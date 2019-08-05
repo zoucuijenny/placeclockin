@@ -83,6 +83,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding-top: 240px;
     }
     .phoneBg{
       width: 365px;

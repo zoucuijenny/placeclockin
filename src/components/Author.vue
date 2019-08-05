@@ -5,6 +5,7 @@
 
 <script>
   import service from '../assets/js/service'
+  import axios from 'axios'
   export default {
     data() {
       return {
@@ -14,15 +15,23 @@
     methods:{
       wxlogin:function(code){
        let me=this
-        let result=service.login(code)
-        console.log('登录返回结果：'+result)
-       if(result.status===0){
-         localStorage.setItem('userId',result.data.openid)
-         window.location.href=localStorage.getItem('beforeLoginUrl')
-       }else{
-         me.$toast.fail(result.msg);
-         window.location.href = me.webUrl;
-       }
+        let prefix='http://122.112.221.15:9900'
+        axios.post(prefix+'/api/wx/login',{code:code })
+          .then((res)=>{
+            console.log('登录返回结果：'+JSON.stringify(res))
+            if(res.data.status===0){
+              localStorage.setItem('userId',res.data.data.openid)
+             // let url=window.location.href
+            //   url.substring(7,url.length)
+              let backurl='http://www.baltictravellerservice.com/#/'
+              //window.location.href=localStorage.getItem('beforeLoginUrl')
+              window.location.href=backurl
+            }else{
+              me.$toast.fail(res.data.msg);
+             // window.location.href = me.webUrl;
+            }
+          })
+          .catch((err)=>{console.log(err)})
       }
     },
     created:function(){
@@ -31,21 +40,22 @@
       let str=window.location.search
       let  arr=str.split('\&')
       let codeIndex=arr[0].indexOf("\=");
-      let code=str.substring(codeIndex+1,arr.length);
+      let code=str.substring(codeIndex+1,arr[0].length);
       console.log('code=='+code)
       let userId=localStorage.getItem('userId')
       //检测用户是否登录
       if(!code){
-        let url=encodeURIComponent(window.location.href);
+        let url=window.location.href
+         url=encodeURIComponent(url);
         const appId='wx2b0cfb496537a3dc'//后台提供
         let ua = window.navigator.userAgent.toLowerCase()
       //  if(ua.match(/MicroMessenger/i) === 'micromessenger'){
-          me.webUrl= `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=http%3A%2F%2Fapi.lvyy365.com%2Flogin%2FweixinLogin%3Fcallback%3D${url}&response_type=code&scope=snsapi_userinfo&state=state#wechat_redirect`;
+          me.webUrl= `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirec`;
        // }
         window.location.href = me.webUrl;
+      }else{
+        me.wxlogin(code)
       }
-     me.wxlogin(code)
-
     }
   }
 </script>
