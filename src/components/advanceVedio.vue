@@ -1,10 +1,10 @@
 <template>
     <div class="advanceVedio">
-      <video  autoplay  style="width: 100%;height:100%">
-        <source :src="vedio" type="video/mp4" id="mp4" >
+      <video  autoplay  style="width: 100%;height:100%" id="mp4" >
+        <source :src="vedio" type="video/mp4" >
       </video>
-      <audio  autoplay loop>
-        <source :src="mp3" type="audio/ogg" id="mp3">
+      <audio  autoplay loop id="mp3">
+        <source :src="mp3" type="audio/ogg" >
       </audio>
     </div>
 </template>
