@@ -1,21 +1,19 @@
 <template>
     <div class="advanceVedio">
-      <video  autoplay  style="width: 100%;height:100%">
-        <source :src="vedio" type="video/mp4" id="mp4" >
-      </video>
-      <audio  autoplay loop>
-        <source :src="mp3" type="audio/ogg" id="mp3">
+       <img class="bgGif" :src="bgGif">
+      <audio  autoplay loop id="mp3">
+        <source :src="mp3" type="audio/ogg" >
       </audio>
     </div>
 </template>
 
 <script>
-  import vedio from '../assets/vedio/advanceVedio.mp4'
+  import bgGif from '../assets/images/advance.gif'
   import mp3 from '../assets/vedio/advance.mp3'
     export default {
           data(){
             return {
-              vedio:vedio,
+              bgGif:bgGif,
               mp3:mp3
             }
           },
@@ -31,9 +29,13 @@
     }
 </script>
 
-<style >
+<style lang="scss">
 .advanceVedio{
   width: 100%;
   height: 100%;
+  .bgGif{
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

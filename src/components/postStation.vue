@@ -277,7 +277,7 @@
       },
       created:function(){
           let me=this
-
+         //获取明信片情况
       }
     }
 </script>

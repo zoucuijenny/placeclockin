@@ -29,13 +29,13 @@ axios.defaults.headers={'Content-Type': 'application/json' }
 //   })
 
 //test登录
-let testLogin=  axios.get(prefix+'/api/test/login',{})
-  .then((res)=>{return res.data})
-  .catch((err)=>{console.log(err)})
+// let testLogin=  axios.get(prefix+'/api/test/login',{})
+//   .then((res)=>{return res.data})
+//   .catch((err)=>{console.log(err)})
 //正式登录
 let login = function(code){
   axios.post(prefix+'/api/wx/login',{code:code })
-    .then((res)=>{return res.data})
+    .then((res)=>{ res.data})
     .catch((err)=>{console.log(err)})
 }
 
@@ -94,7 +94,7 @@ async postCard(){
 export default {
   // sdkConfig,
   clockIn,
-  testLogin,
+ //testLogin,
   login,
   card
 }
