@@ -35,7 +35,7 @@
       console.log('code=='+code)
       let userId=localStorage.getItem('userId')
       //检测用户是否登录
-      if(!code){
+      if(!userId){
         let url=encodeURIComponent(window.location.href);
         const appId='wx2b0cfb496537a3dc'//后台提供
         let ua = window.navigator.userAgent.toLowerCase()
