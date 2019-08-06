@@ -255,10 +255,12 @@
         },
         getCardInfo:function () {
           let me=this
-          let result=me.card.cardInfo()
+          let result=service.card.cardInfo()
           console.log('获取明信片详情'+result)
           if(result.status===0){
-
+            me.cards=result.data.cardInfo
+          }else{
+            me.$toast.fail(result.msg)
           }
         },
         postCardOut:function(){
@@ -278,6 +280,7 @@
       created:function(){
           let me=this
          //获取明信片情况
+
       }
     }
 </script>

@@ -1,5 +1,6 @@
 const state={
-  dkxzShow:false
+  dkxzShow:false,
+  imgBaseUrl:'http://122.112.221.15:9900'
 }
 
 const mutations={
