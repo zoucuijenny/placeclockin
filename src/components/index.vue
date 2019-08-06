@@ -34,7 +34,7 @@ export default {
   },
   created:function () {
     //wx.sdkConfig()
-   // service.testLogin
+     service.testLogin
   }
 }
 </script>

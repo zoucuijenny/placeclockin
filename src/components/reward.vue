@@ -4,7 +4,7 @@
       <img  class="rewardbg" :src="rewardbg">
       <img  class="rewardHotelcard" :src="rewardHotelcard" v-show="showRewardbgHotel">
       <img  class="rewardPlaceCard" :src="rewardPlaceCard" v-show="showRewardPlace">
-      <div class="crashCard" v-show="showRewardCrash"><span class="bigT">0.99</span>元</div>
+      <div class="crashCard" v-show="showRewardCrash"><span class="bigT" @click="openMoneyUrl()">{{money}}</span>元</div>
       <img  class="rewardText8 rewardText" :src="rewardText">
       <img  class="btnShare" :src="btnShare" >
       <!--<div class="text">旅行路上 总有风景在等你</div>-->
@@ -31,6 +31,10 @@
   import rewardText8 from '../assets/images/rewardText/text8.png'
 
   import btnShare from '../assets/images/btnShare.png'
+
+  import { createNamespacedHelpers } from 'vuex'
+  const { mapState } = createNamespacedHelpers('data/')
+
     export default {
      data(){
        return{
@@ -46,26 +50,49 @@
          showRewardPlace:false,
          showRewardCrash:true,
          rewardHotelcard:rewardHotelcard,
-         rewardPlaceCard:rewardPlaceCard
+         rewardPlaceCard:rewardPlaceCard,
+         money:null,
+         moneyUrl:'0'
        }
      },
+      computed:{
+        ...mapState({
+          imgBaseUrl:state=>state.imgBaseUrl,
+          backReward:state=>state.backReward
+        })
+      },
       methods:{
        share:function(){
 
        },
-        postCard:function(){
-          let me=this
-          let result=me.card.postCard()
-          console.log('寄出明信片'+result)
-          if(result.status===0){
-
-          }
+        openMoneyUrl:function(){
+         window.location.href=this.moneyUrl
         }
       },
       created:function(){
        let me=this
-        me.postCard()
         // to do 获取获奖结果 设置背景 图片展示 文字
+        console.log('type'+JSON.stringify(me.backReward))
+        switch (me.backReward.type) {
+          case 0:
+            me.rewardbg=me.rewardbgNo
+                break
+          case 1:
+            me.rewardbg=me.rewardbgCrash
+            me.money=me.backReward.money
+            me.moneyUrl=me.backReward.moneyUrl
+            break
+          case 2:
+            me.rewardbg=me.rewardbgPlace
+            me.showRewardPlace=true
+            break
+          case 3:
+            me.rewardbg=me.rewardbgHotel
+            me.showRewardbgHotel=true
+            break
+          default: me.rewardbg=me.rewardbgNo
+        }
+        me.rewardText=me.imgBaseUrl+me.backReward.url
       }
     }
 </script>

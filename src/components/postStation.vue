@@ -17,19 +17,19 @@
         </div>
       </div>
       <div class="textMailboxWrap">
-        <div class="text">您可寄出的明信片 <span class="blueNumber">12</span> 张，选择一张拖到信箱寄出吧！</div>
+        <div class="text">您可寄出的明信片 <span class="blueNumber">{{cardCount}}</span> 张，选择一张拖到信箱寄出吧！</div>
         <!--<img  class="storage" :src="storage" >-->
         <div class="storage" :style="storageStyle">
           <div class="cards" >
-            <img
-              :src="item"
-              v-for="(item,index) in cards"
-              :item="item"
-              :key="index"
-              draggable="true"
-              v-on:dragstart="faceImgdrag(item)"
-              @click="showBigPic(item)"
-            >
+            <div class="cardiv" v-for="(item,index) in cards"  :item="item" :key="index">
+              <div class="postout" @click="postCardOut(item.pid)">寄出</div>
+              <img
+                :src="item.url"
+                draggable="true"
+                v-on:dragstart="faceImgdrag(item.url)"
+                @click="showBigPic(item.url)"
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -39,6 +39,13 @@
             <img class="bigImg" :src="bigImgUrl" >
             <img class='closeBtn' :src="closeBtn" @click="closeBigImgBox">
           </div>
+      </div>
+      <!--完成邮寄弹窗-->
+      <div class="getBackLetter" v-show="completePost">
+        <div class="backLetterWrap">
+          <img  class="backLetter" :src="backLetter" >
+          <img  class="btnckLetter" :src="btnckLetter" @click="toReward()" >
+        </div>
       </div>
       <!--查看中奖结果-->
       <div class="rewardResult" v-show="showRewardResult">
@@ -82,13 +89,7 @@
           </div>
         </div>
       </div>
-      <!--完成邮寄弹窗-->
-      <div class="getBackLetter" v-show="completePost">
-        <div class="backLetterWrap">
-          <img  class="backLetter" :src="backLetter" >
-          <img  class="btnckLetter" :src="btnckLetter" @click="toReward()" >
-        </div>
-      </div>
+
     </div>
 </template>
 
@@ -113,19 +114,14 @@
   import backLetter from '../assets/images/backLetter.png'
   import btnckLetter from '../assets/images/btnckLetter.png'
 
-  import  card1 from '../assets/images/card/4dbs.png'
-  import  card2 from '../assets/images/card/4hs.png'
-  import  card3 from '../assets/images/card/4hsg.png'
-  import  card4 from '../assets/images/card/4sms.png'
-  import  card5 from '../assets/images/card/4jfs1.png'
-  import  card6 from '../assets/images/card/4jfs2.png'
-  import  card7 from '../assets/images/card/4wls.png'
-  import  card8 from '../assets/images/card/4xns.png'
-
   import service from '../assets/js/service'
+  import { createNamespacedHelpers } from 'vuex'
+  const { mapState} = createNamespacedHelpers('data/')
+
     export default {
         data(){
           return {
+            moudelNamespace:'data/',
             logo:logo,
             btnSearchReward:btnSearchReward,
             btnBack:btnBack,
@@ -135,7 +131,7 @@
             storage:storage,
             showBigImgBox:false,
             bigImgShow:false,
-            bigImgUrl:card1,
+            bigImgUrl:'',
             showRewardResult:false,
             resultTitle:resultTitle,
             noGetReward:noGetReward,
@@ -196,9 +192,15 @@
               backgroundPosition:'0 0',
               curDragImgItem:null,
             },
-            cards:[ card1, card2, card3, card4, card5, card6, card7, card8]
+            cards:null,
+            cardCount:0
           }
         },
+      computed:{
+        ...mapState({
+          imgBaseUrl:state=>state.imgBaseUrl
+        })
+      },
       methods:{
         showBigPic:function(item){
           let me=this
@@ -212,8 +214,46 @@
         back:function(){
          this.$router.back(-1)
          },
+        //查询中奖结果
         searchReward:function(){
-          this.showRewardResult=true
+          let me=this
+          me.rewardResultCrash=[]
+          me.rewardResultInterst=[]
+          me.rewardResultHotel=[]
+          me.showRewardResult=true
+          me.$axios.get('api/prizeInfo')
+            .then((res)=>{
+              if(res.data.status===0){
+                 for(let item of res.data.data){
+                   let temp={}
+                  switch(item.type){
+                    case 1:
+                      temp.count=item.num
+                      temp.money=item.money
+                      temp.url=item.url
+                      me.rewardResultCrash.push(temp)
+                          break
+                    case 2:
+                      temp.code=item.orderId
+                      temp.url=me.imgBaseUrl+item.url
+                      temp.name=item.name
+                      me.rewardResultInterst.push(temp)
+                          break
+                    case 3:
+                      temp.code=item.orderId
+                      temp.url=me.imgBaseUrl+item.url
+                      temp.name=item.name
+                      me.rewardResultHotel.push(temp)
+                          break
+                    default :
+                      temp.count=0
+                      temp.money=0
+                      me.rewardResultCrash.url=''
+                          break
+                  }
+                 }
+              }
+            })
         },
         //拖动开始
         faceImgdrag:function(item){
@@ -239,7 +279,7 @@
             },1000)
             setTimeout(function () {
               opp.removeChild(img)
-              me.postCardOut()
+             // me.postCardOut()
             },3000)
           }
         } ,
@@ -255,31 +295,64 @@
         },
         getCardInfo:function () {
           let me=this
-          let result=service.card.cardInfo()
-          console.log('获取明信片详情'+result)
-          if(result.status===0){
-            me.cards=result.data.cardInfo
-          }else{
-            me.$toast.fail(result.msg)
-          }
-        },
-        postCardOut:function(){
-          let me=this
+          me.$axios.get('/api/cardInfo',{})
+            .then((res)=>{
+              console.log('获取明信片详情'+res)
+              if(res.data.status===0){
+                let arr=[]
+                me.cardCount=res.data.data.cardNum
+                for(let item of res.data.data.cardInfo ){
+                  let temp={}
+                  temp.pid=item.pid
+                  temp.url=me.imgBaseUrl+item.url
+                  arr.push(temp)
+                }
+                if(arr.length>8){
+                  me.cards=arr.slice(0,8)
+                }else {
+                  me.cards=arr
+                }
 
-          let result=service.card.postCard()
-          console.log('寄出明信片'+result)
-          if(result.status===0){
-            //请求寄信接口成功后操作
-            me.cards.splice(me.cards.indexOf(me.curDragImgItem), 1)
-            me.completePost=true
-          }else{
-            me.$toast(result.msg)
-          }
+              }else{
+                me.$toast.fail(res.data.msg)
+              }
+            })
+            .catch((err)=>{
+              console.log(err)
+            })
+
+        },
+        postCardOut:function(pid){
+          let me=this
+          me.$axios.post('/api/sendCard',{pid:pid})
+            .then((res)=>{
+             console.log('寄出明信片'+JSON.stringify(res))
+              if(res.data.status===0){
+                //请求寄信接口成功后操作
+                me.getCardInfo()
+                me.completePost=true
+                let rewardInfo={}
+                rewardInfo.type=res.data.data.type
+                rewardInfo.url=res.data.data.url
+                rewardInfo.orderId=res.data.data.orderId
+                if(res.data.data.type===1){
+                  rewardInfo.money=res.data.data.money
+                  rewardInfo.moneyUrl=res.data.data.openUrl
+                }
+              //  console.log('存：'+JSON.stringify(rewardInfo))
+               me.$store.commit(me.moudelNamespace +'setReward',{data:rewardInfo})
+              }else{
+                me.$toast(res.data.msg)
+              }
+            })
+            .catch((err)=>{
+              console.log(err)
+            })
+
         }
       },
       created:function(){
-          let me=this
-         //获取明信片情况
+          this.getCardInfo()
 
       }
     }
@@ -375,16 +448,28 @@
         top:0;
         z-index:3;
         width: 197.5px;
-        height: 320px;
+        /*height: 320px;*/
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
-        img{
+        .cardiv{
           width:90px ;
           height: 66px;
           margin-top:20px;
           margin-bottom: 5px;
-
+          position: relative;
+          .postout{
+            color:#07c160;
+            width:20px;
+            height: 10px;
+            position: absolute;
+            right:0;
+            bottom: 0;
+          }
+        }
+        img{
+          width:90px ;
+          height: 66px;
         }
       }
     }

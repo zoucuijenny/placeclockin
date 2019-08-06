@@ -1,6 +1,7 @@
-import request from 'request'
+
 import wx from 'weixin-js-sdk'
 import axios from 'axios'
+import Vue from 'vue'
  import promise from 'promise'
 
 const prefix = process.env.NODB_BNV === 'development'
@@ -9,7 +10,14 @@ const prefix = process.env.NODB_BNV === 'development'
 
 axios.defaults.withCredentials=true
 axios.defaults.headers={'Content-Type': 'application/json' }
-//setHeader("Access-Control-Allow-Origin
+const request=axios.create({
+    baseURL:prefix
+})
+let fetch=function(){
+  Vue.prototype.$axios=request
+}
+
+
 //微信 SDK 接口配置
 // const sdkConfig=request.post('')
 //   .then((res)=>{
@@ -29,9 +37,9 @@ axios.defaults.headers={'Content-Type': 'application/json' }
 //   })
 
 //test登录
-// let testLogin=  axios.get(prefix+'/api/test/login',{})
-//   .then((res)=>{return res.data})
-//   .catch((err)=>{console.log(err)})
+let testLogin=  axios.get(prefix+'/api/test/login',{})
+  .then((res)=>{return res.data})
+  .catch((err)=>{console.log(err)})
 //正式登录
 let login = function(code){
   axios.post(prefix+'/api/wx/login',{code:code })
@@ -42,42 +50,30 @@ let login = function(code){
 //长图打卡相关api
 const clockIn={
  // 获取打卡情况
- async list(){
-    let result={}
-    await axios.get(prefix + '/api/placeInfo',{})
-      .then((res)=>{
-        result=res.data
-      })
-      .catch((err)=>{console.log(err)})
-      return result
-
-},
+//  async list(){
+//     let result={}
+//     await axios.get(prefix + '/api/placeInfo',{})
+//       .then((res)=>{
+//         result=res
+//       })
+//       .catch((err)=>{console.log(err)})
+//       return result
+//
+// },
   //完成打卡
-  async clock(placeId){
-    let result = {}
-    await axios.post(prefix+'/api/punch',{'place':placeId, 'status':1})
-      .then((res)=>{
-       result = res.data
-      })
-      .catch((err)=>{
-        console.log(err)
-      })
-    return result
-  }
+  // async clock(placeId){
+  //   let result = {}
+  //   await axios.post(prefix+'/api/punch',{'place':placeId, 'status':1})
+  //     .then((res)=>{
+  //      result = res.data
+  //     })
+  //     .catch((err)=>{
+  //       console.log(err)
+  //     })
+  //   return result
+  // }
 }
 const card={
-  //查询明信片详情
-  async cardInfo(){
-    let result = {}
-    await axios.get(prefix+'/api/cardInfo',)
-      .then((res)=>{
-        result = res.data
-      })
-      .catch((err)=>{
-        console.log(err)
-      })
-    return result
-  },
   //寄出明信片
 async postCard(){
   let result = {}
@@ -94,7 +90,8 @@ async postCard(){
 export default {
   // sdkConfig,
   clockIn,
- //testLogin,
+ testLogin,
   login,
-  card
+  card,
+  fetch
 }

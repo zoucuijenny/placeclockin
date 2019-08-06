@@ -145,7 +145,8 @@
      },
       computed:{
         ...mapState({
-           dkxzShow:state=>state.dkxzShow
+           dkxzShow:state=>state.dkxzShow,
+           prefix:state=>state.prefix
         })
       },
       methods:{
@@ -165,14 +166,31 @@
         dkxz:function(){
          let me=this
           this.$store.commit(me.moudelNamespace+'changeDkxz',{data:!me.dkxzShow})
+        },
+        getCardCount:function(){
+          let me=this
+          me.$axios.get('/api/cardInfo',{})
+            .then((res)=>{
+              //console.log('获取打卡情况：'+JSON.stringify(res))
+              if(res.data.status===0){
+                me.cardCount=res.data.data.cardNum
+              }else{
+                me.$toast.fail(res.data.msg)
+              }
+            })
+            .catch((err)=>{
+              console.log(err)
+            })
         }
       },
       created:function () {
         let me=this
-        let result=service.clockIn.list()
-        result.then(function (res) {
-          if(res.status===0){
-            let data =res.data
+        me.getCardCount()
+        me.$axios.get('/api/placeInfo',{})
+        .then(function (res) {
+          //console.log('获取打卡情况'+JSON.stringify(res))
+          if(res.data.status===0){
+            let data =res.data.data
             let j=0
             for(let i in data){
               j++
@@ -182,14 +200,18 @@
                   break
                 case 1:
                   me.$set( me.clockStatus,j-1,true)
-                  me.cardCount++
                   break
                 default:  me.$set( me.clockStatus,j-1,false)
               }
             }
            // me.$forceUpdate(); 强制更新数据
+          }else{
+            me.$toast.fail(res.data.msg)
           }
         })
+          .catch((err)=>{
+            console.log(err)
+          })
       }
     }
 </script>

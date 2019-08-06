@@ -26,9 +26,10 @@
   import smsBg from '../assets/images/placeDetail/sms.jpg'
   import wlsBg from '../assets/images/placeDetail/wls.jpg'
   import xnsBg from '../assets/images/placeDetail/xns.jpg'
-
+ import service from '../assets/js/service'
   import succcess from '../assets/images/clockSuccesspop.png'
-  import service from '../assets/js/service'
+  import { createNamespacedHelpers } from 'vuex'
+  const { mapState } = createNamespacedHelpers('data/')
 
     export default {
         name: "placeDetail",
@@ -51,6 +52,11 @@
             }
           }
       },
+      computed:{
+        ...mapState({
+          prefix:state=>state.prefix
+        })
+      },
       methods:{
         back:function(){
           this.$router.back(-1)
@@ -58,10 +64,10 @@
         clock:function () {
           let me=this
           let arr=['a','b','c','d','e','f','g']
-          let promise = service.clockIn.clock(arr[me.$route.params.placeId])
-          promise.then(function (res) {
-            console.log('请求返回结果',res)
-            if(res.status===0){
+          me.$axios.post('/api/punch',{place:arr[me.$route.params.placeId],status:'1'})
+          .then(function (res) {
+           // console.log('请求返回结果',res)
+            if(res.data.status===0){
               me.showClockSucessBg=true
               let audio = document.createElement('audio');
               audio.src=me.clockSuccess
@@ -70,8 +76,13 @@
               setTimeout(function () {
                 me.showClockSucessBg=false
               },1000)
+            }else{
+              me.$toast.fail(res.data.msg)
             }
           })
+            .catch((err)=>{
+              console.log(err)
+            })
         }
       },
       created:function(){

@@ -8,13 +8,14 @@
       <div class="startWrap" v-show="isStart">
         <img class="startbg" :src="startbg" >
         <div class="startContentWrap">
-          <img :src="phoneBg" class="phoneBg">
-          <img :src="statusFlag" class="statusFlag">
-          <img :src="startContent" class="startContent">
-          <img :src="detailOnTap" class="detailOnTap" @click="toNext()">
+          <div class="placeItem" v-for="(item,index) in startContent" :item="item" :index="index">
+            <img :src="phoneBg" class="phoneBg">
+            <img :src="statusFlag" class="statusFlag">
+            <img :src="item" class="startContent">
+            <img :src="detailButton" class="detailOnTap" @click="toNext(index)">
+          </div>
         </div>
       </div>
-
     </div>
 </template>
 
@@ -24,8 +25,15 @@
   import btnBack from '../assets/images/btnback.png'
   import phoneBg from '../assets/images/phoneBg.png'
   import statusFlag from '../assets/images/statusFlag.png'
-  import startContent from '../assets/images/startContent.png'
-  import detailOnTap from '../assets/images/detailOnTap.png'
+  import detailButton from '../assets/images/detailButton.png'
+
+  import atj from '../assets/images/bannerText/atj.png'
+  import dbs from '../assets/images/bannerText/dbs.png'
+  import hs from '../assets/images/bannerText/hs.png'
+  import hsgsh from '../assets/images/bannerText/hsgsh.png'
+  import jfs from '../assets/images/bannerText/jfs.png'
+  import wls from '../assets/images/bannerText/wls.png'
+  import xns from '../assets/images/bannerText/xns.png'
     export default {
        data(){
          return {
@@ -35,8 +43,8 @@
            btnBack:btnBack,
            phoneBg:phoneBg,
            statusFlag:statusFlag,
-           startContent:startContent,
-           detailOnTap:detailOnTap
+           startContent:[atj,dbs,hs,hsgsh,jfs,wls,xns],
+           detailButton:detailButton
          }
        },
       methods:{
@@ -84,6 +92,9 @@
       flex-direction: column;
       align-items: center;
       padding-top: 240px;
+      .placeItem{
+        text-align: center;
+      }
     }
     .phoneBg{
       width: 365px;
