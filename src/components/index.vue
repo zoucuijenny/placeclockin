@@ -15,6 +15,9 @@
   import logo from '../assets/images/logowhite.png'
   import onthewayBtn from '../assets/images/ontheway.png'
   import clockinBtn from '../assets/images/btnclockin.png'
+  import wxshare from '../store/modules/share.js'
+  import request from "../assets/js/request";
+  import service from "../assets/js/service";
   import btnMusic from '../assets/vedio/btnMusic.mp3'
   import wx from 'weixin-js-sdk'
   //import wx from '../assets/js/service'
@@ -29,6 +32,14 @@ export default {
     }
   },
   methods:{
+    isIPhone : function() {
+      const uag = window.navigator.userAgent;
+      let _isIPhone = true;
+      if (uag.indexOf('Android') > -1 || uag.indexOf('Adr') > -1) {
+        _isIPhone = false;
+      }
+      return _isIPhone;
+    },
     totheway:function(){
       let me=this
       let  myVideo=document.getElementById("btnMusic");
@@ -42,13 +53,16 @@ export default {
       let  myVideo=document.getElementById("btnMusic");
         myVideo.play();
         setTimeout(function () {
-          me.$router.push({name:'pictureClock'})
+         // me.$router.push({name:'pictureClock'})
+          window.location.href= '/pictureClock'
         },300)
     }
   },
   created:function () {
+    wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
+    wxshare.successfulShare(this.$route.query)
     //wx.sdkConfig()
-    let me=this
+    //let me=this
    //  this.$axios.get('/api/test/login',{})
    //   .then((res)=>{ me.$toast(res.data.msg)})
    //   .catch((err)=>{console.log(err)})

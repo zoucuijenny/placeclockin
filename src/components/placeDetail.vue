@@ -26,75 +26,76 @@
   import smsBg from '../assets/images/placeDetail/sms.jpg'
   import wlsBg from '../assets/images/placeDetail/wls.jpg'
   import xnsBg from '../assets/images/placeDetail/xns.jpg'
- import service from '../assets/js/service'
   import succcess from '../assets/images/clockSuccesspop.png'
+  import service from '../assets/js/service'
+  import wxshare from '../store/modules/share.js'
+
   import { createNamespacedHelpers } from 'vuex'
   const { mapState } = createNamespacedHelpers('data/')
-
     export default {
-        name: "placeDetail",
-      data(){
-          return{
-            logo:logo,
-            btnBack:btnBack,
-            bgs:[xnsBg,smsBg,dbsBg,hsgBg,jfsBg,wlsBg,hsBg],
-            placedetailbg:xnsBg,
-            countDowm:4,
-            placeId:0,
-            clockSuccess:clockSuccess,
-            succcess:succcess,//打卡成功图片
-            showClockSucessBg:false,//显示打卡成功蒙层
-            timeDown:null,
-            countDownStyle:{
-              background:'url('+ countDownBg+')',
-              backgroundRepeat:'no-repeat',
-              backgroundPosition:'0 0',
-              backgroundSize:'100% 100%'
-            }
+      name: "placeDetail",
+      data() {
+        return {
+          logo: logo,
+          btnBack: btnBack,
+          bgs: [xnsBg, smsBg, dbsBg, hsgBg, jfsBg, wlsBg, hsBg],
+          placedetailbg: xnsBg,
+          countDowm: 4,
+          placeId: 0,
+          clockSuccess: clockSuccess,
+          succcess: succcess,//打卡成功图片
+          showClockSucessBg: false,//显示打卡成功蒙层
+          timeDown: null,
+          countDownStyle: {
+            background: 'url(' + countDownBg + ')',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: '0 0',
+            backgroundSize: '100% 100%'
           }
+        }
       },
-      methods:{
-        back:function(){
+      methods: {
+        back: function () {
           this.$router.back(-1)
-          this.countDowm=0
-          this.showClockSucessBg=false
+          this.countDowm = 0
+          this.showClockSucessBg = false
         },
-        clock:function () {
-          let me=this
-          let arr=['a','b','c','d','e','f','g']
-          me.$axios.post('/api/punch',{place:arr[me.$route.params.placeId],status:'1'})
-          .then(function (res) {
-           // console.log('请求返回结果',res)
-            if(res.data.status===0){
-              me.showClockSucessBg=true
-              let audio = document.createElement('audio');
-              audio.src=me.clockSuccess
-              document.body.appendChild(audio)
-              audio.play()
-              setTimeout(function () {
-                me.showClockSucessBg=false
-              },1000)
-            }else{
-              me.$toast.fail(res.data.msg)
-            }
-          })
-            .catch((err)=>{
+        clock: function () {
+          let me = this
+          let arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+          me.$axios.post('/api/punch', {place: arr[me.$route.query.placeId], status: '1'})
+            .then(function (res) {
+              // console.log('请求返回结果',res)
+              if (res.data.status === 0) {
+                me.showClockSucessBg = true
+                let audio = document.createElement('audio');
+                audio.src = me.clockSuccess
+                document.body.appendChild(audio)
+                audio.play()
+                setTimeout(function () {
+                  me.showClockSucessBg = false
+                }, 1000)
+              } else {
+                me.$toast.fail(res.data.msg)
+              }
+            })
+            .catch((err) => {
               console.log(err)
             })
         },
-        countDown:function () {
-          let me=this
-          me.timeDown=setInterval(function(){
-            me.countDowm=me.countDowm-1
-            if( me.countDowm===0){
+        countDown: function () {
+          let me = this
+          me.timeDown = setInterval(function () {
+            me.countDowm = me.countDowm - 1
+            if (me.countDowm === 0) {
               clearInterval(me.timeDown)
               me.clock()
             }
-          },1000)
+          }, 1000)
         }
       },
       destoryed:function(){
-          let me=this
+        let me=this
         clearInterval(me.timeDown)
       },
       deactivated:function(){
@@ -102,7 +103,7 @@
       },
       created:function(){
         let me=this
-        me.placeId=me.$route.params.placeId
+        me.placeId=me.$route.query.placeId
         me.placedetailbg=me.bgs[me.placeId]
         me.$axios.get('/api/placeInfo',{})
           .then((res)=>{
@@ -114,7 +115,7 @@
               }
               let j=0
               for(let i in arr){
-                   j++
+                j++
                 if(j=== me.placeId+1){
                   switch(arr[i]){
                     case 0:
@@ -124,7 +125,7 @@
                       me.isClocked=true
                       break
                     default:  me.isClocked=false
-                          break
+                      break
                   }
                   if(!me.isClocked){
                     me.countDown()
@@ -139,6 +140,9 @@
           .catch((err)=>{
             console.log(err)
           })
+
+        wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
+        wxshare.successfulShare(this.$route.query)
       }
     }
 </script>

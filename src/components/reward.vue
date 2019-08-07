@@ -35,6 +35,7 @@
   import rewardText6 from '../assets/images/rewardText/text6.png'
   import rewardText7 from '../assets/images/rewardText/text7.png'
   import rewardText8 from '../assets/images/rewardText/text8.png'
+  import wxshare from '../store/modules/share.js'
 
   import btnShare from '../assets/images/btnShare.png'
   import btnMusic from '../assets/vedio/btnMusic.mp3'
@@ -119,6 +120,10 @@
         }
         me.rewardText=me.imgBaseUrl+me.backReward.texturl
         me.rewardClass= me.backReward.serial
+
+        wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
+        wxshare.successfulShare(this.$route.query)
+
       }
     }
 </script>

@@ -121,6 +121,7 @@
   import postOutSuccessMusic from '../assets/vedio/postOut.mp3'
   import btnMusic from '../assets/vedio/btnMusic.mp3'
 
+  import wxshare from '../store/modules/share.js'
   import service from '../assets/js/service'
   import { createNamespacedHelpers } from 'vuex'
   const { mapState} = createNamespacedHelpers('data/')
@@ -318,11 +319,12 @@
         },
         toReward:function(){
           this.completePost=false
+          // this.$router.push({name:'reward'})
           let me = this
           let  myVideo=document.getElementById("btnMusic1");
           myVideo.play();
           setTimeout(function () {
-            me.$router.push({name:'reward'})
+            window.location.href= '/name=reward'
           },300)
         },
         getCardInfo:function () {
@@ -394,6 +396,9 @@
       },
       created:function(){
           this.getCardInfo()
+          let me=this
+          wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
+          wxshare.successfulShare(this.$route.query)
 
       }
     }
@@ -433,6 +438,7 @@
       position: relative;
       width: 375px;
       height:664px;
+
       }
     .flowerpot{
      width: 84.5px;

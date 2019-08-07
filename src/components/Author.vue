@@ -4,6 +4,8 @@
 </template>
 
 <script>
+  import wxshare from '../store/modules/share.js'
+
   export default {
     data() {
       return {
@@ -54,6 +56,9 @@
       } else {
         me.wxlogin(code)
       }
+      wxshare.wxshare(me.$route.fullPath, localStorage.getItem('userId'))
+      wxshare.successfulShare(me.$route.query)
+
     }
   }
 </script>

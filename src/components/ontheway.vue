@@ -44,6 +44,9 @@
   import { createNamespacedHelpers } from 'vuex'
   const { mapState } = createNamespacedHelpers('data/')
 
+  import startContent from '../assets/images/startContent.png'
+  import detailOnTap from '../assets/images/detailOnTap.png'
+  import wxshare from '../store/modules/share.js'
     export default {
        data(){
          return {
@@ -107,17 +110,19 @@
       },
       methods:{
         back:function(){
-          this.$router.back(-1)
+          // this.$router.back(-1)
+          window.history.back()
         },
         toNext:function (index) {
-          this.$router.push({name: 'album',params:{place:index}})
+          window.location.href=`/album?place=${index}`
+         // this.$router.push({name: 'album',params:{place:index}})
         },
         getBanners:function () {
           let me=this
           me.startContent=[]
           me.$axios.get('api/onroad/bigpicture')
             .then((res)=>{
-             // console.log('datu'+JSON.stringify(res))
+              // console.log('datu'+JSON.stringify(res))
               if(res.data.status===0){
                 me.$store.commit(me.moudleNameSpace+'setAlbumTopData',{data:me.data.data})
                 for(let item of me.data.data){
@@ -127,8 +132,8 @@
                   console.log('dif'+item.place)
                   switch (item.place){
                     case 'a':
-                    temp.text=me.xns
-                    break
+                      temp.text=me.xns
+                      break
                     case 'b':
                       temp.text=me.sms
                       break
@@ -147,10 +152,10 @@
                     case 'g':
                       temp.text=me.hs
                       break
-                   default:
+                    default:
                       temp.text=me.sms
                       break
-                    me.startContent.push(temp)
+                      me.startContent.push(temp)
                   }
                 }
               }else{
@@ -159,13 +164,15 @@
             })
             .catch((err)=>{
                 console.log(err)
-            }
+              }
 
             )
         }
       },
       created:function () {
         this.getBanners()
+        wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
+        wxshare.successfulShare(this.$route.query)
       }
     }
 </script>
