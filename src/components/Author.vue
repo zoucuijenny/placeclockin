@@ -4,9 +4,6 @@
 </template>
 
 <script>
-  import service from '../assets/js/service'
-  import axios from 'axios'
-
   export default {
     data() {
       return {
@@ -16,8 +13,7 @@
     methods: {
       wxlogin: function (code) {
         let me = this
-        let prefix = 'http://122.112.221.15:9900'
-        axios.post(prefix + '/api/wx/login', { code: code })
+        me.$axios.post('/api/wx/login', { code: code })
           .then((res) => {
             console.log('登录返回结果：' + JSON.stringify(res))
             if (res.data.status === 0) {

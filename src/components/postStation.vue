@@ -116,6 +116,7 @@
   import btnckLetter from '../assets/images/btnckLetter.png'
   import postCancelBtn from  '../assets/images/postCancelBtn.png'
   import postBtn from  '../assets/images/postBtn.png'
+  import postOutSuccessMusic from '../assets/vedio/postOut.mp3'
 
   import service from '../assets/js/service'
   import { createNamespacedHelpers } from 'vuex'
@@ -154,6 +155,7 @@
             postBtn:postBtn,
             postOutPId:null,
             postCancelBtn:postCancelBtn,
+            postOutSuccess:postOutSuccessMusic,
             rewardResultHotel:[
               {
                 name:'xns',
@@ -346,6 +348,12 @@
              console.log('寄出明信片'+JSON.stringify(res))
               if(res.data.status===0){
                 //请求寄信接口成功后操作
+                //声效
+                let audio = document.createElement('audio');
+                audio.src=me.postOutSuccess
+                document.body.appendChild(audio)
+                audio.play()
+
                 me.getCardInfo()
                 me.bigImgShow=false
                 me.completePost=true

@@ -31,48 +31,7 @@ let fetch=function(){
 //         jsApiList: [] // 必填，需要使用的JS接口列表
 //       });
 //     }
-//   })
-//   .catch((err)=>{
-//     console.log(err)
-//   })
 
-//test登录
-let testLogin=  axios.get(prefix+'/api/test/login',{})
-  .then((res)=>{return res.data})
-  .catch((err)=>{console.log(err)})
-//正式登录
-let login = function(code){
-  axios.post(prefix+'/api/wx/login',{code:code })
-    .then((res)=>{ res.data})
-    .catch((err)=>{console.log(err)})
-}
-
-//长图打卡相关api
-const clockIn={
- // 获取打卡情况
-//  async list(){
-//     let result={}
-//     await axios.get(prefix + '/api/placeInfo',{})
-//       .then((res)=>{
-//         result=res
-//       })
-//       .catch((err)=>{console.log(err)})
-//       return result
-//
-// },
-  //完成打卡
-  // async clock(placeId){
-  //   let result = {}
-  //   await axios.post(prefix+'/api/punch',{'place':placeId, 'status':1})
-  //     .then((res)=>{
-  //      result = res.data
-  //     })
-  //     .catch((err)=>{
-  //       console.log(err)
-  //     })
-  //   return result
-  // }
-}
 const card={
   //寄出明信片
 async postCard(){
@@ -89,9 +48,5 @@ async postCard(){
 }
 export default {
   // sdkConfig,
-  clockIn,
- testLogin,
-  login,
-  card,
   fetch
 }

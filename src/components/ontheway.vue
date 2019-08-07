@@ -48,7 +48,7 @@
        data(){
          return {
            moudleNameSpace:'data/',
-           isStart:true,
+           isStart:false,
            noStartbg:noStartbg,
            startbgTop:startbgTop,
            contentBg:contentBg,
@@ -117,7 +117,7 @@
           me.startContent=[]
           me.$axios.get('api/onroad/bigpicture')
             .then((res)=>{
-              console.log('datu'+JSON.stringify(res))
+             // console.log('datu'+JSON.stringify(res))
               if(res.data.status===0){
                 me.$store.commit(me.moudleNameSpace+'setAlbumTopData',{data:me.data.data})
                 for(let item of me.data.data){

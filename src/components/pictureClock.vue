@@ -1,6 +1,13 @@
 <template>
     <div class="pcClockWrap">
-        <img class="shctimg" :src="shct">
+        <!--<img class="shctimg" :src="shct">-->
+      <div class="shctimg">
+        <img class="bgimg1 gifbg" :src="bgimg1" >
+        <img class="bgimg2 gifbg" :src="bgimg2" >
+        <img class="bgimg3 gifbg" :src="bgimg3" >
+        <img class="bgimg4 gifbg" :src="bgimg4" >
+        <img class="bgimg5 gifbg" :src="bgimg5" >
+      </div>
         <img class="logo" :src="logo">
       <div class="ykyz">
         <img class="btnykyz" :src="btnykyz" @click="ykyz()">
@@ -98,7 +105,11 @@
   import closeBtn from '../assets/images/closeBtn.png'
   import dkxzCon from '../assets/images/dkxzContent.png'
 
-  import service from '../assets/js/service'
+  import bgimg1 from '../assets/images/bggif/bggif1.gif'
+  import bgimg2 from '../assets/images/bggif/bggif2.gif'
+  import bgimg3 from '../assets/images/bggif/bggif3.gif'
+  import bgimg4 from '../assets/images/bggif/bggif4.gif'
+  import bgimg5 from '../assets/images/bggif/bggif5.gif'
 
   import { createNamespacedHelpers } from 'vuex'
   const { mapState } = createNamespacedHelpers('data/')
@@ -118,6 +129,12 @@
          dkxzCon:dkxzCon,
          cardCount:0,
          moudelNamespace:'data/',
+         bgimg1:bgimg1,
+         bgimg2:bgimg2,
+         bgimg3:bgimg3,
+         bgimg4:bgimg4,
+         bgimg5:bgimg5,
+
          clockStatus:[false,true,false,false,false,false,false],
          //仙女山 四面山 大巴山 黑山谷 金佛山 武陵山 黄水
          xns:{
@@ -277,6 +294,14 @@
   .shctimg{
     width:100%;
     height: 100%;
+    .gifbg{
+      width: 100%;
+      height: auto;
+      padding:0;
+      border:0;
+      margin:0;
+      display:block;
+    }
   }
     .xns{
       position: absolute;

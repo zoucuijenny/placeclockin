@@ -12,8 +12,6 @@
   import logo from '../assets/images/logowhite.png'
   import onthewayBtn from '../assets/images/ontheway.png'
   import clockinBtn from '../assets/images/btnclockin.png'
-  import request from "../assets/js/request";
-  import service from "../assets/js/service";
   //import wx from '../assets/js/service'
 export default {
   data () {
@@ -34,8 +32,11 @@ export default {
   },
   created:function () {
     //wx.sdkConfig()
-     //service.testLogin
-  }
+  //   let me=this
+  //   this.$axios.get('/api/test/login',{})
+  //    .then((res)=>{ me.$toast(res.data.msg)})
+  //    .catch((err)=>{console.log(err)})
+   }
 }
 </script>
 <style lang="scss">
