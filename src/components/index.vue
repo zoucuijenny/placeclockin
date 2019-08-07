@@ -16,6 +16,7 @@
   import onthewayBtn from '../assets/images/ontheway.png'
   import clockinBtn from '../assets/images/btnclockin.png'
   import btnMusic from '../assets/vedio/btnMusic.mp3'
+  import wx from 'weixin-js-sdk'
   //import wx from '../assets/js/service'
 export default {
   data () {
@@ -48,9 +49,9 @@ export default {
   created:function () {
     //wx.sdkConfig()
     let me=this
-    // this.$axios.get('/api/test/login',{})
-    //  .then((res)=>{ me.$toast(res.data.msg)})
-    //  .catch((err)=>{console.log(err)})
+   //  this.$axios.get('/api/test/login',{})
+   //   .then((res)=>{ me.$toast(res.data.msg)})
+   //   .catch((err)=>{console.log(err)})
    }
 }
 </script>
@@ -58,9 +59,10 @@ export default {
   .hello{
     width: 100%;
     height: 100%;
+    position: relative;
     .bgimg{
       width: 100%;
-      height: auto;
+      height:664px;
     }
     .onthewayBtn{
       z-index:2;

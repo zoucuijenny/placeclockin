@@ -20,7 +20,7 @@
             <img class="locationIcon" :src="locationIcon">
             <img class="clickClockText"  :src="clickClockText" >
           </div>
-          <div class="afterClock"  v-if="clockStatus[0]" >
+          <div class="afterClock"  v-if="clockStatus[0]"  @click="clickClock(0)">
             <img class="completeClock" :src="completeClock">
             <img class="completeClockText"  :src="completeClockText" >
           </div>
@@ -30,7 +30,7 @@
           <img class="locationIcon" :src="locationIcon">
           <img class="clickClockText"  :src="clickClockText" >
         </div>
-        <div class="afterClock" v-if="clockStatus[1]">
+        <div class="afterClock" v-if="clockStatus[1]" @click="clickClock(1)">
           <img class="completeClock" :src="completeClock">
           <img class="completeClockText"  :src="completeClockText" >
         </div>
@@ -40,7 +40,7 @@
           <img class="locationIcon" :src="locationIcon">
           <img class="clickClockText"  :src="clickClockText" >
         </div>
-        <div class="afterClock" v-show="clockStatus[2]">
+        <div class="afterClock" v-show="clockStatus[2]" @click="clickClock(2)">
           <img class="completeClock" :src="completeClock">
           <img class="completeClockText"  :src="completeClockText" >
         </div>
@@ -50,7 +50,7 @@
           <img class="locationIcon" :src="locationIcon">
           <img class="clickClockText"  :src="clickClockText" >
         </div>
-        <div class="afterClock" v-show="clockStatus[3]">
+        <div class="afterClock" v-show="clockStatus[3]" @click="clickClock(3)">
           <img class="completeClock" :src="completeClock">
           <img class="completeClockText"  :src="completeClockText" >
         </div>
@@ -60,7 +60,7 @@
           <img class="locationIcon" :src="locationIcon">
           <img class="clickClockText"  :src="clickClockText" >
         </div>
-        <div class="afterClock" v-show="clockStatus[4]">
+        <div class="afterClock" v-show="clockStatus[4]" @click="clickClock(4)">
           <img class="completeClock" :src="completeClock">
           <img class="completeClockText"  :src="completeClockText" >
         </div>
@@ -70,7 +70,7 @@
           <img class="locationIcon" :src="locationIcon">
           <img class="clickClockText"  :src="clickClockText" >
         </div>
-        <div class="afterClock" v-show="clockStatus[5]">
+        <div class="afterClock" v-show="clockStatus[5]" @click="clickClock(5)">
           <img class="completeClock" :src="completeClock">
           <img class="completeClockText"  :src="completeClockText" >
         </div>
@@ -80,7 +80,7 @@
           <img class="locationIcon" :src="locationIcon">
           <img class="clickClockText"  :src="clickClockText" >
         </div>
-        <div class="afterClock" v-show="clockStatus[6]">
+        <div class="afterClock" v-show="clockStatus[6]" @click="clickClock(6)">
           <img class="completeClock" :src="completeClock">
           <img class="completeClockText"  :src="completeClockText" >
         </div>

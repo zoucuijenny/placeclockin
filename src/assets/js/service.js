@@ -11,7 +11,9 @@ const prefix = process.env.NODB_BNV === 'development'
 axios.defaults.withCredentials=true
 axios.defaults.headers={'Content-Type': 'application/json' }
 const request=axios.create({
-    baseURL:prefix
+    baseURL:prefix,
+    headers:{'Content-Type': 'application/json' },
+    withCredentials:true
 })
 let fetch=function(){
   Vue.prototype.$axios=request

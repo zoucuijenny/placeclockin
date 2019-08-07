@@ -7,6 +7,9 @@
       <div class="crashCard" v-show="showRewardCrash"><span class="bigT" @click="openMoneyUrl()">{{money}}</span>元</div>
       <img  class="rewardText" :class="'rewardText'+rewardClass" :src="rewardText">
       <img  class="btnShare" :src="btnShare" @click="btnShared()" >
+      <div class="popwindow" v-if="showShareNotice" @click="closeShareWindow()">
+        <img class="shareNotice" :src="shareNotice" >
+      </div>
       <!--<div class="text">旅行路上 总有风景在等你</div>-->
       <audio  id="btnMusic2">
         <source :src="btnMusic" type="audio/ogg" >
@@ -35,6 +38,7 @@
 
   import btnShare from '../assets/images/btnShare.png'
   import btnMusic from '../assets/vedio/btnMusic.mp3'
+  import shareNotice from '../assets/images/shareNotice.png'
 
   import { createNamespacedHelpers } from 'vuex'
   const { mapState } = createNamespacedHelpers('data/')
@@ -58,7 +62,9 @@
          rewardClass:8,
          money:null,
          moneyUrl:'0',
-         btnMusic:btnMusic
+         btnMusic:btnMusic,
+         shareNotice:shareNotice,
+         showShareNotice:false
        }
      },
       computed:{
@@ -75,8 +81,15 @@
          window.location.href=this.moneyUrl
         },
         btnShared:function() {
+         let me=this
           let  myVideo=document.getElementById("btnMusic2");
           myVideo.play();
+         setTimeout(function(){
+           me.showShareNotice=true
+         })
+        },
+        closeShareWindow:function(){
+         this.showShareNotice=false
         }
       },
       created:function(){
@@ -114,6 +127,7 @@
   .rewardWrap{
     width: 100%;
     height: 100%;
+    overflow: hidden;
     .rewardbg{
       width: 100%;
       height: 100%;
@@ -196,14 +210,17 @@
         font-size: 28px;
       }
     }
-
-    /*.text{*/
-      /*position: absolute;*/
-      /*top:300px;*/
-      /*left:68px;*/
-      /*z-index: 3;*/
-      /*color: #999;*/
-      /*font-weight: bold;*/
-    /*}*/
+    .popwindow{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+      top:0;
+      left:0
+    }
+    .shareNotice{
+      width: 100%;
+      height: 100%;
+    }
   }
 </style>

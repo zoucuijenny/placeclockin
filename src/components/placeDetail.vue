@@ -57,6 +57,7 @@
         back:function(){
           this.$router.back(-1)
           this.countDowm=0
+          this.showClockSucessBg=false
         },
         clock:function () {
           let me=this
@@ -103,7 +104,41 @@
         let me=this
         me.placeId=me.$route.params.placeId
         me.placedetailbg=me.bgs[me.placeId]
-        me.countDown()
+        me.$axios.get('/api/placeInfo',{})
+          .then((res)=>{
+            if(res.data.status===0){
+              let datas =res.data.data
+              var arr = []
+              for(let k in datas){
+                arr.push(datas[k])
+              }
+              let j=0
+              for(let i in arr){
+                   j++
+                if(j=== me.placeId+1){
+                  switch(arr[i]){
+                    case 0:
+                      me.isClocked=false
+                      break
+                    case 1:
+                      me.isClocked=true
+                      break
+                    default:  me.isClocked=false
+                          break
+                  }
+                  if(!me.isClocked){
+                    me.countDown()
+                  }else{
+                    me.countDowm=0
+                  }
+                  break
+                }
+              }
+            }
+          })
+          .catch((err)=>{
+            console.log(err)
+          })
       }
     }
 </script>

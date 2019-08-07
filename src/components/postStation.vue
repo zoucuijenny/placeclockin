@@ -433,7 +433,6 @@
       position: relative;
       width: 375px;
       height:664px;
-
       }
     .flowerpot{
      width: 84.5px;
