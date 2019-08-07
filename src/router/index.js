@@ -3,10 +3,12 @@ import Router from 'vue-router'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('data/')
+import wxshare from '../store/modules/share.js'
 
 Vue.use(Router)
 
 const router=new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -56,14 +58,20 @@ const router=new Router({
     }
   ]
 })
+
+
+
 router.beforeEach((to,from,next)=>{
+  wxshare.successfulShare(to.query)
+  console.log(to)
   //第一次进入项目
   if(!localStorage.getItem('userId') && to.path !=='/author'){
     //保存用户进入的url
-    localStorage.setItem('beforeLoginUrl',to.fullPath)
+    localStorage.setItem('beforeLoginUrl',to.params)
     next('/author')
     return false
   }
+
   next()
 })
 export default router

@@ -26,6 +26,7 @@
   import statusFlag from '../assets/images/statusFlag.png'
   import startContent from '../assets/images/startContent.png'
   import detailOnTap from '../assets/images/detailOnTap.png'
+  import wxshare from '../store/modules/share.js'
     export default {
        data(){
          return {
@@ -39,12 +40,19 @@
            detailOnTap:detailOnTap
          }
        },
+
+      created: function () {
+        wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
+        wxshare.successfulShare(this.$route.query)
+      },
       methods:{
         back:function(){
-          this.$router.back(-1)
+          // this.$router.back(-1)
+          window.history.back()
         },
         toNext:function () {
-          this.$router.push({name: 'album'})
+          // this.$router.push({name: 'album'})
+          window.location.href='/album'
         }
       }
     }

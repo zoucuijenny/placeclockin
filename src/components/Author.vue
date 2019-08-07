@@ -6,6 +6,7 @@
 <script>
   import service from '../assets/js/service'
   import axios from 'axios'
+  import wxshare from '../store/modules/share.js'
 
   export default {
     data() {
@@ -14,6 +15,7 @@
       }
     },
     methods: {
+
       wxlogin: function (code) {
         let me = this
         let prefix = 'http://122.112.221.15:9900'
@@ -58,6 +60,9 @@
       } else {
         me.wxlogin(code)
       }
+      wxshare.wxshare(me.$route.fullPath, localStorage.getItem('userId'))
+      wxshare.successfulShare(me.$route.query)
+
     }
   }
 </script>

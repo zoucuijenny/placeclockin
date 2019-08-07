@@ -29,7 +29,7 @@
 
   import succcess from '../assets/images/clockSuccesspop.png'
   import service from '../assets/js/service'
-
+  import wxshare from '../store/modules/share.js'
     export default {
         name: "placeDetail",
       data(){
@@ -78,7 +78,8 @@
         let me=this
         me.placeId=me.$route.params.placeId
         me.placedetailbg=me.bgs[me.placeId]
-
+        wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
+        wxshare.successfulShare(this.$route.query)
           let timeDown=setInterval(function(){
             me.countDowm=me.countDowm-1
             if( me.countDowm===0){
