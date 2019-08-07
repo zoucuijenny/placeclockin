@@ -5,6 +5,9 @@
     <img :src="logo" alt="" class="logo">
     <img @click="toclock()" class="clockinBtn" :src="clockinBtn">
     <img @click="totheway()" class="onthewayBtn" :src="onthewayBtn">
+    <audio  id="btnMusic">
+      <source :src="btnMusic" type="audio/ogg" >
+    </audio>
   </div>
 </template>
 <script>
@@ -12,6 +15,7 @@
   import logo from '../assets/images/logowhite.png'
   import onthewayBtn from '../assets/images/ontheway.png'
   import clockinBtn from '../assets/images/btnclockin.png'
+  import btnMusic from '../assets/vedio/btnMusic.mp3'
   //import wx from '../assets/js/service'
 export default {
   data () {
@@ -19,23 +23,34 @@ export default {
       indexbg:indexbg,
       logo:logo,
       clockinBtn:clockinBtn,
-      onthewayBtn:onthewayBtn
+      onthewayBtn:onthewayBtn,
+      btnMusic:btnMusic
     }
   },
   methods:{
     totheway:function(){
-      this.$router.push({name:'ontheway'})
+      let me=this
+      let  myVideo=document.getElementById("btnMusic");
+      myVideo.play();
+      setTimeout(function () {
+        me.$router.push({name:'ontheway'})
+      },300)
     },
     toclock:function(){
-      this.$router.push({name:'pictureClock'})
+      let me=this
+      let  myVideo=document.getElementById("btnMusic");
+        myVideo.play();
+        setTimeout(function () {
+          me.$router.push({name:'pictureClock'})
+        },300)
     }
   },
   created:function () {
     //wx.sdkConfig()
-  //   let me=this
-  //   this.$axios.get('/api/test/login',{})
-  //    .then((res)=>{ me.$toast(res.data.msg)})
-  //    .catch((err)=>{console.log(err)})
+    let me=this
+    // this.$axios.get('/api/test/login',{})
+    //  .then((res)=>{ me.$toast(res.data.msg)})
+    //  .catch((err)=>{console.log(err)})
    }
 }
 </script>
@@ -43,10 +58,9 @@ export default {
   .hello{
     width: 100%;
     height: 100%;
-    overflow: hidden;
     .bgimg{
       width: 100%;
-      height: 100%;
+      height: auto;
     }
     .onthewayBtn{
       z-index:2;

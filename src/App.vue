@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <div class="musicIcon"></div>
-    <!--<img class="musicIcon" :src="musicIcon" alt="">-->
-    <audio  autoplay loop id="mp3">
+    <!--<div class="musicIcon" @click="togglePlay()"></div>-->
+    <img class="musicIcon" :src="musicIcon" alt=""  @click="togglePlay()">
+    <audio  autoplay loop id="mp3" >
       <source :src="topicMusic" type="audio/ogg" >
     </audio>
     <router-view/>
@@ -11,24 +11,33 @@
 
 <script>
   import topicMusic from './assets/vedio/clockTopic.mp3'
+  import musicplay from './assets/images/musicPlay.png'
+  import musicPase from './assets/images/musicPase.png'
 export default {
   name: 'App',
   data(){
     return{
       topicMusic:topicMusic,
-     // musicIcon:musicIcon,
+      musicPase:musicPase,
+      musicplay:musicplay,
+      musicIcon:musicPase,
+    }
+  },
+  methods:{
+    togglePlay(){
+      let me=this
+      let  myVideo=document.getElementById("mp3");
+      if (myVideo.paused){
+        myVideo.play();
+        me.musicIcon=me.musicPase
+      } else{
+        myVideo.pause();
+        me.musicIcon=me.musicplay
+      }
     }
   },
   created:function () {
-    let  myVideo=document.getElementById("mp3");
-    function playPause()
-    {
-      if (myVideo.paused){
-        myVideo.play();
-      } else{
-        myVideo.pause();
-      }
-    }
+   this.togglePlay()
 
   }
 }
@@ -43,7 +52,7 @@ export default {
     width: 25px;
     height: 25px;
     border-radius: 25px;
-    position: absolute;
+    position: fixed;
     top:70px;
     right: 10px;
     z-index: 100;

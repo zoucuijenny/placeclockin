@@ -90,7 +90,9 @@
           </div>
         </div>
       </div>
-
+      <audio  id="btnMusic1">
+        <source :src="btnMusic" type="audio/ogg" >
+      </audio>
     </div>
 </template>
 
@@ -117,6 +119,7 @@
   import postCancelBtn from  '../assets/images/postCancelBtn.png'
   import postBtn from  '../assets/images/postBtn.png'
   import postOutSuccessMusic from '../assets/vedio/postOut.mp3'
+  import btnMusic from '../assets/vedio/btnMusic.mp3'
 
   import service from '../assets/js/service'
   import { createNamespacedHelpers } from 'vuex'
@@ -205,7 +208,8 @@
               curDragImgItem:null,
             },
             cards:null,
-            cardCount:0
+            cardCount:0,
+            btnMusic:btnMusic
           }
         },
       computed:{
@@ -223,6 +227,10 @@
         closeBigImgBox:function(){
           let me=this
           me.bigImgShow=false
+
+          let  myVideo=document.getElementById("btnMusic1");
+          myVideo.play();
+
         },
         back:function(){
          this.$router.back(-1)
@@ -310,7 +318,12 @@
         },
         toReward:function(){
           this.completePost=false
-          this.$router.push({name:'reward'})
+          let me = this
+          let  myVideo=document.getElementById("btnMusic1");
+          myVideo.play();
+          setTimeout(function () {
+            me.$router.push({name:'reward'})
+          },300)
         },
         getCardInfo:function () {
           let me=this

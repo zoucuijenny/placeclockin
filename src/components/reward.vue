@@ -6,8 +6,11 @@
       <img  class="rewardPlaceCard" :src="rewardPlaceCard" v-show="showRewardPlace">
       <div class="crashCard" v-show="showRewardCrash"><span class="bigT" @click="openMoneyUrl()">{{money}}</span>元</div>
       <img  class="rewardText" :class="'rewardText'+rewardClass" :src="rewardText">
-      <img  class="btnShare" :src="btnShare" >
+      <img  class="btnShare" :src="btnShare" @click="btnShared()" >
       <!--<div class="text">旅行路上 总有风景在等你</div>-->
+      <audio  id="btnMusic2">
+        <source :src="btnMusic" type="audio/ogg" >
+      </audio>
     </div>
 </template>
 
@@ -31,6 +34,7 @@
   import rewardText8 from '../assets/images/rewardText/text8.png'
 
   import btnShare from '../assets/images/btnShare.png'
+  import btnMusic from '../assets/vedio/btnMusic.mp3'
 
   import { createNamespacedHelpers } from 'vuex'
   const { mapState } = createNamespacedHelpers('data/')
@@ -53,7 +57,8 @@
          rewardPlaceCard:rewardPlaceCard,
          rewardClass:8,
          money:null,
-         moneyUrl:'0'
+         moneyUrl:'0',
+         btnMusic:btnMusic
        }
      },
       computed:{
@@ -68,6 +73,10 @@
        },
         openMoneyUrl:function(){
          window.location.href=this.moneyUrl
+        },
+        btnShared:function() {
+          let  myVideo=document.getElementById("btnMusic2");
+          myVideo.play();
         }
       },
       created:function(){
@@ -124,7 +133,8 @@
     .rewardText{
       position:absolute;
       z-index: 2;
-      top:352.5px;
+      /*top:352.5px;*/
+      top:53%;
       left:68px;
     }
     .rewardTextp1{

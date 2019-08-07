@@ -44,6 +44,7 @@
             clockSuccess:clockSuccess,
             succcess:succcess,//打卡成功图片
             showClockSucessBg:false,//显示打卡成功蒙层
+            timeDown:null,
             countDownStyle:{
               background:'url('+ countDownBg+')',
               backgroundRepeat:'no-repeat',
@@ -55,6 +56,7 @@
       methods:{
         back:function(){
           this.$router.back(-1)
+          this.countDowm=0
         },
         clock:function () {
           let me=this
@@ -78,26 +80,39 @@
             .catch((err)=>{
               console.log(err)
             })
+        },
+        countDown:function () {
+          let me=this
+          me.timeDown=setInterval(function(){
+            me.countDowm=me.countDowm-1
+            if( me.countDowm===0){
+              clearInterval(me.timeDown)
+              me.clock()
+            }
+          },1000)
         }
+      },
+      destoryed:function(){
+          let me=this
+        clearInterval(me.timeDown)
+      },
+      deactivated:function(){
+        this.$destroy('placeDetail')
       },
       created:function(){
         let me=this
         me.placeId=me.$route.params.placeId
         me.placedetailbg=me.bgs[me.placeId]
-
-          let timeDown=setInterval(function(){
-            me.countDowm=me.countDowm-1
-            if( me.countDowm===0){
-              clearInterval(timeDown)
-              me.clock()
-            }
-          },1000)
+        me.countDown()
       }
     }
 </script>
 
 <style lang="scss">
   .placeDetail{
+    height: 100%;
+    width: 100%;
+    position: relative;
     .test{
       position: absolute;
       z-index:5;
@@ -119,13 +134,13 @@
     .placedetailbg{
       width: 100%;
       height: auto;
-      position: absolute;
-      z-index: 1;
-      top:0;
-      left:0
+      /*position: absolute;*/
+      /*z-index: 1;*/
+      /*top:0;*/
+      /*left:0*/
     }
     .countDown{
-     position: absolute;
+     position: fixed;
       background-color: rgba(0,0,0,0.7);
       z-index:2;
       top:91px;
@@ -149,7 +164,7 @@
       background: rgba(0,0,0,0.5);
       width: 100%;
       height: 100%;
-      position: absolute;
+      position: fixed;
       top:0;
       left: 0;
       z-index:10;
