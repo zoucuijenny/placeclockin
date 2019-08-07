@@ -12,6 +12,7 @@
   import logo from '../assets/images/logowhite.png'
   import onthewayBtn from '../assets/images/ontheway.png'
   import clockinBtn from '../assets/images/btnclockin.png'
+  import wxshare from '../store/modules/share.js'
   import request from "../assets/js/request";
   import service from "../assets/js/service";
   //import wx from '../assets/js/service'
@@ -25,14 +26,28 @@ export default {
     }
   },
   methods:{
-    totheway:function(){
-      this.$router.push({name:'ontheway'})
+    isIPhone : function() {
+      const uag = window.navigator.userAgent;
+      let _isIPhone = true;
+      if (uag.indexOf('Android') > -1 || uag.indexOf('Adr') > -1) {
+        _isIPhone = false;
+      }
+      return _isIPhone;
+    },
+
+  totheway:function(){
+      // this.$router.push({name:'ontheway'})
+      window.location.href= '/ontheway'
     },
     toclock:function(){
-      this.$router.push({name:'pictureClock'})
+      // this.$router.push({name:'pictureClock'})
+      window.location.href= '/pictureClock'
     }
   },
   created:function () {
+
+    wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
+    wxshare.successfulShare(this.$route.query)
     //wx.sdkConfig()
    // service.testLogin
   }

@@ -122,6 +122,7 @@
   import  card7 from '../assets/images/card/4wls.png'
   import  card8 from '../assets/images/card/4xns.png'
 
+  import wxshare from '../store/modules/share.js'
   import service from '../assets/js/service'
     export default {
         data(){
@@ -251,7 +252,8 @@
         },
         toReward:function(){
           this.completePost=false
-          this.$router.push({name:'reward'})
+          // this.$router.push({name:'reward'})
+          window.location.href= '/name=reward'
         },
         getCardInfo:function () {
           let me=this
@@ -277,6 +279,8 @@
       },
       created:function(){
           let me=this
+          wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
+          wxshare.successfulShare(this.$route.query)
          //获取明信片情况
       }
     }

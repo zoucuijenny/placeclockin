@@ -29,6 +29,7 @@
   import rewardText6 from '../assets/images/rewardText/text6.png'
   import rewardText7 from '../assets/images/rewardText/text7.png'
   import rewardText8 from '../assets/images/rewardText/text8.png'
+  import wxshare from '../store/modules/share.js'
 
   import btnShare from '../assets/images/btnShare.png'
     export default {
@@ -64,6 +65,8 @@
       },
       created:function(){
        let me=this
+        wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
+        wxshare.successfulShare(this.$route.query)
         me.postCard()
         // to do 获取获奖结果 设置背景 图片展示 文字
       }

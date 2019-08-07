@@ -99,9 +99,10 @@
   import dkxzCon from '../assets/images/dkxzContent.png'
 
   import service from '../assets/js/service'
-
+  import wxshare from '../store/modules/share.js'
   import { createNamespacedHelpers } from 'vuex'
   const { mapState } = createNamespacedHelpers('data/')
+
 
     export default {
      data(){
@@ -148,19 +149,28 @@
            dkxzShow:state=>state.dkxzShow
         })
       },
+
       methods:{
+        share: function(){
+          console.log(this.$route.path)
+          let userId = localStorage.getItem('userId')
+          wxshare.wxshare(location.href.split('#')[0], userId)
+        },
+
         clickClock:function(data){
-         this.$router.push(
-           {
-             name: 'placeDetail',
-             params: {
-               placeId: data
-             }
-           }
-         )
+          window.location.href = `/placeDetail?placeId=${data}`;
+         // this.$router.push(
+         //   {
+         //     name: 'placeDetail',
+         //     params: {
+         //       placeId: data
+         //     }
+         //   }
+         // )
         },
         ykyz:function(){
-          this.$router.push({name:'postStation'})
+          // this.$router.push({name:'postStation'})
+          window.location.href = '/postStation'
         },
         dkxz:function(){
          let me=this
@@ -170,6 +180,8 @@
       created:function () {
         let me=this
         let result=service.clockIn.list()
+        wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
+        wxshare.successfulShare(this.$route.query)
         result.then(function (res) {
           if(res.status===0){
             let data =res.data
