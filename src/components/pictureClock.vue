@@ -179,19 +179,19 @@
         },
 
         clickClock:function(data){
-          window.location.href = `/placeDetail?placeId=${data}`;
-         // this.$router.push(
-         //   {
-         //     name: 'placeDetail',
-         //     params: {
-         //       placeId: data
-         //     }
-         //   }
-         // )
+      //  window.location.href = `/placeDetail?placeId=${data}`;
+         this.$router.push(
+           {
+             name: 'placeDetail',
+             params: {
+               placeId: data
+             }
+           }
+         )
         },
         ykyz:function(){
-          // this.$router.push({name:'postStation'})
-          window.location.href = '/postStation'
+          this.$router.push({name:'postStation'})
+         //window.location.href = '/postStation'
         },
         dkxz:function(){
          let me=this
@@ -220,8 +220,8 @@
         me.getCardCount()
         me.$axios.get('/api/placeInfo',{})
         .then(function (res) {
-          if(res.status===0){
-            let data =res.data
+          if(res.data.status===0){
+            let data =res.data.data
             let j=0
             for(let i in data){
               j++

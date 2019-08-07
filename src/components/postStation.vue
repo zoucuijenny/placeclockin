@@ -324,7 +324,8 @@
           let  myVideo=document.getElementById("btnMusic1");
           myVideo.play();
           setTimeout(function () {
-            window.location.href= '/name=reward'
+           // window.location.href= '/name=reward'
+             me.$router.push({name:'reward'})
           },300)
         },
         getCardInfo:function () {

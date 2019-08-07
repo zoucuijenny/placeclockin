@@ -44,8 +44,6 @@
   import { createNamespacedHelpers } from 'vuex'
   const { mapState } = createNamespacedHelpers('data/')
 
-  import startContent from '../assets/images/startContent.png'
-  import detailOnTap from '../assets/images/detailOnTap.png'
   import wxshare from '../store/modules/share.js'
     export default {
        data(){
@@ -114,8 +112,8 @@
           window.history.back()
         },
         toNext:function (index) {
-          window.location.href=`/album?place=${index}`
-         // this.$router.push({name: 'album',params:{place:index}})
+         // window.location.href=`/album?place=${index}`
+          this.$router.push({name: 'album',params:{place:index}})
         },
         getBanners:function () {
           let me=this

@@ -53,20 +53,20 @@ export default {
       let  myVideo=document.getElementById("btnMusic");
         myVideo.play();
         setTimeout(function () {
-         // me.$router.push({name:'pictureClock'})
-          window.location.href= '/pictureClock'
+          me.$router.push({name:'pictureClock'})
+         // window.location.href= '/pictureClock'
         },300)
     }
   },
   created:function () {
     wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
     wxshare.successfulShare(this.$route.query)
-    //wx.sdkConfig()
-    //let me=this
-   //  this.$axios.get('/api/test/login',{})
-   //   .then((res)=>{ me.$toast(res.data.msg)})
-   //   .catch((err)=>{console.log(err)})
-   }
+    wx.sdkConfig()
+    let me=this
+    // this.$axios.get('/api/test/login',{})
+    //  .then((res)=>{ me.$toast(res.data.msg)})
+    //  .catch((err)=>{console.log(err)})
+}
 }
 </script>
 <style lang="scss">

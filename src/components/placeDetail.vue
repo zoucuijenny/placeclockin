@@ -40,7 +40,7 @@
           btnBack: btnBack,
           bgs: [xnsBg, smsBg, dbsBg, hsgBg, jfsBg, wlsBg, hsBg],
           placedetailbg: xnsBg,
-          countDowm: 4,
+          countDowm: 10,
           placeId: 0,
           clockSuccess: clockSuccess,
           succcess: succcess,//打卡成功图片
@@ -63,7 +63,7 @@
         clock: function () {
           let me = this
           let arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-          me.$axios.post('/api/punch', {place: arr[me.$route.query.placeId], status: '1'})
+          me.$axios.post('/api/punch', {place: arr[me.$route.params.placeId], status: '1'})
             .then(function (res) {
               // console.log('请求返回结果',res)
               if (res.data.status === 0) {
@@ -103,7 +103,8 @@
       },
       created:function(){
         let me=this
-        me.placeId=me.$route.query.placeId
+        me.countDowm=10
+        me.placeId=me.$route.params.placeId
         me.placedetailbg=me.bgs[me.placeId]
         me.$axios.get('/api/placeInfo',{})
           .then((res)=>{

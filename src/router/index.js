@@ -71,7 +71,6 @@ router.beforeEach((to,from,next)=>{
     next('/author')
     return false
   }
-
   next()
 })
 export default router
