@@ -1,6 +1,6 @@
 <template>
     <div class="placeDetail">
-      <img class="logo" :src="logo">
+      <!--<img class="logo" :src="logo">-->
       <img class="backBtn" :src="btnBack" @click="back()">
 
       <div class="countDown" :style="countDownStyle">
@@ -51,11 +51,6 @@
               backgroundSize:'100% 100%'
             }
           }
-      },
-      computed:{
-        ...mapState({
-          prefix:state=>state.prefix
-        })
       },
       methods:{
         back:function(){

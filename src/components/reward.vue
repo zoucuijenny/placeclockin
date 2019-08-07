@@ -5,7 +5,7 @@
       <img  class="rewardHotelcard" :src="rewardHotelcard" v-show="showRewardbgHotel">
       <img  class="rewardPlaceCard" :src="rewardPlaceCard" v-show="showRewardPlace">
       <div class="crashCard" v-show="showRewardCrash"><span class="bigT" @click="openMoneyUrl()">{{money}}</span>元</div>
-      <img  class="rewardText8 rewardText" :src="rewardText">
+      <img  class="rewardText" :class="'rewardText'+rewardClass" :src="rewardText">
       <img  class="btnShare" :src="btnShare" >
       <!--<div class="text">旅行路上 总有风景在等你</div>-->
     </div>
@@ -48,9 +48,10 @@
          btnShare:btnShare,
          showRewardbgHotel:false,
          showRewardPlace:false,
-         showRewardCrash:true,
+         showRewardCrash:false,
          rewardHotelcard:rewardHotelcard,
          rewardPlaceCard:rewardPlaceCard,
+         rewardClass:8,
          money:null,
          moneyUrl:'0'
        }
@@ -84,15 +85,18 @@
             break
           case 2:
             me.rewardbg=me.rewardbgPlace
+            me.rewardPlaceCard=me.imgBaseUrl+me.backReward.url
             me.showRewardPlace=true
             break
           case 3:
             me.rewardbg=me.rewardbgHotel
+            me.rewardHotelcard=me.imgBaseUrl+me.backReward.url
             me.showRewardbgHotel=true
             break
           default: me.rewardbg=me.rewardbgNo
         }
-        me.rewardText=me.imgBaseUrl+me.backReward.url
+        me.rewardText=me.imgBaseUrl+me.backReward.texturl
+        me.rewardClass= me.backReward.serial
       }
     }
 </script>
@@ -123,35 +127,35 @@
       top:352.5px;
       left:68px;
     }
-    .rewardText1{
+    .rewardTextp1{
       width: 155.5px;
       height: 91.5px;
     }
-    .rewardText2{
+    .rewardTextp2{
       width: 133px;
       height: 91px;
     }
-    .rewardText3{
+    .rewardTextp3{
       width: 68px;
       height: 91.5px;
     }
-    .rewardText4{
+    .rewardTextp4{
       width: 79.5px;
       height: 38.5px;
     }
-    .rewardText5{
+    .rewardTextp5{
       width: 144.5px;
       height: 65px;
     }
-    .rewardText6{
+    .rewardTextp6{
       width: 144.5px;
       height: 38.5px;
     }
-    .rewardText7{
+    .rewardTextp7{
       width: 165.5px;
       height: 38.5px;
     }
-    .rewardText8{
+    .rewardTextp8{
       width: 187.5px;
       height: 65px;
     }

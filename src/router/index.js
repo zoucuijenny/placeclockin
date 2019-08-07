@@ -50,20 +50,20 @@ const router=new Router({
       component:()=>import('@/components/reward')
     },
     {
-      path:'/album',
+      path:'/album/ :place',
       name:'album',
       component:()=>import('@/components/album')
     }
   ]
 })
-// router.beforeEach((to,from,next)=>{
-//   //第一次进入项目
-//   if(!localStorage.getItem('userId') && to.path !=='/author'){
-//     //保存用户进入的url
-//     localStorage.setItem('beforeLoginUrl',to.fullPath)
-//     next('/author')
-//     return false
-//   }
-//   next()
-// })
+router.beforeEach((to,from,next)=>{
+  //第一次进入项目
+  if(!localStorage.getItem('userId') && to.path !=='/author'){
+    //保存用户进入的url
+    localStorage.setItem('beforeLoginUrl',to.fullPath)
+    next('/author')
+    return false
+  }
+  next()
+})
 export default router

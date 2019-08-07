@@ -17,17 +17,16 @@
         </div>
       </div>
       <div class="textMailboxWrap">
-        <div class="text">您可寄出的明信片 <span class="blueNumber">{{cardCount}}</span> 张，选择一张拖到信箱寄出吧！</div>
+        <div class="text">您可寄出的明信片 <span class="blueNumber">{{cardCount}}</span> 张，选择一张点击查看并寄出吧！</div>
         <!--<img  class="storage" :src="storage" >-->
         <div class="storage" :style="storageStyle">
           <div class="cards" >
             <div class="cardiv" v-for="(item,index) in cards"  :item="item" :key="index">
-              <div class="postout" @click="postCardOut(item.pid)">寄出</div>
               <img
                 :src="item.url"
                 draggable="true"
                 v-on:dragstart="faceImgdrag(item.url)"
-                @click="showBigPic(item.url)"
+                @click="showBigPic(item.url,item.pid)"
               >
             </div>
           </div>
@@ -38,6 +37,8 @@
           <div class="bigImgBox">
             <img class="bigImg" :src="bigImgUrl" >
             <img class='closeBtn' :src="closeBtn" @click="closeBigImgBox">
+            <img  class="postBtn" :src="postBtn" @click="postCardOut(postOutPId)">
+            <img  class="postCancelBtn" :src="postCancelBtn"  @click="closeBigImgBox">
           </div>
       </div>
       <!--完成邮寄弹窗-->
@@ -54,36 +55,36 @@
           <img  class="resultTitle" :src="resultTitle" alt="">
           <div class="resultBox">
             <div  class="rewardContainer">
-              <img  class='noGetReward' :src="noGetReward" alt="" v-show="showNoReward">
-              <div class="resultHotel" v-show="rewardResultHotel.length>0">
+              <img  class='noGetReward' :src="noGetReward"  v-if="showNoReward">
+              <div class="resultHotel" v-if="rewardResultHotel.length>0">
                 <img class="rewardResutTitle" :src="hotelTitle" >
                 <div class="hotelCardwrap"   v-for="(item, index) in rewardResultHotel" :item="item" :key="index">
                   <img class="hotelCard" :src="hotelcard">
                   <div class="changeInfo">
                     <div class="code">兑奖码：{{ item.code}}</div>
-                    <div class="valueDate">有效期：{{item.valueDate}}</div>
+                    <!--<div class="valueDate">有效期：{{item.valueDate}}</div>-->
                   </div>
                 </div>
-                <div class="hotelText">中奖者请凭兑奖码在有效期前，提前三天致电023-63718080预约兑换奖品，过期视为自动放弃奖品。</div>
+                <div class="hotelText">中奖者请凭兑奖码在有效期前，提前三天致电023-63718080/13101342268预约兑换奖品，过期视为自动放弃奖品。</div>
               </div>
-              <div class="resultCrash" v-show="rewardResultCrash.count>0">
+              <div class="resultCrash" v-if="rewardResultCrash.length>0">
                 <img class="rewardResutTitle" :src="crashTitle" >
                 <div class="crashCardwrap">
                   <img class="crashCard" :src="crashcard">
-                  <div class="textInfo">{{rewardResultCrash.count }}</div>
+                  <div class="textInfo">{{rewardResultCrash[0].count }}</div>
                 </div>
                 <div class="crashText">请注意查看服务通知消息并领取红包。</div>
               </div>
-              <div class="resultPlace" v-show="rewardResultInterst.length>0">
+              <div class="resultPlace" v-if="rewardResultInterst.length>0">
                 <img class="rewardResutTitle" :src="interestTitle" >
                 <div class="interestCardwrap"   v-for="(item, index) in rewardResultInterst" :item="item" :key="index">
                   <img  class="placecard" :src="placecard" >
                   <div class="changeInfo">
                     <div class="code">兑奖码：{{ item.code}}</div>
-                    <div class="valueDate">有效期：{{item.valueDate}}</div>
+                    <!--<div class="valueDate">有效期：{{item.valueDate}}</div>-->
                   </div>
                 </div>
-                <div class="interestText">中奖者请凭兑奖码在有效期前，提前三天致电023-63718080预约兑换奖品，过期视为自动放弃奖品。</div>
+                <div class="interestText">中奖者请凭兑奖码在有效期前，提前三天致电023-63718080/13101342268预约兑换奖品，过期视为自动放弃奖品。</div>
               </div>
             </div>
           </div>
@@ -113,6 +114,8 @@
 
   import backLetter from '../assets/images/backLetter.png'
   import btnckLetter from '../assets/images/btnckLetter.png'
+  import postCancelBtn from  '../assets/images/postCancelBtn.png'
+  import postBtn from  '../assets/images/postBtn.png'
 
   import service from '../assets/js/service'
   import { createNamespacedHelpers } from 'vuex'
@@ -148,6 +151,9 @@
             completePost:false,
             currentDraggleImg:null,
             isDraged: false,
+            postBtn:postBtn,
+            postOutPId:null,
+            postCancelBtn:postCancelBtn,
             rewardResultHotel:[
               {
                 name:'xns',
@@ -162,9 +168,13 @@
                 valueDate:'20190815',
               },
             ],
-            rewardResultCrash:{
-              count:8,
-           },
+            rewardResultCrash:[
+              {
+                count:0,
+                money:0,
+                url:''
+              }
+            ],
             rewardResultInterst:[
               {
                 name:'四面山酒店',
@@ -202,10 +212,11 @@
         })
       },
       methods:{
-        showBigPic:function(item){
+        showBigPic:function(item,pid){
           let me=this
           me.bigImgShow=true
           me.bigImgUrl=item
+          me.postOutPId=pid
         },
         closeBigImgBox:function(){
           let me=this
@@ -223,35 +234,41 @@
           me.showRewardResult=true
           me.$axios.get('api/prizeInfo')
             .then((res)=>{
+              console.log('查询中奖结果：'+JSON.stringify(res))
               if(res.data.status===0){
-                 for(let item of res.data.data){
-                   let temp={}
-                  switch(item.type){
-                    case 1:
-                      temp.count=item.num
-                      temp.money=item.money
-                      temp.url=item.url
-                      me.rewardResultCrash.push(temp)
-                          break
-                    case 2:
-                      temp.code=item.orderId
-                      temp.url=me.imgBaseUrl+item.url
-                      temp.name=item.name
-                      me.rewardResultInterst.push(temp)
-                          break
-                    case 3:
-                      temp.code=item.orderId
-                      temp.url=me.imgBaseUrl+item.url
-                      temp.name=item.name
-                      me.rewardResultHotel.push(temp)
-                          break
-                    default :
-                      temp.count=0
-                      temp.money=0
-                      me.rewardResultCrash.url=''
-                          break
+                if(res.data.data.length===0){
+                  me.showNoReward=true
+                }else{
+                  for(let item of res.data.data){
+                    let temp={}
+                    switch(item.type){
+                      case 1:
+                        temp.count=item.num
+                        temp.money=item.money
+                        temp.url=item.url
+                        me.rewardResultCrash.push(temp)
+                        break
+                      case 2:
+                        temp.code=item.orderId
+                        temp.url=me.imgBaseUrl+item.url
+                        temp.name=item.name
+                        me.rewardResultInterst.push(temp)
+                        break
+                      case 3:
+                        temp.code=item.orderId
+                        temp.url=me.imgBaseUrl+item.url
+                        temp.name=item.name
+                        me.rewardResultHotel.push(temp)
+                        break
+                      default :
+                        temp.count=0
+                        temp.money=0
+                        me.rewardResultCrash.url=''
+                        break
+                    }
                   }
-                 }
+                }
+
               }
             })
         },
@@ -330,16 +347,19 @@
               if(res.data.status===0){
                 //请求寄信接口成功后操作
                 me.getCardInfo()
+                me.bigImgShow=false
                 me.completePost=true
                 let rewardInfo={}
                 rewardInfo.type=res.data.data.type
                 rewardInfo.url=res.data.data.url
                 rewardInfo.orderId=res.data.data.orderId
+                rewardInfo.serial=res.data.data.serial
+                rewardInfo.texturl=res.data.data.texturl
                 if(res.data.data.type===1){
                   rewardInfo.money=res.data.data.money
                   rewardInfo.moneyUrl=res.data.data.openUrl
                 }
-              //  console.log('存：'+JSON.stringify(rewardInfo))
+               console.log('存：'+JSON.stringify(rewardInfo))
                me.$store.commit(me.moudelNamespace +'setReward',{data:rewardInfo})
               }else{
                 me.$toast(res.data.msg)
@@ -412,7 +432,7 @@
       .postOutArea{
         width: 93px;
         height: 100px;
-        border:2px dashed red;
+      //  border:2px dashed red;
       }
     }
 
@@ -458,14 +478,6 @@
           margin-top:20px;
           margin-bottom: 5px;
           position: relative;
-          .postout{
-            color:#07c160;
-            width:20px;
-            height: 10px;
-            position: absolute;
-            right:0;
-            bottom: 0;
-          }
         }
         img{
           width:90px ;
@@ -474,7 +486,7 @@
       }
     }
     .showBigImgBox{
-      z-index:5;
+      z-index:10;
       position:absolute;
       top:0;
       left:0;
@@ -485,10 +497,14 @@
       justify-content: center;
       .bigImgBox{
         width: 295px;
-        height:210px;
+        height:386px;
         padding-top:40px;
         margin-top:112.5px;
         position:relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         .closeBtn{
           width: 22.5px;
           height: 40.5px;
@@ -499,6 +515,16 @@
         .bigImg{
           width: 295px;
           height:210px;
+        }
+        .postBtn{
+          margin-top:40px;
+          width: 135.5px;
+          height: 48px;
+        }
+        .postCancelBtn{
+          margin-top:40px;
+          width: 135.5px;
+          height: 48px;
         }
       }
     }

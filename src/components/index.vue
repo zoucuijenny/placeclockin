@@ -34,13 +34,12 @@ export default {
   },
   created:function () {
     //wx.sdkConfig()
-     service.testLogin
+     //service.testLogin
   }
 }
 </script>
 <style lang="scss">
   .hello{
-    background-color: #abcdef;
     width: 100%;
     height: 100%;
     overflow: hidden;
