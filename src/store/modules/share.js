@@ -57,16 +57,16 @@ export default {
       // wx.error(function(res){
       //   alert(res.data)
       // });
-      document.getElementById("mp3").play()
-      window.onload =function(){
-        WeixinJSBridge.invoke('getNetworkType',{},function(e){
-          document.getElementById("mp3").play()
-        })
-        console.log('触发 ios')
-      }
-      document.addEventListener("WeixinJSBridgeReady", function() {
-        document.getElementById('mp3').play();
-      },false);
+      // document.getElementById("mp3").play()
+      // window.onload =function(){
+      //   WeixinJSBridge.invoke('getNetworkType',{},function(e){
+      //     document.getElementById("mp3").play()
+      //   })
+      //   console.log('触发 ios')
+      // }
+      // document.addEventListener("WeixinJSBridgeReady", function() {
+      //   document.getElementById('mp3').play();
+      // },false);
     });
     })
   },
