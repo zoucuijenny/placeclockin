@@ -34,11 +34,11 @@ request.interceptors.request.use(config => {
 )
 request.interceptors.response.use(response=>{
   if(response.data.status===403){
-    //let beforeUrl='http://www.baltictravellerservice.com'
-    let beforeUrl='www.zss001.cn/'
+    let beforeUrl='http://www.baltictravellerservice.com'
+   // let beforeUrl='http://www.zss001.cn'
     beforeUrl=encodeURIComponent(beforeUrl)
     let toWx=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=${beforeUrl}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirec`;
-    //window.location.href=toWx
+    window.location.href=toWx
   }
   return response;
 },function (error) {

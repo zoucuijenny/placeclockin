@@ -65,25 +65,25 @@ export default {
     wxshare.successfulShare(this.$route.query)
   //  wx.sdkConfig()
 
-    // let str = window.location.href
-    // if(str.indexOf('\?') !== -1){
-    //    str=window.location.search
-    //   let arr = str.split('\&')
-    //   let codeIndex = arr[0].indexOf("\=");
-    //   let code = str.substring(codeIndex + 1, arr[0].length);
-    //   me.$axios.post('/api/wx/login', { code: code })
-    //     .then((res) => {
-    //       console.log('登录返回结果：' + JSON.stringify(res))
-    //       if (res.data.status === 0) {
-    //         localStorage.setItem('userId', res.data.data.openid)
-    //       } else {
-    //         me.$toast.fail(res.data.msg);
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log(err)
-    //     })
-    // }
+    let str = window.location.href
+    if(str.indexOf('\?') !== -1){
+       str=window.location.search
+      let arr = str.split('\&')
+      let codeIndex = arr[0].indexOf("\=");
+      let code = str.substring(codeIndex + 1, arr[0].length);
+      me.$axios.post('/api/wx/login', { code: code })
+        .then((res) => {
+          console.log('登录返回结果：' + JSON.stringify(res))
+          if (res.data.status === 0) {
+            localStorage.setItem('userId', res.data.data.openid)
+          } else {
+            me.$toast.fail(res.data.msg);
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
     //测试登录
     // localStorage.setItem('userId','')
     // this.$axios.get('/api/test/login',{})
