@@ -57,15 +57,15 @@ export default {
       // wx.error(function(res){
       //   alert(res.data)
       // });
-      document.getElementById("advanceMp3").play()
+      document.getElementById("mp3").play()
       window.onload =function(){
         WeixinJSBridge.invoke('getNetworkType',{},function(e){
-          document.getElementById("advanceMp3").play()
+          document.getElementById("mp3").play()
         })
         console.log('触发 ios')
       }
       document.addEventListener("WeixinJSBridgeReady", function() {
-        document.getElementById('advanceMp3').play();
+        document.getElementById('mp3').play();
       },false);
     });
     })

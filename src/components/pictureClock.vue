@@ -399,8 +399,9 @@
       left:0;
       display: flex;
       justify-content: center;
+      align-items: center;
       .dkxzInnerWrap{
-        margin-top: 69.5px;
+        /*margin-top: 69.5px;*/
         padding-top: 18px;
         position: relative;
         .dkxzTitle {

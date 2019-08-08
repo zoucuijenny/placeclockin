@@ -137,7 +137,7 @@ export default {
   }
   .logo{
     position: absolute;;
-    z-index:999;
+    z-index:2;
     width: 161px;
     height: 25px;
     left:20px;
