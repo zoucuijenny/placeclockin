@@ -193,7 +193,7 @@
       z-index:2;
       width: 35px;
       height: 43.5px;
-      position:absolute;
+      position:fixed;
       right:24px;
       top:13px;
     }

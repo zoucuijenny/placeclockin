@@ -4,6 +4,8 @@ import axios from 'axios'
 import Vue from 'vue'
  import promise from 'promise'
 
+const appId = 'wx2b0cfb496537a3dc'//后台提供
+
 const prefix = process.env.NODB_BNV === 'development'
   ? 'http://122.112.221.15:9900'
   :'http://122.112.221.15:9900'
@@ -32,9 +34,11 @@ request.interceptors.request.use(config => {
 )
 request.interceptors.response.use(response=>{
   if(response.data.status===403){
-    this.$router.push({name:'author'})
-   // alert(window.location.href)
-   //  window.location.href='http://www.baidu.com'
+    //let beforeUrl='http://www.baltictravellerservice.com'
+    let beforeUrl='www.zss001.cn/'
+    beforeUrl=encodeURIComponent(beforeUrl)
+    let toWx=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=${beforeUrl}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirec`;
+    //window.location.href=toWx
   }
   return response;
 },function (error) {

@@ -379,18 +379,18 @@
       z-index:2;
       width: 36.5px;
       height: 43.5px;
-      position:absolute;
+      position:fixed;
       right:70px;
       top:20px;
     }
     .btnBack{
-      z-index:2;
-      width: 35px;
-      height: 43.5px;
-      position:absolute;
-      right:24px;
-      top:20px;
-    }
+           z-index:2;
+           width: 35px;
+           height: 43.5px;
+           position:fixed;
+           right:24px;
+           top:20px;
+         }
     .bgImg{
       position: relative;
       width: 375px;

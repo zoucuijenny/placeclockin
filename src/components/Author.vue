@@ -19,7 +19,7 @@
             console.log('登录返回结果：' + JSON.stringify(res))
             if (res.data.status === 0) {
               localStorage.setItem('userId', res.data.data.openid)
-              let backurl = 'http://www.baltictravellerservice.com/#/'
+              let backurl = 'www.zss001.cn/'
               //window.location.href=localStorage.getItem('beforeLoginUrl')
               window.location.href = backurl
             } else {
@@ -47,7 +47,7 @@
         return
       }
       if (!code) {
-        let url = window.location.href
+         let url = window.location.href
         url = encodeURIComponent(url);
         const appId = 'wx2b0cfb496537a3dc'//后台提供
         me.webUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirec`;

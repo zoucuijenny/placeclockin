@@ -1,6 +1,6 @@
 <template>
     <div class="pcClockWrap">
-        <!--<img class="shctimg" :src="shct">-->
+      <img class="backBtn" :src="btnBack" @click="back()">
       <div class="shctimg">
         <img class="bgimg1 gifbg" :src="bgimg1" >
         <img class="bgimg2 gifbg" :src="bgimg2" >
@@ -66,8 +66,8 @@
         </div>
       </div>
       <div class="wls">
+        <div class="beforeClock" v-show="!clockStatus[5]" @click="clickClock(5)">
           <img class="locationIcon" :src="locationIcon">
-          <div class="beforeClock" v-show="!clockStatus[5]" @click="clickClock(5)">
           <img class="clickClockText"  :src="clickClockText" >
         </div>
         <div class="afterClock" v-show="clockStatus[5]" @click="clickClock(5)">
@@ -90,8 +90,10 @@
         <div class="dkxzInnerWrap">
           <img class="closeBtn" :src="closeBtn" @click="dkxz()">
           <img :src="dkxzTitle" class="dkxzTitle" >
-          <div class="conentBox">
-            <img class="dkxzCon" :src="dkxzCon">
+          <div class="contentBox">
+            <div class="textwrap">
+              <img class="dkxzImg" :src="dkxzCon">
+            </div>
           </div>
         </div>
 
@@ -101,6 +103,7 @@
 
 <script>
   import logo from '../assets/images/logored.png'
+  import btnBack from '../assets/images/btnback.png'
   import  btnykyz  from '../assets/images/btnykyz.png'
   import  btndkxz  from '../assets/images/btndkxz.png'
   import shct from '../assets/images/p2bg.jpg'
@@ -129,6 +132,7 @@
      data(){
        return{
          logo:logo,
+         btnBack:btnBack,
          btnykyz:btnykyz,
          btndkxz:btndkxz,
          closeBtn:closeBtn,
@@ -180,6 +184,9 @@
       },
 
       methods:{
+        back:function(){
+          this.$router.back(-1)
+        },
         share: function(){
           console.log(this.$route.path)
           let userId = localStorage.getItem('userId')
@@ -260,8 +267,8 @@
     z-index:2;
     width: 38px;
     height: 43px;
-    position:absolute;
-    right:70px;
+    position:fixed;
+    right:90px;
     top:20px;
     .btnykyz{
       width: 38px;
@@ -285,8 +292,16 @@
     z-index:2;
     width: 36px;
     height: 43px;
-    position:absolute;
-    right:24px;
+    position:fixed;
+    right:50px;
+    top:20px;
+  }
+  .backBtn{
+    z-index:2;
+    width: 35px;
+    height: 43.5px;
+    position:fixed;
+    right:10px;
     top:20px;
   }
   .beforeClock{
@@ -396,6 +411,25 @@
           width: 209.5px;
           height: 36.5px;
         }
+        .contentBox{
+          margin-top: 22.5px;
+          padding: 25px;
+          width: 285.5px;
+          height: 480.5px;
+          background-color: #8bdcff;
+          border-radius: 5px;
+          .textwrap{
+            background: #fff;
+            width: 265.5px;
+            height: 451.5px;
+            padding:15px 10px;
+            border-radius: 5px;
+            .dkxzImg{
+              width: 265.5px;
+              height: 451.5px;
+            }
+          }
+        }
       }
       .closeBtn{
         width: 22.5px;
@@ -404,18 +438,7 @@
         right: 20px;
         top: 0;
       }
-      .conentBox{
-        margin-top: 22.5px;
-        padding: 25px;
-        width: 265.5px;
-        height: 451.5px;
-        background-color: #8bdcff;
-        border-radius: 5px;
-        .dkxzCon{
-          width: 265.5px;
-          height: 451.5px;
-        }
-      }
+
     }
   }
 

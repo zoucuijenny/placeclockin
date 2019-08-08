@@ -124,7 +124,9 @@
             me.rewardHotelcard=me.imgBaseUrl+me.backReward.url
             me.showRewardbgHotel=true
             break
-          default: me.rewardbg=me.rewardbgNo
+          default :
+            me.rewardbg=me.rewardbgNo
+            break
         }
         me.rewardText=me.imgBaseUrl+me.backReward.texturl
         me.rewardClass= me.backReward.serial

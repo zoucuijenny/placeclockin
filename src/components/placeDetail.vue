@@ -56,9 +56,11 @@
       },
       methods: {
         back: function () {
-          this.$router.back(-1)
-          this.countDowm = 0
-          this.showClockSucessBg = false
+          let me=this
+          me.$router.back(-1)
+          me.countDowm = 0
+          clearInterval(me.timeDown)
+          me.showClockSucessBg = false
         },
         clock: function () {
           let me = this
@@ -167,7 +169,7 @@
       z-index:2;
       width: 35px;
       height: 43.5px;
-      position:absolute;
+      position:fixed;
       right:24px;
       top:13px;
     }
