@@ -6,15 +6,6 @@
       <img class="bgImg" :src="bgImg" >
       <img class="flowerpot" :src="flowerpot">
       <div class="mailbox" :style="mailboxStyle">
-        <div
-          id="postOutArea"
-          class="postOutArea"
-          v-on:dragenter="ondragenter()"
-          v-on:drop="faceDrop()"
-          v-on:dragover="allowDrop()"
-        >
-          <!--这里可寄出邮件额！-->
-        </div>
       </div>
       <div class="textMailboxWrap">
         <div class="text">您可寄出的明信片 <span class="blueNumber">{{cardCount}}</span> 张，选择一张点击查看并寄出吧！</div>
@@ -24,8 +15,6 @@
             <div class="cardiv" v-for="(item,index) in cards"  :item="item" :key="index">
               <img
                 :src="item.url"
-                draggable="true"
-                v-on:dragstart="faceImgdrag(item.url)"
                 @click="showBigPic(item.url,item.pid)"
               >
             </div>
@@ -122,7 +111,6 @@
   import btnMusic from '../assets/vedio/btnMusic.mp3'
 
   import wxshare from '../store/modules/share.js'
-  import service from '../assets/js/service'
   import { createNamespacedHelpers } from 'vuex'
   const { mapState} = createNamespacedHelpers('data/')
 
@@ -155,7 +143,6 @@
             btnckLetter:btnckLetter,
             completePost:false,
             currentDraggleImg:null,
-            isDraged: false,
             postBtn:postBtn,
             postOutPId:null,
             postCancelBtn:postCancelBtn,
@@ -243,9 +230,9 @@
           me.rewardResultInterst=[]
           me.rewardResultHotel=[]
           me.showRewardResult=true
-          me.$axios.get('api/prizeInfo')
+          me.$axios.get('api/prizeInfo',{token:localStorage.getItem('userId')})
             .then((res)=>{
-              console.log('查询中奖结果：'+JSON.stringify(res))
+             // console.log('查询中奖结果：'+JSON.stringify(res))
               if(res.data.status===0){
                 if(res.data.data.length===0){
                   me.showNoReward=true
@@ -283,37 +270,6 @@
               }
             })
         },
-        //拖动开始
-        faceImgdrag:function(item){
-          this.currentDraggleImg=item
-          this.isDraged = true
-        },
-        faceDrop:function(e){
-          //e.preventDefault();
-         let data=e.dataTransfer.getData("Text");
-          e.target.appendChild(document.getElementById(data))
-        },
-        //拖动完成
-        allowDrop:function(e){
-          let me = this
-          if (me.isDraged){
-            let opp=document.getElementById("postOutArea")
-            let img=document.createElement('img');
-            img.setAttribute('src',this.currentDraggleImg)
-            opp.appendChild(img)
-            me.isDraged = false
-            setTimeout(function () {
-              img.setAttribute('class', 'scaleMinAnimation')
-            },1000)
-            setTimeout(function () {
-              opp.removeChild(img)
-             // me.postCardOut()
-            },3000)
-          }
-        } ,
-        ondragenter:function(e){
-          //e.preventDefault();
-        },
         closeRewardResult:function(){
           this.showRewardResult=false
         },
@@ -330,9 +286,9 @@
         },
         getCardInfo:function () {
           let me=this
-          me.$axios.get('/api/cardInfo',{})
+          me.$axios.get('/api/cardInfo',{token:localStorage.getItem('userId')})
             .then((res)=>{
-              console.log('获取明信片详情'+res)
+             // console.log('获取明信片详情'+res)
               if(res.data.status===0){
                 let arr=[]
                 me.cardCount=res.data.data.cardNum
@@ -359,9 +315,9 @@
         },
         postCardOut:function(pid){
           let me=this
-          me.$axios.post('/api/sendCard',{pid:pid})
+          me.$axios.post('/api/sendCard',{pid:pid,token:localStorage.getItem('userId')})
             .then((res)=>{
-             console.log('寄出明信片'+JSON.stringify(res))
+             //console.log('寄出明信片'+JSON.stringify(res))
               if(res.data.status===0){
                 //请求寄信接口成功后操作
                 //声效
@@ -456,11 +412,6 @@
       bottom:0;
       z-index:2;
       position: absolute;
-      .postOutArea{
-        width: 93px;
-        height: 100px;
-      //  border:2px dashed red;
-      }
     }
 
     .textMailboxWrap{
@@ -514,7 +465,7 @@
     }
     .showBigImgBox{
       z-index:10;
-      position:absolute;
+      position:fixed;
       top:0;
       left:0;
       width: 100%;
@@ -557,7 +508,7 @@
     }
     .rewardResult {
       z-index: 5;
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
@@ -707,7 +658,7 @@
     }
     .getBackLetter{
       z-index:5;
-      position:absolute;
+      position:fixed;
       top:0;
       left:0;
       text-align: center;

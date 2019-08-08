@@ -40,7 +40,6 @@
   import xns from '../assets/images/bannerText/xns.png'
   import  contentBg from '../assets/images/bannerContentbg.png'
   import phonePhoto from '../assets/images/albumTop.jpg'
-
   import { createNamespacedHelpers } from 'vuex'
   const { mapState } = createNamespacedHelpers('data/')
 
@@ -118,7 +117,7 @@
         getBanners:function () {
           let me=this
           me.startContent=[]
-          me.$axios.get('api/onroad/bigpicture')
+          me.$axios.get('api/onroad/bigpicture',{token:localStorage.getItem('userId')})
             .then((res)=>{
               // console.log('datu'+JSON.stringify(res))
               if(res.data.status===0){

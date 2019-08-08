@@ -4,12 +4,14 @@
       <img  class="rewardbg" :src="rewardbg">
       <img  class="rewardHotelcard" :src="rewardHotelcard" v-show="showRewardbgHotel">
       <img  class="rewardPlaceCard" :src="rewardPlaceCard" v-show="showRewardPlace">
-      <div class="crashCard" v-show="showRewardCrash"><span class="bigT" @click="openMoneyUrl()">{{money}}</span>元</div>
-      <img  class="rewardText" :class="'rewardText'+rewardClass" :src="rewardText">
-      <img  class="btnShare" :src="btnShare" @click="btnShared()" >
-      <div class="popwindow" v-if="showShareNotice" @click="closeShareWindow()">
-        <img class="shareNotice" :src="shareNotice" >
+      <div class="crashCard" v-show="showRewardCrash">
+        <span class="bigT" >{{money}}</span>元
       </div>
+        <img  class="rewardText" :class="'rewardText'+rewardClass" :src="rewardText">
+        <img  class="btnShare" :src="btnShare" @click="btnShared()" >
+       <div class="popwindow" v-if="showShareNotice" @click="closeShareWindow()">
+           <img class="shareNotice" :src="shareNotice" >
+       </div>
       <!--<div class="text">旅行路上 总有风景在等你</div>-->
       <audio  id="btnMusic2">
         <source :src="btnMusic" type="audio/ogg" >
@@ -79,7 +81,11 @@
 
        },
         openMoneyUrl:function(){
-         window.location.href=this.moneyUrl
+        let me=this
+         console.log('红包打开地址'+me.moneyUrl)
+         setTimeout(function () {
+           window.location.href=me.moneyUrl
+         },1000)
         },
         btnShared:function() {
          let me=this
@@ -105,6 +111,8 @@
             me.rewardbg=me.rewardbgCrash
             me.money=me.backReward.money
             me.moneyUrl=me.backReward.moneyUrl
+            me.showRewardCrash=true
+            me.openMoneyUrl()
             break
           case 2:
             me.rewardbg=me.rewardbgPlace
@@ -153,8 +161,8 @@
       position:absolute;
       z-index: 2;
       /*top:352.5px;*/
-      top:53%;
-      left:68px;
+      top:53.2%;
+      left:18.7%;
     }
     .rewardTextp1{
       width: 155.5px;
@@ -206,7 +214,7 @@
     }
     .crashCard{
       position: absolute;
-      top:245px;
+      top:36.74%;
       color:#fff;
       width: 100%;
       text-align: center;
@@ -216,7 +224,7 @@
       }
     }
     .popwindow{
-      position: absolute;
+      position: fixed;
       width: 100%;
       height: 100%;
       z-index: 100;

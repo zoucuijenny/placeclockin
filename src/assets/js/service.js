@@ -10,11 +10,37 @@ const prefix = process.env.NODB_BNV === 'development'
 
 axios.defaults.withCredentials=true
 axios.defaults.headers={'Content-Type': 'application/json' }
+
 const request=axios.create({
-    baseURL:prefix,
-    headers:{'Content-Type': 'application/json' },
-    withCredentials:true
+  baseURL:prefix,
+  headers:{'Content-Type': 'application/json' },
+  withCredentials:true
 })
+
+//http request 请求拦截器，有ppId值则配置上ppId值
+request.interceptors.request.use(config => {
+  // let token = localStorage.getItem('userId')
+  // console.log('当前userId=='+token)
+  // let defaultParams={
+  //   token:token
+  // }
+  //   config.data = Object.assign(defaultParams,config.data)
+  //   console.log('头部参数+'+JSON.stringify( config.data))
+  return config
+},
+    err => Promise.reject(err)
+)
+request.interceptors.response.use(response=>{
+  if(response.data.status===403){
+    this.$router.push({name:'author'})
+   // alert(window.location.href)
+   //  window.location.href='http://www.baidu.com'
+  }
+  return response;
+},function (error) {
+  return Promise.reject(error)
+})
+
 let fetch=function(){
   Vue.prototype.$axios=request
 }
@@ -33,21 +59,6 @@ let fetch=function(){
 //         jsApiList: [] // 必填，需要使用的JS接口列表
 //       });
 //     }
-
-const card={
-  //寄出明信片
-async postCard(){
-  let result = {}
-  await axios.post(prefix+'/api/sendCard',)
-    .then((res)=>{
-      result = res.data
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
-  return result
-},
-}
 export default {
   // sdkConfig,
   fetch

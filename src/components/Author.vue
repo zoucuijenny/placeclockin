@@ -5,7 +5,6 @@
 
 <script>
   import wxshare from '../store/modules/share.js'
-
   export default {
     data() {
       return {

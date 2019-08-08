@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <!--<div class="musicIcon" @click="togglePlay()"></div>-->
-    <img class="musicIcon" :src="musicIcon" alt=""  @click="togglePlay()">
-    <audio  autoplay loop id="mp3" >
-      <source :src="topicMusic" type="audio/ogg" >
-    </audio>
+    <!--<img class="musicIcon" :src="musicIcon" alt=""  @click="togglePlay()">-->
+    <!--<audio  autoplay loop id="mp3" >-->
+      <!--<source :src="topicMusic" type="audio/ogg" >-->
+    <!--</audio>-->
     <router-view/>
   </div>
 </template>
@@ -13,6 +13,7 @@
   import topicMusic from './assets/vedio/clockTopic.mp3'
   import musicplay from './assets/images/musicPlay.png'
   import musicPase from './assets/images/musicPase.png'
+  import wxshare from './store/modules/share.js'
 export default {
   name: 'App',
   data(){
@@ -34,10 +35,11 @@ export default {
         myVideo.pause();
         me.musicIcon=me.musicplay
       }
-    }
+    },
   },
   created:function () {
-   this.togglePlay()
+    wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
+  // this.togglePlay()
 
   }
 }
@@ -48,6 +50,12 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background:#5b9352;
   .musicIcon{
     width: 25px;
     height: 25px;
@@ -56,7 +64,7 @@ export default {
     top:70px;
     right: 10px;
     z-index: 100;
-    background: red;
+    //background: red;
   }
 }
 </style>

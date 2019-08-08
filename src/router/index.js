@@ -10,16 +10,16 @@ Vue.use(Router)
 const router=new Router({
   mode: 'history',
   routes: [
-    {
-      path: '/',
-      name: 'index',
-      component:()=>import('@/components/index')
-    },
     // {
     //   path: '/',
     //   name: 'index',
-    //   component:()=>import('@/components/advanceVedio')
+    //   component:()=>import('@/components/index')
     // },
+    {
+      path: '/',
+      name: 'index',
+      component:()=>import('@/components/advanceVedio')
+    },
     {
       path: '/author',
       name: 'author',
@@ -58,9 +58,6 @@ const router=new Router({
     }
   ]
 })
-
-
-
 router.beforeEach((to,from,next)=>{
   wxshare.successfulShare(to.query)
   console.log(to)

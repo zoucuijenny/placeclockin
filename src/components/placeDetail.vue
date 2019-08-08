@@ -63,7 +63,7 @@
         clock: function () {
           let me = this
           let arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-          me.$axios.post('/api/punch', {place: arr[me.$route.params.placeId], status: '1'})
+          me.$axios.post('/api/punch', {place: arr[me.$route.params.placeId], status: '1',token:localStorage.getItem('userId')})
             .then(function (res) {
               // console.log('请求返回结果',res)
               if (res.data.status === 0) {
@@ -106,7 +106,7 @@
         me.countDowm=10
         me.placeId=me.$route.params.placeId
         me.placedetailbg=me.bgs[me.placeId]
-        me.$axios.get('/api/placeInfo',{})
+        me.$axios.get('/api/placeInfo',{token:localStorage.getItem('userId')})
           .then((res)=>{
             if(res.data.status===0){
               let datas =res.data.data

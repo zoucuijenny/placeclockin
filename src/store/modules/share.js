@@ -12,7 +12,6 @@ let isIPhone = () => {
   }
   return _isIPhone;
 };
-
 export default {
 
   wxshare(url, userId){
@@ -32,7 +31,7 @@ export default {
       timestamp: data.data.timestamp, // 必填，生成签名的时间戳
       nonceStr: data.data.nonceStr, // 必填，生成签名的随机串
       signature: data.data.signature,// 必填，签名
-      jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData'] // 必填，需要使用的JS接口列表
+      jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData','WeixinJSBridge'] // 必填，需要使用的JS接口列表
     })
     url = shareDomain + url
 
@@ -53,15 +52,22 @@ export default {
         imgUrl: 'http://qn.baltictravellerservice.com/sharePic.jpg', // 分享图标
         success: function () {
           console.log("分享成功")
-        }
+        },
       })
-      wx.error(function(res){
-        alert(res.data)
-      });
-
+      // wx.error(function(res){
+      //   alert(res.data)
+      // });
+      document.getElementById("advanceMp3").play()
+      window.onload =function(){
+        WeixinJSBridge.invoke('getNetworkType',{},function(e){
+          document.getElementById("advanceMp3").play()
+        })
+        console.log('触发 ios')
+      }
+      document.addEventListener("WeixinJSBridgeReady", function() {
+        document.getElementById('advanceMp3').play();
+      },false);
     });
-
-
     })
   },
 
@@ -78,8 +84,6 @@ export default {
       }
     })
   }
-
-
 }
 
 

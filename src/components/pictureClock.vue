@@ -66,8 +66,8 @@
         </div>
       </div>
       <div class="wls">
-        <div class="beforeClock" v-show="!clockStatus[5]" @click="clickClock(5)">
           <img class="locationIcon" :src="locationIcon">
+          <div class="beforeClock" v-show="!clockStatus[5]" @click="clickClock(5)">
           <img class="clickClockText"  :src="clickClockText" >
         </div>
         <div class="afterClock" v-show="clockStatus[5]" @click="clickClock(5)">
@@ -87,8 +87,14 @@
       </div>
       <!--打卡须知-->
       <div class="dkxzWrap" v-show="dkxzShow">
-        <img class="closeBtn" :src="closeBtn" @click="dkxz()">
-        <img class="dkxzCon" :src="dkxzCon">
+        <div class="dkxzInnerWrap">
+          <img class="closeBtn" :src="closeBtn" @click="dkxz()">
+          <img :src="dkxzTitle" class="dkxzTitle" >
+          <div class="conentBox">
+            <img class="dkxzCon" :src="dkxzCon">
+          </div>
+        </div>
+
       </div>
     </div>
 </template>
@@ -104,6 +110,7 @@
   import completeClockText from '../assets/images/completeClockText.png'
   import closeBtn from '../assets/images/closeBtn.png'
   import dkxzCon from '../assets/images/dkxzContent.png'
+  import dkxzTitle from '../assets/images/dkxzTitle.png'
 
   import bgimg1 from '../assets/images/bggif/bggif1.gif'
   import bgimg2 from '../assets/images/bggif/bggif2.gif'
@@ -131,6 +138,7 @@
          completeClock:completeClock,
          completeClockText:completeClockText,
          dkxzCon:dkxzCon,
+         dkxzTitle:dkxzTitle,
          cardCount:0,
          moudelNamespace:'data/',
          bgimg1:bgimg1,
@@ -199,7 +207,7 @@
         },
         getCardCount:function(){
           let me=this
-          me.$axios.get('/api/cardInfo',{})
+          me.$axios.get('/api/cardInfo',{token:localStorage.getItem('userId')})
             .then((res)=>{
               //console.log('获取打卡情况：'+JSON.stringify(res))
               if(res.data.status===0){
@@ -218,7 +226,7 @@
         wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
         wxshare.successfulShare(this.$route.query)
         me.getCardCount()
-        me.$axios.get('/api/placeInfo',{})
+        me.$axios.get('/api/placeInfo',{token:localStorage.getItem('userId')})
         .then(function (res) {
           if(res.data.status===0){
             let data =res.data.data
@@ -370,22 +378,43 @@
       width: 100%;
       height: 100%;
       background-color: rgba(0,0,0,0.5);
-      position: absolute;
+      position: fixed;
       z-index:10;
       top:0;
       left:0;
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      .dkxzInnerWrap{
+        margin-top: 69.5px;
+        padding-top: 18px;
+        position: relative;
+        .dkxzTitle {
+          position: absolute;
+          top: 18px;
+          left: 50%;
+          margin-left: -104.5px;
+          width: 209.5px;
+          height: 36.5px;
+        }
+      }
       .closeBtn{
         width: 22.5px;
         height: 40.5px;
-        top:68px;
-        left:302.5px;
         position: absolute;
+        right: 20px;
+        top: 0;
       }
-      .dkxzCon{
-       margin-top:85px;
-        width:316px;
-        height:500px;
+      .conentBox{
+        margin-top: 22.5px;
+        padding: 25px;
+        width: 265.5px;
+        height: 451.5px;
+        background-color: #8bdcff;
+        border-radius: 5px;
+        .dkxzCon{
+          width: 265.5px;
+          height: 451.5px;
+        }
       }
     }
   }

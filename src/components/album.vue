@@ -20,7 +20,7 @@
             </div>
             <div class="photoList">
               <div class="photoItem" v-for="(photoItem,i) in item.photos" :item="photoItem" :index="i">
-                <img :src="imgBaseUrl+photoItem.url" class="photo">
+                <img :src="imgBaseUrl+photoItem.url" class="photo" @click="showbigImg(photoItem.url)">
                 <div class="photoInfo">
                   <div class="loved">
                     <img :src="loved" alt="" class="loved" v-if="islike===1">
@@ -36,6 +36,13 @@
           </div>
         </div>
       </div>
+    <!--点击图片放大查看-->
+    <div class="showBigImgBox"  v-show="bigImgShow">
+      <div class="bigImgBox">
+        <img class="bigImg" :src="bigImgUrl" >
+        <img class='closeBtn' :src="closeBtn" @click="closeBigImgBox">
+      </div>
+    </div>
   </div>
 </template>
 
@@ -44,6 +51,7 @@
   import  photo from '../assets/images/photo.jpg'
   import  albumTop from '../assets/images/albumTop.jpg'
   import btnBack from '../assets/images/btnback.png'
+  import  closeBtn from '../assets/images/closeBtn.png'
   import seed from '../assets/images/seed.png'
   import loved from '../assets/images/loved.png'
   import toLove from '../assets/images/toLove.png'
@@ -74,6 +82,8 @@
            backgroundSize:'100% 100%',
            backgroundPosition:'0,0'
          },
+         bigImgUrl:'',
+         bigImgShow:false,
          listContent:[
            {
              date:'8月14',
@@ -107,9 +117,18 @@
         back:function(){
           this.$router.back(-1)
         },
+        showbigImg:function(url){
+          let me=this
+          me.bigImgShow=false
+          me.bigImgUrl=url
+       },
+        closeBigImgBox:function(){
+          let me=this
+          me.bigImgShow=false
+        },
         getList:function () {
           let me=this
-          me.$axios.get('/api/onroad/picture',{placea:me.$route.params.place})
+          me.$axios.get('/api/onroad/picture',{placea:me.$route.params.place,token:localStorage.getItem('userId')})
             .then((res)=>{
               if(res.data.status===0){
                 me.listContent=res.data.data
@@ -123,7 +142,7 @@
         },
         chooseMe:function(pid){
           let me=this
-          me.$axios.get('/api/onroad/addlike',{pid:pid})
+          me.$axios.get('/api/onroad/addlike',{pid:pid,token:localStorage.getItem('userId')})
             .then((res)=>{
               if(res.data.status===0){
                 me.getList()
@@ -137,7 +156,7 @@
         },
         getViews:function(){
           let me=this
-          me.$axios.get('/api/onroad/addlike',{place:me.$route.params.place})
+          me.$axios.get('/api/onroad/addlike',{place:me.$route.params.place,token:localStorage.getItem('userId')})
             .then((res)=>{
               if(res.data.status===0){
               }
@@ -264,7 +283,39 @@
         }
       }
     }
-
+    .showBigImgBox{
+      z-index:10;
+      position:fixed;
+      top:0;
+      left:0;
+      width: 100%;
+      height: 100%;
+      background-color:rgba(0,0,0,0.3) ;
+      display: flex;
+      justify-content: center;
+      .bigImgBox{
+        width: 295px;
+        height:386px;
+        padding-top:40px;
+        margin-top:112.5px;
+        position:relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .closeBtn{
+          width: 22.5px;
+          height: 40.5px;
+          position: absolute;
+          right:20px;
+          top:0;
+        }
+        .bigImg{
+          width: 295px;
+          height:210px;
+        }
+      }
+    }
   }
 
 </style>

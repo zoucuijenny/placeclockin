@@ -1,7 +1,7 @@
 <template>
     <div class="advanceVedio">
        <img class="bgGif" :src="bgGif">
-      <audio  autoplay loop id="mp3">
+      <audio  autoplay loop id="advanceMp3">
         <source :src="mp3" type="audio/ogg" >
       </audio>
     </div>
@@ -10,6 +10,7 @@
 <script>
   import bgGif from '../assets/images/advance.gif'
   import mp3 from '../assets/vedio/advance.mp3'
+  import wxshare from '../store/modules/share.js'
     export default {
           data(){
             return {
@@ -18,6 +19,8 @@
             }
           },
       created:function(){
+        wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
+        wxshare.successfulShare(this.$route.query)
             // let me=this
             // let myMp4=document.getElementById("mp4");
             //
@@ -33,6 +36,10 @@
 .advanceVedio{
   width: 100%;
   height: 100%;
+  background:#5b9352;;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   .bgGif{
     width: 100%;
     height: 100%;

@@ -1,8 +1,8 @@
 <template>
   <div class="hello">
     <img  class="bgimg" :src="indexbg">
-    <img class="logo" :src="logo">
     <img :src="logo" alt="" class="logo">
+    <img class="indexTopic" :src="indexTopic">
     <img @click="toclock()" class="clockinBtn" :src="clockinBtn">
     <img @click="totheway()" class="onthewayBtn" :src="onthewayBtn">
     <audio  id="btnMusic">
@@ -16,11 +16,10 @@
   import onthewayBtn from '../assets/images/ontheway.png'
   import clockinBtn from '../assets/images/btnclockin.png'
   import wxshare from '../store/modules/share.js'
-  import request from "../assets/js/request";
-  import service from "../assets/js/service";
+  import indexTopic from '../assets/images/indexTopic.png'
   import btnMusic from '../assets/vedio/btnMusic.mp3'
   import wx from 'weixin-js-sdk'
-  //import wx from '../assets/js/service'
+
 export default {
   data () {
     return {
@@ -28,7 +27,8 @@ export default {
       logo:logo,
       clockinBtn:clockinBtn,
       onthewayBtn:onthewayBtn,
-      btnMusic:btnMusic
+      btnMusic:btnMusic,
+      indexTopic:indexTopic
     }
   },
   methods:{
@@ -56,17 +56,23 @@ export default {
           me.$router.push({name:'pictureClock'})
          // window.location.href= '/pictureClock'
         },300)
-    }
+    },
+
   },
   created:function () {
+    let me=this
     wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
     wxshare.successfulShare(this.$route.query)
-    wx.sdkConfig()
-    let me=this
+  //  wx.sdkConfig()
+
+    // localStorage.setItem('userId','1234567ppp')
     // this.$axios.get('/api/test/login',{})
-    //  .then((res)=>{ me.$toast(res.data.msg)})
+    //  .then((res)=>{
+    //    me.$toast(res.data.msg)
+    //
+    //  })
     //  .catch((err)=>{console.log(err)})
-}
+ }
 }
 </script>
 <style lang="scss">
@@ -74,13 +80,24 @@ export default {
     width: 100%;
     height: 100%;
     position: relative;
+    text-align: center;
+    background: #213629;
     .bgimg{
       width: 100%;
-      height:664px;
+     // height:664px;
+      height:730px;
+    }
+    .indexTopic{
+      position: absolute;
+      width: 308.5px;
+      height: 167.5px;
+      top:50px;
+      left: 50%;
+      margin-left:-154px;
     }
     .onthewayBtn{
       z-index:2;
-      position:absolute;
+      position:fixed;
       width: 136px;
       height:51px;
       left:50%;
@@ -89,7 +106,7 @@ export default {
     }
     .clockinBtn{
       z-index:2;
-      position:absolute;
+      position:fixed;
       width: 136px;
       height:51px;
       left:50%;
