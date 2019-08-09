@@ -1,8 +1,9 @@
 import axios from 'axios'
 import wx from 'weixin-js-sdk';
-var host = 'http://122.112.221.15:9900'
-var shareDomain = 'http://www.baltictravellerservice.com'
-var shareUrl = 'http://www.baltictravellerservice.com/?beforUserId='
+var host = 'http://www.zss001.cn'
+//var shareDomain = 'http://www.zss001.cn'
+var shareDomain = ''
+var shareUrl =shareDomain+ '?beforUserId='
 
 let isIPhone = () => {
   const uag = window.navigator.userAgent;
@@ -26,7 +27,7 @@ export default {
 
   axios.get(host + '/api/share?url='+ shareDomain + url + '&userId='+userId).then(function ({data}) {
     wx.config({
-      debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+      debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
       appId: data.data.appid, // 必填，公众号的唯一标识
       timestamp: data.data.timestamp, // 必填，生成签名的时间戳
       nonceStr: data.data.nonceStr, // 必填，生成签名的随机串
@@ -36,11 +37,12 @@ export default {
     url = shareDomain + url
 
     wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+      let me=this
       wx.updateAppMessageShareData({
         title: '美丽重庆打卡季，偶遇惊喜好礼', // 分享标题
         desc: '渝快生活，重庆农商行带您出行！打卡美丽重庆，还有机会领取景区门票、酒店住宿、现金红包！', // 分享描述
         link: shareUrl + userId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-        imgUrl: 'http://qn.baltictravellerservice.com/sharePic.jpg', // 分享图标
+        imgUrl:shareDomain+ '/sharePic.jpg', // 分享图标
         success: function () {
           console.log("分享成功")
         }
@@ -49,24 +51,14 @@ export default {
         title: '美丽重庆打卡季，偶遇惊喜好礼', // 分享标题
         desc: '渝快生活，重庆农商行带您出行！打卡美丽重庆，还有机会领取景区门票、酒店住宿、现金红包！', // 分享描述
         link: shareUrl + userId,  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-        imgUrl: 'http://qn.baltictravellerservice.com/sharePic.jpg', // 分享图标
+        imgUrl: shareDomain+'/sharePic.jpg', // 分享图标
         success: function () {
           console.log("分享成功")
         },
       })
-      // wx.error(function(res){
-      //   alert(res.data)
-      // });
-      // document.getElementById("mp3").play()
-      // window.onload =function(){
-      //   WeixinJSBridge.invoke('getNetworkType',{},function(e){
-      //     document.getElementById("mp3").play()
-      //   })
-      //   console.log('触发 ios')
-      // }
-      // document.addEventListener("WeixinJSBridgeReady", function() {
-      //   document.getElementById('mp3').play();
-      // },false);
+      wx.error(function(res){
+        console.log(res.data)
+      });
     });
     })
   },

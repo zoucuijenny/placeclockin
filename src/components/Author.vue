@@ -55,6 +55,7 @@
       } else {
         me.wxlogin(code)
       }
+
       wxshare.wxshare(me.$route.fullPath, localStorage.getItem('userId'))
       wxshare.successfulShare(me.$route.query)
 

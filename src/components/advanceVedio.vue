@@ -1,21 +1,28 @@
 <template>
     <div class="advanceVedio">
-       <img class="bgGif" :src="bgGif">
-      <audio  autoplay loop id="advanceMp3">
-        <source :src="mp3" type="audio/ogg" >
-      </audio>
+       <!--<img class="bgGif" :src="bgGif">-->
+      <!--<audio  autoplay loop id="advanceMp3">-->
+        <!--<source :src="mp3" type="audio/ogg" >-->
+      <!--</audio>-->
+      <video style="width: 100%;height: 100%">
+        <source :src="mp4" type="video/mp4"  autoplay :poster="poster">
+      </video>
     </div>
 </template>
 
 <script>
   import bgGif from '../assets/images/advance.gif'
   import mp3 from '../assets/vedio/advance.mp3'
+  import mp4 from '../assets/vedio/topicVedio.mp4'
   import wxshare from '../store/modules/share.js'
+  import poster from '../assets/vedio/poster.jpg'
     export default {
           data(){
             return {
               bgGif:bgGif,
-              mp3:mp3
+              mp3:mp3,
+              mp4:mp4,
+              poster:poster
             }
           },
       created:function(){
@@ -36,7 +43,6 @@
 .advanceVedio{
   width: 100%;
   height: 100%;
-  background:#5b9352;;
   display: flex;
   justify-content: center;
   align-items: center;

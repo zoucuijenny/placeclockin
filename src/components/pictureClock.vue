@@ -230,7 +230,7 @@
       },
       created:function () {
         let me=this
-        wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
+        wxshare.wxshare(this.$address, localStorage.getItem('userId'))
         wxshare.successfulShare(this.$route.query)
         me.getCardCount()
         me.$axios.get('/api/placeInfo',{token:localStorage.getItem('userId')})

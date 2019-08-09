@@ -15,10 +15,10 @@
   import logo from '../assets/images/logowhite.png'
   import onthewayBtn from '../assets/images/ontheway.png'
   import clockinBtn from '../assets/images/btnclockin.png'
-  import wxshare from '../store/modules/share.js'
   import indexTopic from '../assets/images/indexTopic.png'
   import btnMusic from '../assets/vedio/btnMusic.mp3'
-  import wx from 'weixin-js-sdk'
+ import wxshare from '../store/modules/share.js'
+ import wx from 'weixin-js-sdk'
 
 export default {
   data () {
@@ -61,28 +61,33 @@ export default {
   },
   created:function () {
     let me=this
-    wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
+    wxshare.wxshare(this.$address, localStorage.getItem('userId'))
     wxshare.successfulShare(this.$route.query)
-  //  wx.sdkConfig()
+    wx.sdkConfig()
 
     let str = window.location.href
+    console.log('地址问号后字符串'+str.indexOf('\?'))
+    console.log('window.location.href 地址'+str)
     if(str.indexOf('\?') !== -1){
        str=window.location.search
       let arr = str.split('\&')
       let codeIndex = arr[0].indexOf("\=");
       let code = str.substring(codeIndex + 1, arr[0].length);
-      me.$axios.post('/api/wx/login', { code: code })
-        .then((res) => {
-          console.log('登录返回结果：' + JSON.stringify(res))
-          if (res.data.status === 0) {
-            localStorage.setItem('userId', res.data.data.openid)
-          } else {
-            me.$toast.fail(res.data.msg);
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      console.log('code值'+code)
+      if(code){
+        me.$axios.post('/api/wx/login', { code: code })
+          .then((res) => {
+            console.log('登录返回结果：' + JSON.stringify(res))
+            if (res.data.status === 0) {
+              localStorage.setItem('userId', res.data.data.openid)
+            } else {
+              // me.$toast.fail(res.data.msg);
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
     }
     //测试登录
     // localStorage.setItem('userId','')
