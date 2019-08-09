@@ -56,9 +56,12 @@ export default {
           console.log("分享成功")
         },
       })
-      wx.error(function(res){
-        console.log(res.data)
-      });
+      // wx.error(function(res){
+      //   console.log(res.data)
+      // });
+        document.addEventListener("WeixinJSBridgeReady",function(){
+        document.getElementById('mp444').play()
+      },false)
     });
     })
   },
