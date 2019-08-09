@@ -299,19 +299,17 @@
       left:0;
       width: 100%;
       height: 100%;
-      background-color:rgba(0,0,0,0.3) ;
+      background-color:rgba(0,0,0,0.5) ;
       display: flex;
       justify-content: center;
+      align-items: center;
       .bigImgBox{
         width: 295px;
-        height:386px;
+        height:210px;
         padding-top:40px;
-        margin-top:112.5px;
+        /*margin-top:112.5px;*/
         position:relative;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
         .closeBtn{
           width: 22.5px;
           height: 40.5px;

@@ -90,14 +90,14 @@ export default {
       }
     }
     // //测试登录
-    // localStorage.setItem('userId','')
-    // this.$axios.get('/api/test/login',{})
-    //  .then((res)=>{
-    //    if(res.data.status!==0){
-    //      me.$toast(res.data.msg)
-    //    }
-    //  })
-    //  .catch((err)=>{console.log(err)})
+    localStorage.setItem('userId','')
+    this.$axios.get('/api/test/login',{})
+     .then((res)=>{
+       if(res.data.status!==0){
+         me.$toast(res.data.msg)
+       }
+     })
+     .catch((err)=>{console.log(err)})
  }
 }
 </script>

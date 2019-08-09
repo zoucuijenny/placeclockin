@@ -48,7 +48,7 @@
        data(){
          return {
            moudleNameSpace:'data/',
-           isStart:false,
+           isStart:true,
            noStartbg:noStartbg,
            startbgTop:startbgTop,
            contentBg:contentBg,
