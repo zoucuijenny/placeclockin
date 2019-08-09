@@ -5,18 +5,18 @@ import Vue from 'vue'
  import promise from 'promise'
 
 const appId = 'wx2b0cfb496537a3dc'//后台提供
-const address='http://www.zss001.cn'
+const address='http://www.zss001.cn/'
 
 const prefix = process.env.NODB_BNV === 'development'
   ? address
-  :address
+  : address
 
 axios.defaults.withCredentials=true
 axios.defaults.headers={'Content-Type': 'application/json' }
 
 const request=axios.create({
   baseURL:prefix,
-  headers:{'Content-Type': 'application/json' },
+  headers:{'Content-Type': 'application/json','token':localStorage.getItem('userId') },
   withCredentials:true
 })
 

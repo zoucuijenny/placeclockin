@@ -1,7 +1,6 @@
 const state={
   dkxzShow:true,
   imgBaseUrl:'http://122.112.221.15:9900',
-  prefix:'http://122.112.221.15:9900',
   backReward:{},
   albumTopData:{}
 }

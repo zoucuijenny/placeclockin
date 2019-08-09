@@ -1,10 +1,9 @@
 <template>
   <div id="app">
-    <div class="musicIcon" @click="togglePlay()"></div>
-    <img class="musicIcon" :src="musicIcon" alt=""  @click="togglePlay()">
-    <audio  autoplay loop id="mp3" >
-      <source :src="topicMusic" type="audio/ogg" >
-    </audio>
+    <!--<img class="musicIcon" :src="musicIcon" alt=""  @click="togglePlay()">-->
+    <!--<audio  autoplay loop id="mp3" >-->
+      <!--<source :src="topicMusic" type="audio/ogg" >-->
+    <!--</audio>-->
     <router-view/>
   </div>
 </template>
@@ -14,7 +13,7 @@
   import musicplay from './assets/images/musicPlay.png'
   import musicPase from './assets/images/musicPase.png'
   import wxshare from './store/modules/share.js'
- // import topicMusic from './assets/vedio/clockSuccess.mp3'
+
 export default {
   name: 'App',
   data(){
@@ -51,12 +50,12 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  background:#5b9352;
+  /*display: flex;*/
+  /*justify-content: center;*/
+  /*align-items: center;*/
+  /*height: 100%;*/
+  /*width: 100%;*/
+  /*background:#5b9352;*/
   .musicIcon{
     width: 25px;
     height: 25px;

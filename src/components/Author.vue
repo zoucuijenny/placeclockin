@@ -19,12 +19,11 @@
             console.log('登录返回结果：' + JSON.stringify(res))
             if (res.data.status === 0) {
               localStorage.setItem('userId', res.data.data.openid)
-              let backurl = 'www.zss001.cn/'
-              //window.location.href=localStorage.getItem('beforeLoginUrl')
+              let backurl = localStorage.getItem('beforeLoginUrl')
               window.location.href = backurl
             } else {
               me.$toast.fail(res.data.msg);
-              // window.location.href = me.webUrl;
+               window.location.href = me.$address;
             }
           })
           .catch((err) => {
@@ -47,7 +46,8 @@
         return
       }
       if (!code) {
-         let url = window.location.href
+        let url=me.$address
+        console.log('授权返回地址='+url)
         url = encodeURIComponent(url);
         const appId = 'wx2b0cfb496537a3dc'//后台提供
         me.webUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirec`;

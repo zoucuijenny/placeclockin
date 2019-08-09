@@ -117,7 +117,7 @@
         getBanners:function () {
           let me=this
           me.startContent=[]
-          me.$axios.get('api/onroad/bigpicture',{token:localStorage.getItem('userId')})
+          me.$axios.get('api/onroad/bigpicture',{hearders:{token:localStorage.getItem('userId')}})
             .then((res)=>{
               // console.log('datu'+JSON.stringify(res))
               if(res.data.status===0){

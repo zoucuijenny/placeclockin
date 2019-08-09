@@ -45,6 +45,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: 'http://qn.baltictravellerservice.com/',
     //assetsPublicPath:'http://www.zss001.cn/',
+   // assetsPublicPath:'http://pvszhis9q.bkt.clouddn.com/' ,
     /**
      * Source Maps
      */

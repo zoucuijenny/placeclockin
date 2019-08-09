@@ -128,7 +128,10 @@
         },
         getList:function () {
           let me=this
-          me.$axios.get('/api/onroad/picture',{placea:me.$route.params.place,token:localStorage.getItem('userId')})
+          me.$axios.get('/api/onroad/picture',{
+            params:{placea:me.$route.params.place},
+            hearders:{token:localStorage.getItem('userId')}
+          })
             .then((res)=>{
               if(res.data.status===0){
                 me.listContent=res.data.data
@@ -142,7 +145,10 @@
         },
         chooseMe:function(pid){
           let me=this
-          me.$axios.get('/api/onroad/addlike',{pid:pid,token:localStorage.getItem('userId')})
+          me.$axios.get('/api/onroad/addlike',{
+            params:{pid:pid},
+            headers:{token:localStorage.getItem('userId')}
+        })
             .then((res)=>{
               if(res.data.status===0){
                 me.getList()
@@ -156,7 +162,10 @@
         },
         getViews:function(){
           let me=this
-          me.$axios.get('/api/onroad/addlike',{place:me.$route.params.place,token:localStorage.getItem('userId')})
+          me.$axios.get('/api/onroad/addlike',{
+            params:{place:me.$route.params.place},
+            hearders:{token:localStorage.getItem('userId')}
+            })
             .then((res)=>{
               if(res.data.status===0){
               }

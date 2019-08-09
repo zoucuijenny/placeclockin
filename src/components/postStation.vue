@@ -230,7 +230,7 @@
           me.rewardResultInterst=[]
           me.rewardResultHotel=[]
           me.showRewardResult=true
-          me.$axios.get('api/prizeInfo',{token:localStorage.getItem('userId')})
+          me.$axios.get('api/prizeInfo',{hearders:{token:localStorage.getItem('userId')}})
             .then((res)=>{
              // console.log('查询中奖结果：'+JSON.stringify(res))
               if(res.data.status===0){
@@ -275,10 +275,9 @@
         },
         toReward:function(){
           this.completePost=false
-          // this.$router.push({name:'reward'})
           let me = this
           let  myVideo=document.getElementById("btnMusic1");
-          myVideo.play();
+               myVideo.play();
           setTimeout(function () {
            // window.location.href= '/name=reward'
              me.$router.push({name:'reward'})
@@ -286,7 +285,7 @@
         },
         getCardInfo:function () {
           let me=this
-          me.$axios.get('/api/cardInfo',{token:localStorage.getItem('userId')})
+          me.$axios.get('/api/cardInfo',{hearders:{token:localStorage.getItem('userId')}})
             .then((res)=>{
              // console.log('获取明信片详情'+res)
               if(res.data.status===0){
@@ -338,9 +337,11 @@
                 if(res.data.data.type===1){
                   rewardInfo.money=res.data.data.money
                   rewardInfo.moneyUrl=res.data.data.openUrl
+                  localStorage.setItem('isCrashOpened',false)
                 }
-               console.log('存：'+JSON.stringify(rewardInfo))
+               //console.log('存：'+JSON.stringify(rewardInfo))
                me.$store.commit(me.moudelNamespace +'setReward',{data:rewardInfo})
+                localStorage.setItem('prizeResult',rewardInfo)
               }else{
                 me.$toast(res.data.msg)
               }
