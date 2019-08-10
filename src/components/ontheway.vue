@@ -55,35 +55,14 @@
            btnBack:btnBack,
            phoneBg:phoneBg,
            statusFlag:statusFlag,
-           startContent:[
-             {
-               text:atj,
-               url:phonePhoto
-             },
-             {
-               text:dbs,
-               url:phonePhoto
-             },
-             {
-               text:hs,
-               url:phonePhoto
-             },
-             {
-               text:jfs,
-               url:phonePhoto
-             },
-             {
-               text:hsg,
-               url:phonePhoto
-             },
-             {
-               text:wls,
-               url:phonePhoto
-             },
-             {
-               text:xns,
-               url:phonePhoto
-             }],
+           atj:atj,
+           dbs:dbs,
+           hs:hs,
+           jfs:jfs,
+           hsg:hsg,
+           wls:wls,
+           xns:xns,
+           startContent:[],
            detailButton:detailButton,
            phonePhoto:phonePhoto,
            startContentWrapStyle:{
@@ -107,8 +86,8 @@
       },
       methods:{
         back:function(){
-          // this.$router.back(-1)
-          window.history.back()
+           //this.$router.back(-1)
+         window.history.back()
         },
         toNext:function (index) {
          // window.location.href=`/album?place=${index}`
@@ -117,16 +96,15 @@
         getBanners:function () {
           let me=this
           me.startContent=[]
-          me.$axios.get('api/onroad/bigpicture',{hearders:{token:localStorage.getItem('userId')}})
+          me.$axios.get('api/onroad/bigpicture',{hearders:{token:sessionStorage.getItem('userId')}})
             .then((res)=>{
-              // console.log('datu'+JSON.stringify(res))
+             // console.log('datu'+JSON.stringify(res))
               if(res.data.status===0){
-                me.$store.commit(me.moudleNameSpace+'setAlbumTopData',{data:me.data.data})
-                for(let item of me.data.data){
+                me.$store.commit(me.moudleNameSpace+'setAlbumTopData',{data:res.data.data})
+                for(let item of res.data.data){
                   let temp={}
-                  temp.url=me.imgBaseUrl+item.url
+                  temp.url=item.url
                   temp.place=item.place
-                  console.log('dif'+item.place)
                   switch (item.place){
                     case 'a':
                       temp.text=me.xns
@@ -152,8 +130,8 @@
                     default:
                       temp.text=me.sms
                       break
-                      me.startContent.push(temp)
                   }
+                  me.startContent.push(temp)
                 }
               }else{
                 me.$toast.fail(res.data.msg)
@@ -182,7 +160,7 @@
       width: 35px;
       height: 43.5px;
       position:fixed;
-      right:24px;
+      right:10px;
       top:13px;
     }
     .noStartbg{

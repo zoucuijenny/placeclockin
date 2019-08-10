@@ -6,7 +6,7 @@ import Vue from 'vue'
 
 const appId = 'wx2b0cfb496537a3dc'//后台提供
 const address='http://www.zss001.cn/'
-
+const imgbaseUrl=address.substring(0,address.length-1)
 const prefix = process.env.NODB_BNV === 'development'
   ? address
   : address
@@ -16,7 +16,7 @@ axios.defaults.headers={'Content-Type': 'application/json' }
 
 const request=axios.create({
   baseURL:prefix,
-  headers:{'Content-Type': 'application/json','token':localStorage.getItem('userId') },
+  headers:{'Content-Type': 'application/json','token':sessionStorage.getItem('userId') },
   withCredentials:true
 })
 
@@ -49,6 +49,7 @@ request.interceptors.response.use(response=>{
 let fetch=function(){
   Vue.prototype.$axios=request
   Vue.prototype.$address=address
+  Vue.prototype.$imgbaseUrl=imgbaseUrl
 }
 
 

@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <!--<img class="musicIcon" :src="musicIcon" alt=""  @click="togglePlay()">-->
-    <!--<audio  autoplay loop id="mp3" >-->
-      <!--<source :src="topicMusic" type="audio/ogg" >-->
-    <!--</audio>-->
+    <img class="musicIcon" :src="musicIcon" alt=""  @click="togglePlay()">
+    <audio  autoplay loop id="mp3" >
+      <source :src="topicMusic" type="audio/ogg" >
+    </audio>
     <router-view/>
   </div>
 </template>
@@ -50,12 +50,11 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /*display: flex;*/
-  /*justify-content: center;*/
-  /*align-items: center;*/
-  /*height: 100%;*/
-  /*width: 100%;*/
-  /*background:#5b9352;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
   .musicIcon{
     width: 25px;
     height: 25px;

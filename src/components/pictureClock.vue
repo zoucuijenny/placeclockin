@@ -213,7 +213,7 @@
         },
         getCardCount:function(){
           let me=this
-          me.$axios.get('/api/cardInfo',{hearders:{token:localStorage.getItem('userId')}})
+          me.$axios.get('/api/cardInfo',{hearders:{token:sessionStorage.getItem('userId')}})
             .then((res)=>{
               //console.log('获取打卡情况：'+JSON.stringify(res))
               if(res.data.status===0){
@@ -229,11 +229,8 @@
       },
       created:function () {
         let me=this
-        
-        wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
         me.getCardCount()
-         me.$axios.get('/api/placeInfo',{hearders:{token:localStorage.getItem('userId')}})
-
+         me.$axios.get('/api/placeInfo',{hearders:{token:sessionStorage.getItem('userId')}})
         .then(function (res) {
           if(res.data.status===0){
             let data =res.data.data
@@ -258,6 +255,7 @@
           .catch((err)=>{
             console.log(err)
           })
+        wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
       }
     }
 </script>
@@ -416,18 +414,16 @@
           margin-top: 22.5px;
           padding: 25px;
           width: 298px;
-          height: 447px;
           background-color: #8bdcff;
           border-radius: 5px;
           .textwrap{
             background: #fff;
             width: 278px;
-            height: 417px;
             padding:15px 10px;
             border-radius: 5px;
             .dkxzImg{
               width:  278px;
-              height:  417px;
+              height:  auto;
             }
           }
         }

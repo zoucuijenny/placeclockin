@@ -1,7 +1,8 @@
 <template>
     <div class="rewardWrap" >
-      <img class="logo" :src="logo">
       <img  class="rewardbg" :src="rewardbg">
+      <img class="logo" :src="logo">
+      <img class="backBtn" :src="btnBack" @click="back()">
       <img  class="rewardHotelcard" :src="rewardHotelcard" v-show="showRewardbgHotel">
       <img  class="rewardPlaceCard" :src="rewardPlaceCard" v-show="showRewardPlace">
       <div class="crashCard" v-show="showRewardCrash">
@@ -18,9 +19,9 @@
       </audio>
     </div>
 </template>
-
 <script>
   import logo from '../assets/images/logored.png'
+  import btnBack from '../assets/images/btnback.png'
 
   import rewardbgNo from '../assets/images/rewardBgNO.png'
   import rewardbgHotel from '../assets/images/rewardBgHotel.png'
@@ -50,6 +51,7 @@
      data(){
        return{
          logo:logo,
+         btnBack:btnBack,
          rewardbgNo:rewardbgNo,
          rewardbgHotel:rewardbgHotel,
          rewardbgPlace:rewardbgPlace,
@@ -72,16 +74,14 @@
          isCrashOpened:false
        }
      },
-      computed:{
-        ...mapState({
-          imgBaseUrl:state=>state.imgBaseUrl,
-          // backReward:state=>state.backReward
-        })
-      },
       methods:{
        share:function(){
 
        },
+        back:function(){
+          localStorage.setItem('prizeResult','')
+         this.$router.push({name:'pictureClock'})
+        },
         openMoneyUrl:function(){
         let me=this
           //若红包未打开过，则自动打开
@@ -109,7 +109,8 @@
        let me=this
         // to do 获取获奖结果 设置背景 图片展示 文字
         me.backReward=localStorage.getItem('prizeResult')
-       // console.log('type'+JSON.stringify(me.backReward))
+        me.backReward=JSON.parse( me.backReward)
+        console.log('type=='+typeof(me.backReward))
         switch (me.backReward.type) {
           case 0:
             me.rewardbg=me.rewardbgNo
@@ -123,21 +124,21 @@
             break
           case 2:
             me.rewardbg=me.rewardbgPlace
-            me.rewardPlaceCard=me.imgBaseUrl+me.backReward.url
+            me.rewardPlaceCard=me.$imgbaseUrl+me.backReward.url
             me.showRewardPlace=true
             break
           case 3:
             me.rewardbg=me.rewardbgHotel
-            me.rewardHotelcard=me.imgBaseUrl+me.backReward.url
+            me.rewardHotelcard=me.$imgbaseUrl+me.backReward.url
             me.showRewardbgHotel=true
             break
           default :
             me.rewardbg=me.rewardbgNo
             break
         }
-        me.rewardText=me.imgBaseUrl+me.backReward.texturl
+        me.rewardText=me.$imgbaseUrl+me.backReward.texturl
         me.rewardClass= me.backReward.serial
-
+   console.log('ssss'+me.$imgbaseUrl)
         wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
 
 
@@ -150,10 +151,27 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
+    .logo{
+      position: absolute;;
+      z-index:2;
+      width: 161px;
+      height: 25px;
+      left:20px;
+      top:20px;
+    }
+    .backBtn{
+      z-index:2;
+      width: 35px;
+      height: 43.5px;
+      position:fixed;
+      right:10px;
+      top:13px;
+    }
     .rewardbg{
       width: 100%;
       height: 100%;
       position: absolute;
+      z-index: 1;
       left:0;
       top:0;
     }
@@ -170,7 +188,7 @@
       position:absolute;
       z-index: 2;
       /*top:352.5px;*/
-      top:53.2%;
+      top:53.1%;
       left:18.7%;
     }
     .rewardTextp1{

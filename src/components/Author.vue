@@ -4,8 +4,6 @@
 </template>
 
 <script>
-  import wxshare from '../store/modules/share.js'
-  var host = 'http://www.zss001.cn/'
   import { parse } from 'query-string';
   export default {
     data() {
@@ -21,9 +19,7 @@
             console.log('登录返回结果：' + JSON.stringify(res))
             if (res.data.status === 0) {
               sessionStorage.setItem('userId', res.data.data.openid)
-              let backurl = host
-              //window.location.href=sessionStorage.getItem('beforeLoginUrl')
-
+              let backurl = me.$address
               window.location.href = backurl
             } else {
               me.$toast.fail(res.data.msg);
@@ -53,7 +49,7 @@
         return
       }
       if (!code) {
-         let url = host + 'author?time='  +  (new Date()).valueOf()
+         let url = me.$address + 'author?time='  +  (new Date()).valueOf()
         console.log('授权返回地址='+url)
         url = encodeURIComponent(url);
         const appId = 'wx2b0cfb496537a3dc'//后台提供
@@ -62,9 +58,6 @@
       } else {
         me.wxlogin(code)
       }
-      wxshare.wxshare(me.$route.fullPath, localStorage.getItem('userId'))
-      wxshare.successfulShare(me.$route.query)
-
     }
   }
 </script>

@@ -21,18 +21,18 @@
  import wx from 'weixin-js-sdk'
 
 export default {
-  data () {
+  data() {
     return {
-      indexbg:indexbg,
-      logo:logo,
-      clockinBtn:clockinBtn,
-      onthewayBtn:onthewayBtn,
-      btnMusic:btnMusic,
-      indexTopic:indexTopic
+      indexbg: indexbg,
+      logo: logo,
+      clockinBtn: clockinBtn,
+      onthewayBtn: onthewayBtn,
+      btnMusic: btnMusic,
+      indexTopic: indexTopic
     }
   },
-  methods:{
-    isIPhone : function() {
+  methods: {
+    isIPhone: function () {
       const uag = window.navigator.userAgent;
       let _isIPhone = true;
       if (uag.indexOf('Android') > -1 || uag.indexOf('Adr') > -1) {
@@ -40,42 +40,37 @@ export default {
       }
       return _isIPhone;
     },
-    totheway:function(){
-      let me=this
-      let  myVideo=document.getElementById("btnMusic");
+    totheway: function () {
+      let me = this
+      let myVideo = document.getElementById("btnMusic");
       myVideo.play();
       setTimeout(function () {
-        me.$router.push({name:'ontheway'})
-      },300)
+        me.$router.push({name: 'ontheway'})
+      }, 300)
     },
-    toclock:function(){
-      let me=this
-      let  myVideo=document.getElementById("btnMusic");
-        myVideo.play();
-        setTimeout(function () {
-          me.$router.push({name:'pictureClock'})
-         // window.location.href= '/pictureClock'
-        },300)
+    toclock: function () {
+      let me = this
+      let myVideo = document.getElementById("btnMusic");
+      myVideo.play();
+      setTimeout(function () {
+        me.$router.push({name: 'pictureClock'})
+        // window.location.href= '/pictureClock'
+      }, 300)
     },
-
   },
-  created:function () {
-    let me=this
-    wxshare.wxshare(this.$address, localStorage.getItem('userId'))
-    wxshare.successfulShare(this.$route.query)
-    wx.sdkConfig()
-
+  created: function () {
+    let me = this
     let str = window.location.href
-   // console.log('地址问号后字符串'+str.indexOf('\?'))
-    //console.log('window.location.href 地址'+str)
-    if(str.indexOf('\?') !== -1){
-      str=window.location.search
+    // console.log('地址问号后字符串'+str.indexOf('\?'))
+    console.log('window.location.href 地址'+str)
+    if (str.indexOf('\?') !== -1) {
+      str = window.location.search
       let arr = str.split('\&')
       let codeIndex = arr[0].indexOf("\=");
       let code = str.substring(codeIndex + 1, arr[0].length);
-     // console.log('code值'+code)
-      if(code){
-        me.$axios.post('/api/wx/login', { code: code })
+      // console.log('code值'+code)
+      if (code) {
+        me.$axios.post('/api/wx/login', {code: code})
           .then((res) => {
             console.log('登录返回结果：' + JSON.stringify(res))
             if (res.data.status === 0) {
@@ -88,16 +83,20 @@ export default {
             console.log(err)
           })
       }
-    //测试登录
-    // sessionStorage.setItem('userId','')
-    // this.$axios.get('/api/test/login',{})
-    //  .then((res)=>{
-    //    if(res.data.status!==0){
-    //      me.$toast(res.data.msg)
-    //    }
-    //  })
-    //  .catch((err)=>{console.log(err)})
- }
+    }
+     // 测试登录
+     //  sessionStorage.setItem('userId','123456')
+     //  this.$axios.get('/api/test/login',{})
+     //   .then((res)=>{
+     //     if(res.data.status!==0){
+     //       me.$toast(res.data.msg)
+     //     }
+     //   })
+     //   .catch((err)=>{console.log(err)})
+    console.log('session=='+sessionStorage.getItem('userId'))
+    wxshare.wxshare(this.$address,sessionStorage.getItem('userId'))
+    wx.sdkConfig()
+  }
 }
 </script>
 <style lang="scss">

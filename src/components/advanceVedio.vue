@@ -2,7 +2,7 @@
     <div class="advanceVedio">
 
       <video  id="mp444" width="375" height="660" controls>
-        <source :src="mp444" type="video/mp4" autoplay="autoplay"  poster="http://pic.58pic.com/58pic/13/93/09/83F58PICUiG_1024.jpg" preload="auto">
+        <source :src="mp444" type="video/mp4" autoplay="autoplay"  poster="" preload="auto">
       </video>
 
     </div>
@@ -17,8 +17,6 @@
     export default {
       data() {
         return {
-          bgGif: bgGif,
-          mp3: mp3,
           mp444: mp444,
           poster: poster,
           style: {
@@ -37,17 +35,15 @@
         }
       },
       created: function () {
-        wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
-        wxshare.successfulShare(this.$route.query)
+        wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
         let me = this
         let myMp4 = document.getElementById("mp444");
         myMp4.play()
-        // 兼容微信(微信可以自动播放)
+      //  兼容微信(微信可以自动播放)
         document.addEventListener("WeixinJSBridgeReady", function () {
           $("mp444")[0].play();
         }, false);
-        //第二种方法
-
+      //  第二种方法
         if (typeof WeixinJSBridge === "undefined") {
           document.addEventListener("WeixinJSBridgeReady", me.onBridgeReady, false);
         } else {

@@ -89,7 +89,7 @@
           let me = this
           me.timeDown = setInterval(function () {
             me.countDowm = me.countDowm - 1
-            if (me.countDowm === 0) {
+            if (me.countDowm === 0 && me.$route.name=='placeDetail' ) {
               clearInterval(me.timeDown)
               me.clock()
             }
@@ -108,7 +108,7 @@
         me.countDowm=10
         me.placeId=me.$route.params.placeId
         me.placedetailbg=me.bgs[me.placeId]
-        me.$axios.get('/api/placeInfo',{ headers:{token:localStorage.getItem('userId')} })
+        me.$axios.get('/api/placeInfo',{ headers:{token:sessionStorage.getItem('userId')} })
           .then((res)=>{
             if(res.data.status===0){
               let datas =res.data.data
@@ -143,7 +143,6 @@
           .catch((err)=>{
             console.log(err)
           })
-
         wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
 
       }
@@ -170,7 +169,7 @@
       width: 35px;
       height: 43.5px;
       position:fixed;
-      right:24px;
+      right:10px;
       top:13px;
     }
     .placedetailbg{

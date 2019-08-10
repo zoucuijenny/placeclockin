@@ -43,9 +43,9 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: 'http://qn.baltictravellerservice.com/',
+   assetsPublicPath: 'http://qn.baltictravellerservice.com/',
     //assetsPublicPath:'http://www.zss001.cn/',
-   // assetsPublicPath:'http://pvszhis9q.bkt.clouddn.com/' ,
+   //assetsPublicPath:'http://pvszhis9q.bkt.clouddn.com/' ,
     /**
      * Source Maps
      */

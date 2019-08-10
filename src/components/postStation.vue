@@ -44,7 +44,7 @@
           <img  class="resultTitle" :src="resultTitle" alt="">
           <div class="resultBox">
             <div  class="rewardContainer">
-              <img  class='noGetReward' :src="noGetReward"  v-if="showNoReward">
+              <img  class='noGetReward' :src="noGetReward"  v-show="showNoReward">
               <div class="resultHotel" v-if="rewardResultHotel.length>0">
                 <img class="rewardResutTitle" :src="hotelTitle" >
                 <div class="hotelCardwrap"   v-for="(item, index) in rewardResultHotel" :item="item" :key="index">
@@ -200,11 +200,6 @@
             btnMusic:btnMusic
           }
         },
-      computed:{
-        ...mapState({
-          imgBaseUrl:state=>state.imgBaseUrl
-        })
-      },
       methods:{
         showBigPic:function(item,pid){
           let me=this
@@ -230,7 +225,7 @@
           me.rewardResultInterst=[]
           me.rewardResultHotel=[]
           me.showRewardResult=true
-          me.$axios.get('api/prizeInfo',{hearders:{token:localStorage.getItem('userId')}})
+          me.$axios.get('api/prizeInfo',{hearders:{token:sessionStorage.getItem('userId')}})
             .then((res)=>{
              // console.log('查询中奖结果：'+JSON.stringify(res))
               if(res.data.status===0){
@@ -248,13 +243,13 @@
                         break
                       case 2:
                         temp.code=item.orderId
-                        temp.url=me.imgBaseUrl+item.url
+                        temp.url=me.$imgbaseUrl+item.url
                         temp.name=item.name
                         me.rewardResultInterst.push(temp)
                         break
                       case 3:
                         temp.code=item.orderId
-                        temp.url=me.imgBaseUrl+item.url
+                        temp.url=me.$imgbaseUrl+item.url
                         temp.name=item.name
                         me.rewardResultHotel.push(temp)
                         break
@@ -285,7 +280,7 @@
         },
         getCardInfo:function () {
           let me=this
-          me.$axios.get('/api/cardInfo',{hearders:{token:localStorage.getItem('userId')}})
+          me.$axios.get('/api/cardInfo',{hearders:{token:sessionStorage.getItem('userId')}})
             .then((res)=>{
              // console.log('获取明信片详情'+res)
               if(res.data.status===0){
@@ -294,7 +289,7 @@
                 for(let item of res.data.data.cardInfo ){
                   let temp={}
                   temp.pid=item.pid
-                  temp.url=me.imgBaseUrl+item.url
+                  temp.url=me.$imgbaseUrl+item.url
                   arr.push(temp)
                 }
                 if(arr.length>8){
@@ -341,7 +336,7 @@
                 }
                //console.log('存：'+JSON.stringify(rewardInfo))
                me.$store.commit(me.moudelNamespace +'setReward',{data:rewardInfo})
-                localStorage.setItem('prizeResult',rewardInfo)
+                localStorage.setItem('prizeResult',JSON.stringify(rewardInfo))
               }else{
                 me.$toast(res.data.msg)
               }
@@ -354,9 +349,7 @@
       },
       created:function(){
           this.getCardInfo()
-          let me=this
           wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
-
 
       }
     }
@@ -381,7 +374,7 @@
       width: 36.5px;
       height: 43.5px;
       position:fixed;
-      right:70px;
+      right:56px;
       top:20px;
     }
     .btnBack{
@@ -389,7 +382,7 @@
            width: 35px;
            height: 43.5px;
            position:fixed;
-           right:24px;
+           right:10px;
            top:20px;
          }
     .bgImg{
@@ -517,8 +510,8 @@
       background-color: rgba(0, 0, 0, 0.3);
       display: flex;
       justify-content: center;
+      align-items: center;
       .resultBoxWrap {
-        margin-top: 69.5px;
         padding-top: 18px;
         position: relative;
         .resultTitle {
