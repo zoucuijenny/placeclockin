@@ -117,7 +117,7 @@
         getBanners:function () {
           let me=this
           me.startContent=[]
-          me.$axios.get('api/onroad/bigpicture',{token:localStorage.getItem('userId')})
+          me.$axios.get('api/onroad/bigpicture',{token:sessionStorage.getItem('userId')})
             .then((res)=>{
               // console.log('datu'+JSON.stringify(res))
               if(res.data.status===0){
@@ -168,8 +168,8 @@
       },
       created:function () {
         this.getBanners()
-        wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
-        wxshare.successfulShare(this.$route.query)
+        wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
+
       }
     }
 </script>

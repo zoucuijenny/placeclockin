@@ -39,7 +39,7 @@ export default {
     },
   },
   created:function () {
-    wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
+    wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
   // this.togglePlay()
 
   }

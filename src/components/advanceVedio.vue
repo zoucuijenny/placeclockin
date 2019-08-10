@@ -19,8 +19,8 @@
             }
           },
       created:function(){
-        wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
-        wxshare.successfulShare(this.$route.query)
+        wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
+
             // let me=this
             // let myMp4=document.getElementById("mp4");
             //

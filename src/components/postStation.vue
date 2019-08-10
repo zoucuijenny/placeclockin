@@ -230,7 +230,7 @@
           me.rewardResultInterst=[]
           me.rewardResultHotel=[]
           me.showRewardResult=true
-          me.$axios.get('api/prizeInfo',{token:localStorage.getItem('userId')})
+          me.$axios.get('api/prizeInfo',{token:sessionStorage.getItem('userId')})
             .then((res)=>{
              // console.log('查询中奖结果：'+JSON.stringify(res))
               if(res.data.status===0){
@@ -286,7 +286,7 @@
         },
         getCardInfo:function () {
           let me=this
-          me.$axios.get('/api/cardInfo',{token:localStorage.getItem('userId')})
+          me.$axios.get('/api/cardInfo',{token:sessionStorage.getItem('userId')})
             .then((res)=>{
              // console.log('获取明信片详情'+res)
               if(res.data.status===0){
@@ -315,7 +315,7 @@
         },
         postCardOut:function(pid){
           let me=this
-          me.$axios.post('/api/sendCard',{pid:pid,token:localStorage.getItem('userId')})
+          me.$axios.post('/api/sendCard',{pid:pid,token:sessionStorage.getItem('userId')})
             .then((res)=>{
              //console.log('寄出明信片'+JSON.stringify(res))
               if(res.data.status===0){
@@ -354,8 +354,8 @@
       created:function(){
           this.getCardInfo()
           let me=this
-          wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
-          wxshare.successfulShare(this.$route.query)
+          wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
+
 
       }
     }

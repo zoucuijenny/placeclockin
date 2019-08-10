@@ -189,7 +189,7 @@
         },
         share: function(){
           console.log(this.$route.path)
-          let userId = localStorage.getItem('userId')
+          let userId = sessionStorage.getItem('userId')
           wxshare.wxshare(location.href.split('#')[0], userId)
         },
 
@@ -214,7 +214,7 @@
         },
         getCardCount:function(){
           let me=this
-          me.$axios.get('/api/cardInfo',{token:localStorage.getItem('userId')})
+          me.$axios.get('/api/cardInfo',{token:sessionStorage.getItem('userId')})
             .then((res)=>{
               //console.log('获取打卡情况：'+JSON.stringify(res))
               if(res.data.status===0){
@@ -230,10 +230,9 @@
       },
       created:function () {
         let me=this
-        wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
-        wxshare.successfulShare(this.$route.query)
+        wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
         me.getCardCount()
-        me.$axios.get('/api/placeInfo',{token:localStorage.getItem('userId')})
+        me.$axios.get('/api/placeInfo',{token:sessionStorage.getItem('userId')})
         .then(function (res) {
           if(res.data.status===0){
             let data =res.data.data
