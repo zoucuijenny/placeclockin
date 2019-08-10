@@ -4,9 +4,8 @@ var host = 'http://www.zss001.cn'
 import { parse } from 'query-string';
 
 var shareDomain = 'http://www.zss001.cn'
-var shareUrl =shareDomain+ '?beforUserId='
-
 var shareUrlDomain = 'http://qn.baltictravellerservice.com'
+var shareUrl =shareDomain+ '?beforUserId='
 
 let isIPhone = () => {
   const uag = window.navigator.userAgent;
@@ -44,7 +43,6 @@ export default {
     if (url.indexOf('beforUserId') !== 1) {
       successfulShare(parse(window.location.search))
     }
-
 
     if (isIPhone) {
       let iphoneUrl = sessionStorage.getItem('iphonUrl')
@@ -95,10 +93,11 @@ export default {
         wx.error(function(res){
           console.log(res.data)
         });
+           document.addEventListener("WeixinJSBridgeReady",function(){
+           document.getElementById('mp444').play()
       });
     })
   },
-
 
 }
 

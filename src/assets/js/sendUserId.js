@@ -2,7 +2,7 @@ import axios from 'axios'
 const prefix='http://122.112.221.15:9900'
 const sendUserId=function(){
   let me=this
-  axios.get(prefix+'/api/push/login',{userId:sessionStorage.getItem('userId')})
+  axios.get(prefix+'/api/push/login',{headers:{userId:localStorage.getItem('userId')}})
   .then((res)=>{
     if(res.data.status!==0){
      // me.$toast.fail(res.data.msg)

@@ -57,10 +57,10 @@
       methods: {
         back: function () {
           let me=this
-          me.$router.back(-1)
           me.countDowm = 0
           clearInterval(me.timeDown)
           me.showClockSucessBg = false
+          me.$router.back(-1)
         },
         clock: function () {
           let me = this
@@ -108,7 +108,7 @@
         me.countDowm=10
         me.placeId=me.$route.params.placeId
         me.placedetailbg=me.bgs[me.placeId]
-        me.$axios.get('/api/placeInfo',{token:sessionStorage.getItem('userId')})
+        me.$axios.get('/api/placeInfo',{ headers:{token:localStorage.getItem('userId')} })
           .then((res)=>{
             if(res.data.status===0){
               let datas =res.data.data

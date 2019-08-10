@@ -96,7 +96,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
 </template>
@@ -214,7 +213,7 @@
         },
         getCardCount:function(){
           let me=this
-          me.$axios.get('/api/cardInfo',{token:sessionStorage.getItem('userId')})
+          me.$axios.get('/api/cardInfo',{hearders:{token:localStorage.getItem('userId')}})
             .then((res)=>{
               //console.log('获取打卡情况：'+JSON.stringify(res))
               if(res.data.status===0){
@@ -230,9 +229,11 @@
       },
       created:function () {
         let me=this
+        
         wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
         me.getCardCount()
-        me.$axios.get('/api/placeInfo',{token:sessionStorage.getItem('userId')})
+         me.$axios.get('/api/placeInfo',{hearders:{token:localStorage.getItem('userId')}})
+
         .then(function (res) {
           if(res.data.status===0){
             let data =res.data.data
@@ -267,7 +268,7 @@
     width: 38px;
     height: 43px;
     position:fixed;
-    right:90px;
+    right:93px;
     top:20px;
     .btnykyz{
       width: 38px;
@@ -414,19 +415,19 @@
         .contentBox{
           margin-top: 22.5px;
           padding: 25px;
-          width: 285.5px;
-          height: 480.5px;
+          width: 298px;
+          height: 447px;
           background-color: #8bdcff;
           border-radius: 5px;
           .textwrap{
             background: #fff;
-            width: 265.5px;
-            height: 451.5px;
+            width: 278px;
+            height: 417px;
             padding:15px 10px;
             border-radius: 5px;
             .dkxzImg{
-              width: 265.5px;
-              height: 451.5px;
+              width:  278px;
+              height:  417px;
             }
           }
         }

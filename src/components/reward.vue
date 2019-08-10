@@ -67,13 +67,15 @@
          moneyUrl:'0',
          btnMusic:btnMusic,
          shareNotice:shareNotice,
-         showShareNotice:false
+         showShareNotice:false,
+         backReward:null,
+         isCrashOpened:false
        }
      },
       computed:{
         ...mapState({
           imgBaseUrl:state=>state.imgBaseUrl,
-          backReward:state=>state.backReward
+          // backReward:state=>state.backReward
         })
       },
       methods:{
@@ -82,10 +84,14 @@
        },
         openMoneyUrl:function(){
         let me=this
-         console.log('红包打开地址'+me.moneyUrl)
-         setTimeout(function () {
-           window.location.href=me.moneyUrl
-         },1000)
+          //若红包未打开过，则自动打开
+          if(!localStorage.getItem('isCrashOpened')){
+            setTimeout(function () {
+              me.isCrashOpened=true
+              localStorage.setItem('isCrashOpened',true)
+              window.location.href=me.moneyUrl
+            },1000)
+          }
         },
         btnShared:function() {
          let me=this
@@ -102,7 +108,8 @@
       created:function(){
        let me=this
         // to do 获取获奖结果 设置背景 图片展示 文字
-        console.log('type'+JSON.stringify(me.backReward))
+        me.backReward=localStorage.getItem('prizeResult')
+       // console.log('type'+JSON.stringify(me.backReward))
         switch (me.backReward.type) {
           case 0:
             me.rewardbg=me.rewardbgNo
