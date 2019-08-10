@@ -132,6 +132,7 @@
             params:{placea:me.$route.params.place},
             hearders:{token:localStorage.getItem('userId')}
           })
+
             .then((res)=>{
               if(res.data.status===0){
                 me.listContent=res.data.data
