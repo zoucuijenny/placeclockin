@@ -22,7 +22,7 @@ const request=axios.create({
 
 //http request 请求拦截器，有ppId值则配置上ppId值
 request.interceptors.request.use(config => {
-  // let token = localStorage.getItem('userId')
+  // let token = sessionStorage.getItem('userId')
   // console.log('当前userId=='+token)
   // let defaultParams={
   //   token:token

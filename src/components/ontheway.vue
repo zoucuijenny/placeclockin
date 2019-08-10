@@ -168,8 +168,8 @@
       },
       created:function () {
         this.getBanners()
-        wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
-        wxshare.successfulShare(this.$route.query)
+        wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
+
       }
     }
 </script>

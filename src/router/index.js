@@ -58,16 +58,20 @@ const router=new Router({
     }
   ]
 })
-// router.beforeEach((to,from,next)=>{
-//   wxshare.successfulShare(to.query)
-//   console.log(to)
-//   //第一次进入项目
-//   if(!localStorage.getItem('userId') && to.path !=='/author'){
-//     //保存用户进入的url
-//     localStorage.setItem('beforeLoginUrl',to.params)
-//     next('/author')
-//     return false
-//   }
-//   next()
-// })
+
+
+router.beforeEach((to,from,next)=>{
+  console.log(to)
+  //第一次进入项目
+  // sessionStorage.setItem('userId', false)
+  if(!sessionStorage.getItem('userId') && to.path !=='/author'){
+    // sessionStorage.setItem('beforeLoginUrl',to.params)
+    next('/author')
+    return false
+  }
+
+  next()
+})
+
+
 export default router

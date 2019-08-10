@@ -69,7 +69,7 @@ export default {
    // console.log('地址问号后字符串'+str.indexOf('\?'))
     //console.log('window.location.href 地址'+str)
     if(str.indexOf('\?') !== -1){
-       str=window.location.search
+      str=window.location.search
       let arr = str.split('\&')
       let codeIndex = arr[0].indexOf("\=");
       let code = str.substring(codeIndex + 1, arr[0].length);
@@ -79,7 +79,7 @@ export default {
           .then((res) => {
             console.log('登录返回结果：' + JSON.stringify(res))
             if (res.data.status === 0) {
-              localStorage.setItem('userId', res.data.data.openid)
+              sessionStorage.setItem('userId', res.data.data.openid)
             } else {
               // me.$toast.fail(res.data.msg);
             }
@@ -88,16 +88,15 @@ export default {
             console.log(err)
           })
       }
-    }
-    // //测试登录
-    localStorage.setItem('userId','')
-    this.$axios.get('/api/test/login',{})
-     .then((res)=>{
-       if(res.data.status!==0){
-         me.$toast(res.data.msg)
-       }
-     })
-     .catch((err)=>{console.log(err)})
+    //测试登录
+    // sessionStorage.setItem('userId','')
+    // this.$axios.get('/api/test/login',{})
+    //  .then((res)=>{
+    //    if(res.data.status!==0){
+    //      me.$toast(res.data.msg)
+    //    }
+    //  })
+    //  .catch((err)=>{console.log(err)})
  }
 }
 </script>

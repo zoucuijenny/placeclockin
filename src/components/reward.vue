@@ -138,8 +138,8 @@
         me.rewardText=me.imgBaseUrl+me.backReward.texturl
         me.rewardClass= me.backReward.serial
 
-        wxshare.wxshare(this.$route.fullPath, localStorage.getItem('userId'))
-        wxshare.successfulShare(this.$route.query)
+        wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
+
 
       }
     }

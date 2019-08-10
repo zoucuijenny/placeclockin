@@ -188,7 +188,7 @@
         },
         share: function(){
           console.log(this.$route.path)
-          let userId = localStorage.getItem('userId')
+          let userId = sessionStorage.getItem('userId')
           wxshare.wxshare(location.href.split('#')[0], userId)
         },
 
@@ -229,10 +229,11 @@
       },
       created:function () {
         let me=this
-        wxshare.wxshare(this.$address, localStorage.getItem('userId'))
-        wxshare.successfulShare(this.$route.query)
+        
+        wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
         me.getCardCount()
-        me.$axios.get('/api/placeInfo',{hearders:{token:localStorage.getItem('userId')}})
+         me.$axios.get('/api/placeInfo',{hearders:{token:localStorage.getItem('userId')}})
+
         .then(function (res) {
           if(res.data.status===0){
             let data =res.data.data
