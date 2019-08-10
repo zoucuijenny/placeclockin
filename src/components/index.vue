@@ -18,7 +18,6 @@
   import indexTopic from '../assets/images/indexTopic.png'
   import btnMusic from '../assets/vedio/btnMusic.mp3'
  import wxshare from '../store/modules/share.js'
- import wx from 'weixin-js-sdk'
 
 export default {
   data() {
@@ -62,7 +61,7 @@ export default {
     let me = this
     let str = window.location.href
     // console.log('地址问号后字符串'+str.indexOf('\?'))
-    console.log('window.location.href 地址'+str)
+    //console.log('window.location.href 地址'+str)
     if (str.indexOf('\?') !== -1) {
       str = window.location.search
       let arr = str.split('\&')
@@ -95,7 +94,6 @@ export default {
      //   .catch((err)=>{console.log(err)})
     console.log('session=='+sessionStorage.getItem('userId'))
     wxshare.wxshare(this.$address,sessionStorage.getItem('userId'))
-    wx.sdkConfig()
   }
 }
 </script>

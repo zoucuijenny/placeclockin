@@ -61,8 +61,8 @@ const router=new Router({
 
 
 router.beforeEach((to,from,next)=>{
- console.log('第一次进入项目from='+from)
-  console.log('第一次进入项目wl=f'+window.location.href)
+ //console.log('第一次进入项目from='+JSON.stringify(from))
+ // console.log('第一次进入项目wlf='+window.location.href)
   //第一次进入项目
   if(!sessionStorage.getItem('userId') && to.path !=='/author'){
     next('/author')

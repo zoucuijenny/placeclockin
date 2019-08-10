@@ -66,7 +66,7 @@ export default {
         wx.updateAppMessageShareData({
           title: '美丽重庆打卡季，偶遇惊喜好礼', // 分享标题
           desc: '渝快生活，重庆农商行带您出行！打卡美丽重庆，还有机会领取景区门票、酒店住宿、现金红包！', // 分享描述
-          link: c + userId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          link: shareUrl + userId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
           imgUrl: shareUrlDomain + '/sharePic.jpg', // 分享图标
           success: function () {
             console.log("分享成功")
