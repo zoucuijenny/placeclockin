@@ -16,27 +16,22 @@ let isIPhone = () => {
   return _isIPhone;
 };
 
-function successfulShare(query) {
-  let userId = query.beforUserId
-  if(sessionStorage.getItem('beforUserId')){
-    axios.get(host + '/api/share/sucess?beforUserId=' + userId).then(function (data) {
-      if (data.status === 0) {
-        console.log("加次数成功")
-      } else {
-        console.log(data.msg)
-      }
-    })
-  }
-}
+// function successfulShare() {
+//   let userId = sessionStorage.getItem('userId')
+//     axios.get(host + '/api/share/sucess?beforUserId='+userId).then(function (data) {
+//       if (data.status === 0) {
+//         console.log("加次数成功")
+//       } else {
+//         console.log(data.msg)
+//       }
+//     })
+// }
 export default {
   wxshare(url, userId) {
     url = window.location.href
     url = url.split('#')[0]
     if (!userId) {
       return
-    }
-    if (url.indexOf('beforUserId') !== -1) {
-      successfulShare(parse(window.location.search))
     }
     if (isIPhone) {
       let iphoneUrl = sessionStorage.getItem('iphonUrl')
@@ -70,6 +65,14 @@ export default {
           imgUrl: shareUrlDomain + '/sharePic.jpg', // 分享图标
           success: function () {
             console.log("分享成功")
+            let userId = sessionStorage.getItem('userId')
+            axios.get(host + '/api/share/sucess?beforUserId='+userId).then(function (data) {
+              if (data.status === 0) {
+                console.log("加次数成功")
+              } else {
+                console.log(data.msg)
+              }
+            })
           }
         }),
           wx.updateTimelineShareData({
@@ -79,15 +82,23 @@ export default {
             imgUrl: shareUrlDomain + '/sharePic.jpg', // 分享图标
             success: function () {
               console.log("分享成功")
+              let userId = sessionStorage.getItem('userId')
+              axios.get(host + '/api/share/sucess?beforUserId='+userId).then(function (data) {
+                if (data.status === 0) {
+                  console.log("加次数成功")
+                } else {
+                  console.log(data.msg)
+                }
+              })
             },
           })
         wx.error(function (res) {
           console.log(res.data)
         });
-        document.addEventListener("WeixinJSBridgeReady", function () {
-          document.getElementById('mp444').play()
-          document.getElementById('mp3').play()
-        });
+        // document.addEventListener("WeixinJSBridgeReady", function () {
+        //   document.getElementById('mp444').play()
+        //   document.getElementById('mp3').play()
+        // });
       })
     })
   }

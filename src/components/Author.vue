@@ -16,7 +16,6 @@
         let me = this
         me.$axios.post('/api/wx/login', { code: code })
           .then((res) => {
-            console.log('登录返回结果：' + JSON.stringify(res))
             if (res.data.status === 0) {
               sessionStorage.setItem('userId', res.data.data.openid)
               let backurl = me.$address
@@ -41,7 +40,7 @@
       // let arr = str.split('\&')
       // let codeIndex = arr[0].indexOf("\=");
       // let code = str.substring(codeIndex + 1, arr[0].length);
-      console.log('code==' + code)
+      //console.log('code==' + code)
       let userId = sessionStorage.getItem('userId')
       //检测用户是否登录
       if (userId) {
@@ -51,6 +50,7 @@
       if (!code) {
          let url = me.$address + 'author?time='  +  (new Date()).valueOf()
         console.log('授权返回地址='+url)
+        console.log('授权前的authod页地址'+ window.location.href )
         url = encodeURIComponent(url);
         const appId = 'wx2b0cfb496537a3dc'//后台提供
         me.webUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirec`;
