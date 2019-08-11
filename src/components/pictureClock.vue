@@ -422,8 +422,8 @@
             padding:15px 10px;
             border-radius: 5px;
             .dkxzImg{
-              width:  278px;
-              height:  auto;
+              width:278.5px;
+              height:417px;
             }
           }
         }
