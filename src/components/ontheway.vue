@@ -86,8 +86,7 @@
       },
       methods:{
         back:function(){
-           //this.$router.back(-1)
-         window.history.back()
+           this.$router.push({name:'index'})
         },
         toNext:function (index) {
          // window.location.href=`/album?place=${index}`
@@ -221,9 +220,9 @@
         margin-top: 20px;
       }
       .detailOnTap{
-        width: 71px;
-        height: 19.5px;
-        margin-top: 20px;
+        width: 100px;
+        height: 27.5px;
+        margin-top: 30px;
       }
     }
 

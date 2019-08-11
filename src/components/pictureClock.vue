@@ -108,7 +108,7 @@
   import shct from '../assets/images/p2bg.jpg'
   import locationIcon from '../assets/images/location.png'
   import clickClockText from '../assets/images/clickclock.png'
-  import completeClock from '../assets/images/completeClock.png'
+  import completeClock from '../assets/images/completeClock.gif'
   import completeClockText from '../assets/images/completeClockText.png'
   import closeBtn from '../assets/images/closeBtn.png'
   import dkxzCon from '../assets/images/dkxzContent.png'
@@ -184,7 +184,7 @@
 
       methods:{
         back:function(){
-          this.$router.back(-1)
+          this.$router.push({name:'index'})
         },
         share: function(){
           console.log(this.$route.path)
@@ -303,11 +303,20 @@
     top:20px;
   }
   .beforeClock{
+    position: relative;
+    height: 61.5px;
     .locationIcon{
       width: 47px;
       height: 48px;
+      position: absolute;
+      -webkit-animation: jump 1s 2s infinite;
+      -o-animation: jump 1s 2s infinite;
+      animation: jump 1s 2s infinite;
+
     }
     .clickClockText{
+      position: absolute;
+      bottom: 0;
       width: 46px;
       height: 13.5px;
     }
@@ -423,7 +432,7 @@
             border-radius: 5px;
             .dkxzImg{
               width:278.5px;
-              height:417px;
+              height:384px;
             }
           }
         }
@@ -436,6 +445,17 @@
         top: 0;
       }
 
+    }
+    @keyframes jump {
+      0%{
+        margin-top:0
+      }
+     45%{
+       margin-top:-15px;
+     }
+      100%{
+        margin-top:0
+      }
     }
   }
 

@@ -15,7 +15,7 @@
        </div>
       <!--<div class="text">旅行路上 总有风景在等你</div>-->
       <audio  id="btnMusic2">
-        <source :src="btnMusic" type="audio/ogg" >
+        <source :src="btnMusic" type="audio/mpeg" >
       </audio>
     </div>
 </template>
@@ -43,10 +43,7 @@
   import btnShare from '../assets/images/btnShare.png'
   import btnMusic from '../assets/vedio/btnMusic.mp3'
   import shareNotice from '../assets/images/shareNotice.png'
-
-  import { createNamespacedHelpers } from 'vuex'
-  const { mapState } = createNamespacedHelpers('data/')
-
+  import wx from 'weixin-js-sdk';
     export default {
      data(){
        return{
@@ -94,12 +91,17 @@
           }
         },
         btnShared:function() {
-         let me=this
-          let  myVideo=document.getElementById("btnMusic2");
+          let me = this
+          let myVideo = document.getElementById("btnMusic2");
           myVideo.play();
-         setTimeout(function(){
-           me.showShareNotice=true
-         })
+          wx.ready(function () {
+            document.addEventListener("WeixinJSBridgeReady", function () {
+              myVideo.play();
+            })
+            setTimeout(function () {
+              me.showShareNotice = true
+            })
+          })
         },
         closeShareWindow:function(){
          this.showShareNotice=false
@@ -254,13 +256,18 @@
       position: fixed;
       width: 100%;
       height: 100%;
-      z-index: 100;
+      z-index: 10;
       top:0;
-      left:0
+      left:0;
+      background: rgba(0,0,0,0.5);
     }
     .shareNotice{
-      width: 100%;
-      height: 100%;
+     position:absolute;
+      right:20px;
+      top:20px;
+      width: 147.5px;
+      height: 67px;
+      z-index:11;
     }
   }
 </style>

@@ -6,7 +6,7 @@
     <img @click="toclock()" class="clockinBtn" :src="clockinBtn">
     <img @click="totheway()" class="onthewayBtn" :src="onthewayBtn">
     <audio  id="btnMusic">
-      <source :src="btnMusic" type="audio/ogg" >
+      <source :src="btnMusic" type="audio/mpeg" >
     </audio>
   </div>
 </template>
@@ -17,7 +17,8 @@
   import clockinBtn from '../assets/images/btnclockin.png'
   import indexTopic from '../assets/images/indexTopic.png'
   import btnMusic from '../assets/vedio/btnMusic.mp3'
- import wxshare from '../store/modules/share.js'
+  import wxshare from '../store/modules/share.js'
+  import wx from 'weixin-js-sdk';
 
 export default {
   data() {
@@ -42,7 +43,12 @@ export default {
     totheway: function () {
       let me = this
       let myVideo = document.getElementById("btnMusic");
-      myVideo.play();
+         myVideo.play();
+      //    wx.ready(function(){
+      //   document.addEventListener("WeixinJSBridgeReady", function () {
+      //     myVideo.play();
+      //   });
+      // })
       setTimeout(function () {
         me.$router.push({name: 'ontheway'})
       }, 300)
@@ -50,7 +56,12 @@ export default {
     toclock: function () {
       let me = this
       let myVideo = document.getElementById("btnMusic");
-      myVideo.play();
+          myVideo.play();
+      // wx.ready(function(){
+      //   document.addEventListener("WeixinJSBridgeReady", function () {
+      //     myVideo.play();
+      //   });
+      // })
       setTimeout(function () {
         me.$router.push({name: 'pictureClock'})
         // window.location.href= '/pictureClock'
@@ -62,6 +73,7 @@ export default {
     let str = window.location.href
     // console.log('地址问号后字符串'+str.indexOf('\?'))
     //console.log('window.location.href 地址'+str)
+
     if (str.indexOf('\?') !== -1) {
       str = window.location.search
       let arr = str.split('\&')
@@ -84,14 +96,14 @@ export default {
       }
     }
      // 测试登录
-     //  sessionStorage.setItem('userId','123456')
+     //  sessionStorage.setItem('userId','12345678')
      //  this.$axios.get('/api/test/login',{})
      //   .then((res)=>{
      //     if(res.data.status!==0){
      //       me.$toast(res.data.msg)
      //     }
      //   })
-     //   .catch((err)=>{console.log(err)})
+     //  .catch((err)=>{console.log(err)})
     console.log('session=='+sessionStorage.getItem('userId'))
     wxshare.wxshare(this.$address,sessionStorage.getItem('userId'))
   }

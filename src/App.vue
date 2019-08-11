@@ -1,9 +1,11 @@
 <template>
   <div id="app">
     <img class="musicIcon" :src="musicIcon" alt=""  @click="togglePlay()">
-    <audio  autoplay loop id="mp3" >
-      <source :src="topicMusic" type="audio/ogg" >
+    <audio  autoplay loop id="mp3">
+      <source :src="topicMusic" type="audio/mp3">
     </audio>
+    <!--<audio :id="getAudioId('audio',index)" type="audio/mpeg" :data-index="index" preload="auto">-->
+    <!--</audio>-->
     <router-view/>
   </div>
 </template>
@@ -38,9 +40,17 @@ export default {
     },
   },
   created:function () {
-    wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
-  // this.togglePlay()
+    wxshare.wxshare(me.$route.fullPath, sessionStorage.getItem('userId'))
+  },
 
+  mounted:function () {
+    var bgAudio = document.getElementById('mp3');
+    bgAudio.load()
+    bgAudio.play()
+    document.addEventListener("WeixinJSBridgeReady", function () {
+      bgAudio.load()
+      bgAudio.play()
+    },false);
   }
 }
 </script>
@@ -62,7 +72,7 @@ export default {
     position: fixed;
     top:70px;
     right: 10px;
-    z-index: 100;
+    z-index: 3;
     //background: red;
   }
 }

@@ -44,7 +44,6 @@ export default {
           url = iphoneUrl
         }
       }
-
     }
     axios.get(host + '/api/share?url=' + url + '&userId=' + userId).then(function ({data}) {
       wx.config({
@@ -65,14 +64,6 @@ export default {
           imgUrl: shareUrlDomain + '/sharePic.jpg', // 分享图标
           success: function () {
             console.log("分享成功")
-            let userId = sessionStorage.getItem('userId')
-            axios.get(host + '/api/share/sucess?beforUserId='+userId).then(function (data) {
-              if (data.status === 0) {
-                console.log("加次数成功")
-              } else {
-                console.log(data.msg)
-              }
-            })
           }
         }),
           wx.updateTimelineShareData({
@@ -82,23 +73,11 @@ export default {
             imgUrl: shareUrlDomain + '/sharePic.jpg', // 分享图标
             success: function () {
               console.log("分享成功")
-              let userId = sessionStorage.getItem('userId')
-              axios.get(host + '/api/share/sucess?beforUserId='+userId).then(function (data) {
-                if (data.status === 0) {
-                  console.log("加次数成功")
-                } else {
-                  console.log(data.msg)
-                }
-              })
             },
           })
         wx.error(function (res) {
           console.log(res.data)
         });
-        // document.addEventListener("WeixinJSBridgeReady", function () {
-        //   document.getElementById('mp444').play()
-        //   document.getElementById('mp3').play()
-        // });
       })
     })
   }

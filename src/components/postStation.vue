@@ -22,11 +22,11 @@
         </div>
       </div>
       <!--点击明信片放大查看-->
-      <div class="showBigImgBox"  v-show="bigImgShow">
-          <div class="bigImgBox">
-            <img class="bigImg" :src="bigImgUrl" >
+      <div class="showBigImgBox" id="showBigImgBox" v-show="bigImgShow">
+          <div class="bigImgBox" id="bigImgBox">
+            <img class="bigImg" :src="bigImgUrl" :class="postAnimate ? 'scaleMinAnimation':''">
             <img class='closeBtn' :src="closeBtn" @click="closeBigImgBox">
-            <img  class="postBtn" :src="postBtn" @click="postCardOut(postOutPId)">
+            <img  class="postBtn" :src="postBtn" @click="postCardOut(postOutPId,bigImgUrl)">
             <img  class="postCancelBtn" :src="postCancelBtn"  @click="closeBigImgBox">
           </div>
       </div>
@@ -80,7 +80,10 @@
         </div>
       </div>
       <audio  id="btnMusic1">
-        <source :src="btnMusic" type="audio/ogg" >
+        <source :src="btnMusic" type="audio/mpeg" >
+      </audio>
+      <audio  id="btnMusic3">
+        <source :src="postBtn" type="audio/mpeg" >
       </audio>
     </div>
 </template>
@@ -111,9 +114,7 @@
   import btnMusic from '../assets/vedio/btnMusic.mp3'
 
   import wxshare from '../store/modules/share.js'
-  import { createNamespacedHelpers } from 'vuex'
-  const { mapState} = createNamespacedHelpers('data/')
-
+  import wx from 'weixin-js-sdk';
     export default {
         data(){
           return {
@@ -147,6 +148,8 @@
             postOutPId:null,
             postCancelBtn:postCancelBtn,
             postOutSuccess:postOutSuccessMusic,
+            postAnimate:false,
+            //记录是否寄出成功 执行动画
             rewardResultHotel:[
               {
                 name:'xns',
@@ -210,13 +213,11 @@
         closeBigImgBox:function(){
           let me=this
           me.bigImgShow=false
-
-          let  myVideo=document.getElementById("btnMusic1");
-          myVideo.play();
-
+          let myVideo=document.getElementById("btnMusic1");
+          myVideo.play()
         },
         back:function(){
-         this.$router.back(-1)
+         this.$router.push({name:'pictureClock'})
          },
         //查询中奖结果
         searchReward:function(){
@@ -297,7 +298,6 @@
                 }else {
                   me.cards=arr
                 }
-
               }else{
                 me.$toast.fail(res.data.msg)
               }
@@ -307,7 +307,7 @@
             })
 
         },
-        postCardOut:function(pid){
+        postCardOut:function(pid,url){
           let me=this
           me.$axios.post('/api/sendCard',{pid:pid,token:sessionStorage.getItem('userId')})
             .then((res)=>{
@@ -316,13 +316,36 @@
                 //请求寄信接口成功后操作
                 //声效
                 let audio = document.createElement('audio');
-                audio.src=me.postOutSuccess
+                 audio.src=me.postOutSuccess
+                audio.setAttribute('type','audio/mpeg')
                 document.body.appendChild(audio)
+                //let audio=document.getElementById('btnMusic3')
                 audio.play()
 
-                me.getCardInfo()
-                me.bigImgShow=false
-                me.completePost=true
+                //寄出动画效果
+               // setTimeout(function(){
+                  document.getElementById('bigImgBox').style.display='none'
+                  let letter=document.createElement('img')
+                  let div=document.getElementById('showBigImgBox')
+                  letter.setAttribute('src',url)
+                  letter.style.width='140px'
+                  letter.style.height='100px'
+                  letter.style.position='absolute'
+                  letter.style.top='50%'
+                  letter.style.left='50%'
+                  letter.style.marginTop='-50px'
+                  letter.style.marginLeft='-70px'
+                  letter.setAttribute('class','scaleMinAnimation')
+                  div.appendChild(letter)
+                  //寄出效果完
+                  me.getCardInfo()
+                  setTimeout(function(){
+                    me.bigImgShow=false
+                    me.completePost=true
+                    div.removeChild(letter)
+                    document.getElementById('bigImgBox').style.display='bolock'
+                  },1000)
+              //  },2000)
                 let rewardInfo={}
                 rewardInfo.type=res.data.data.type
                 rewardInfo.url=res.data.data.url
@@ -335,7 +358,6 @@
                   localStorage.setItem('isCrashOpened',false)
                 }
                //console.log('存：'+JSON.stringify(rewardInfo))
-               me.$store.commit(me.moudelNamespace +'setReward',{data:rewardInfo})
                 localStorage.setItem('prizeResult',JSON.stringify(rewardInfo))
               }else{
                 me.$toast(res.data.msg)
@@ -363,7 +385,7 @@
     overflow: hidden;
     .logo{
       position: absolute;;
-      z-index:999;
+      z-index:2;
       width: 161px;
       height: 25px;
       left:20px;
@@ -501,7 +523,7 @@
       }
     }
     .rewardResult {
-      z-index: 5;
+      z-index: 10;
       position: fixed;
       top: 0;
       left: 0;
@@ -651,7 +673,7 @@
       }
     }
     .getBackLetter{
-      z-index:5;
+      z-index:10;
       position:fixed;
       top:0;
       left:0;
@@ -680,17 +702,27 @@
     }
   }
   .scaleMinAnimation{
-    animation: scaleMin 2s;
+    animation: scaleMin 1s;
   }
   @keyframes scaleMin {
     from{
-      width:90px ;
-      height: 66px;
-    }to{
+      width: 140px;
+      height: 100px;
+      right:50%;
+      top:50%;
+      margin-top:-50px;
+      margin-left:-70px ;
+      position:absolute;
+    }
+  to{
        width:0 ;
        height:0;
-       margin-top: 50px;
-       margin-left: 50px;
+       position:absolute;
+       transform: rotate(-360deg) scale(0);
+       right:10%;
+       top:85%;
+       margin-top:0;
+       margin-left:50%;
      }
   }
 

@@ -119,7 +119,7 @@
       },
       methods:{
         back:function(){
-          this.$router.back(-1)
+          this.$router.push({name:'ontheway'})
         },
         showbigImg:function(url){
           let me=this
@@ -283,6 +283,7 @@
             .photoItem{
               background: #fff;
               width:47%;
+              margin-bottom: 10px;
               .photo{
               width:100%;
               height: auto;

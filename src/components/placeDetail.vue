@@ -11,6 +11,9 @@
       <div class="clockSucessBg" v-show="showClockSucessBg">
         <img class="succcess" :src="succcess" >
       </div>
+      <audio  id="btnMusic2">
+        <source :src="btnMusic" type="audio/mpeg" >
+      </audio>
     </div>
 </template>
 
@@ -60,7 +63,7 @@
           me.countDowm = 0
           clearInterval(me.timeDown)
           me.showClockSucessBg = false
-          me.$router.back(-1)
+          me.$router.push({name:'pictureClock'})
         },
         clock: function () {
           let me = this
@@ -71,8 +74,10 @@
               if (res.data.status === 0) {
                 me.showClockSucessBg = true
                 let audio = document.createElement('audio');
+                audio.setAttribute('type','audio/mpeg')
                 audio.src = me.clockSuccess
                 document.body.appendChild(audio)
+                //let audio=document.getElementById('btnMusic2')
                 audio.play()
                 setTimeout(function () {
                   me.showClockSucessBg = false
@@ -89,7 +94,7 @@
           let me = this
           me.timeDown = setInterval(function () {
             me.countDowm = me.countDowm - 1
-            if (me.countDowm === 0 && me.$route.name=='placeDetail' ) {
+            if (me.countDowm === 0 && me.$route.name==='placeDetail' ) {
               clearInterval(me.timeDown)
               me.clock()
             }
