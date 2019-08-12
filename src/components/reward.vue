@@ -42,7 +42,7 @@
 
   import btnShare from '../assets/images/btnShare.png'
   import btnMusic from '../assets/vedio/btnMusic.mp3'
-  import shareNotice from '../assets/images/shareNotice.png'
+  import shareNotice from '../assets/images/xuanyaoText.png'
   import wx from 'weixin-js-sdk';
     export default {
      data(){
@@ -53,22 +53,21 @@
          rewardbgHotel:rewardbgHotel,
          rewardbgPlace:rewardbgPlace,
          rewardbgCrash:rewardbgCrash,
-         rewardbg:rewardbgCrash,
+         rewardbg:rewardbgNo,
          rewardText:rewardText8,
          btnShare:btnShare,
          showRewardbgHotel:false,
          showRewardPlace:false,
          showRewardCrash:false,
-         rewardHotelcard:rewardHotelcard,
-         rewardPlaceCard:rewardPlaceCard,
-         rewardClass:8,
+         rewardHotelcard:'',
+         rewardPlaceCard:'',
+         rewardClass:'p8',
          money:null,
          moneyUrl:'0',
          btnMusic:btnMusic,
          shareNotice:shareNotice,
          showShareNotice:false,
-         backReward:null,
-         isCrashOpened:false
+         backReward:null
        }
      },
       methods:{
@@ -76,40 +75,31 @@
 
        },
         back:function(){
-          localStorage.setItem('prizeResult','')
          this.$router.push({name:'pictureClock'})
         },
-        openMoneyUrl:function(){
+        openMoneyUrl:function(url){
         let me=this
           //若红包未打开过，则自动打开
           if(!localStorage.getItem('isCrashOpened')){
             setTimeout(function () {
-              me.isCrashOpened=true
               localStorage.setItem('isCrashOpened',true)
-              window.location.href=me.moneyUrl
+              window.location.href=url
             },1000)
           }
         },
         btnShared:function() {
           let me = this
           let myVideo = document.getElementById("btnMusic2");
-          myVideo.play();
-          wx.ready(function () {
-            document.addEventListener("WeixinJSBridgeReady", function () {
               myVideo.play();
-            })
-            setTimeout(function () {
               me.showShareNotice = true
-            })
-          })
-        },
+           },
         closeShareWindow:function(){
          this.showShareNotice=false
         }
       },
       created:function(){
        let me=this
-        // to do 获取获奖结果 设置背景 图片展示 文字
+       // to do 获取获奖结果 设置背景 图片展示 文字
         me.backReward=localStorage.getItem('prizeResult')
         me.backReward=JSON.parse( me.backReward)
         console.log('type=='+typeof(me.backReward))
@@ -118,21 +108,21 @@
             me.rewardbg=me.rewardbgNo
                 break
           case 1:
+            me.openMoneyUrl(me.backReward.moneyUrl)
             me.rewardbg=me.rewardbgCrash
             me.money=me.backReward.money
             me.moneyUrl=me.backReward.moneyUrl
             me.showRewardCrash=true
-            me.openMoneyUrl()
             break
           case 2:
+            me.showRewardPlace=true
             me.rewardbg=me.rewardbgPlace
             me.rewardPlaceCard=me.$imgbaseUrl+me.backReward.url
-            me.showRewardPlace=true
             break
           case 3:
+            me.showRewardbgHotel=true
             me.rewardbg=me.rewardbgHotel
             me.rewardHotelcard=me.$imgbaseUrl+me.backReward.url
-            me.showRewardbgHotel=true
             break
           default :
             me.rewardbg=me.rewardbgNo
@@ -140,7 +130,7 @@
         }
         me.rewardText=me.$imgbaseUrl+me.backReward.texturl
         me.rewardClass= me.backReward.serial
-   console.log('ssss'+me.$imgbaseUrl)
+        console.log('ssss'+me.$imgbaseUrl)
         wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
 
 
@@ -232,6 +222,7 @@
       top:210px;
       left:50%;
       margin-left:-77px;
+      z-index: 2;
     }
     .rewardPlaceCard{
       width: 153.5px;
@@ -240,6 +231,7 @@
       top:210px;
       left:50%;
       margin-left:-77px;
+      z-index: 2;
     }
     .crashCard{
       position: absolute;
@@ -248,6 +240,7 @@
       width: 100%;
       text-align: center;
       font-size: 15px;
+      z-index:2;
       .bigT{
         font-size: 28px;
       }
@@ -263,8 +256,8 @@
     }
     .shareNotice{
      position:absolute;
-      right:20px;
-      top:20px;
+      right:40px;
+      top:5px;
       width: 147.5px;
       height: 67px;
       z-index:11;

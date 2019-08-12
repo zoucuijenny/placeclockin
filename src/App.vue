@@ -40,7 +40,7 @@ export default {
     },
   },
   created:function () {
-    wxshare.wxshare(me.$route.fullPath, sessionStorage.getItem('userId'))
+    wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
   },
 
   mounted:function () {

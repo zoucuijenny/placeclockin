@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('data/')
-import wxshare from '../store/modules/share.js'
+import  parse  from 'query-string';
 import axios from "axios/index";
 let prex='http://www.zss001.cn/' //*一定不要/
 
@@ -70,9 +70,10 @@ if(environment){
     localStorage.setItem('beforeUrl',beforeUrl)  //值为/
      console.log('第一次进入项目wlf='+window.location.href)
       let params=window.location.search
-      let arr = params.split('\&')
-      let idIndex = arr[0].indexOf("\=");
-      let beforUserId = arr[0].substring(idIndex + 1, arr[0].length);
+      // let arr = params.split('\&')
+      // let idIndex = arr[0].indexOf("\=");
+     // arr[0].substring(idIndex + 1, arr[0].length);
+      let beforUserId = parse.parse(params).beforUserId
       if(params){
         if(beforUserId){
           console.log('即将发送分享成功请求')

@@ -77,13 +77,17 @@
                 audio.setAttribute('type','audio/mpeg')
                 audio.src = me.clockSuccess
                 document.body.appendChild(audio)
-                //let audio=document.getElementById('btnMusic2')
+                audio.load()
                 audio.play()
+                document.addEventListener("weixinJSBridgeReady",function(){
+                  audio.load()
+                  audio.play()
+                })
                 setTimeout(function () {
                   me.showClockSucessBg = false
                 }, 1000)
               } else {
-                me.$toast.fail(res.data.msg)
+               // me.$toast.fail(res.data.msg)
               }
             })
             .catch((err) => {

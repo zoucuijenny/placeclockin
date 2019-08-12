@@ -44,14 +44,15 @@
           <img  class="resultTitle" :src="resultTitle" alt="">
           <div class="resultBox">
             <div  class="rewardContainer">
-              <img  class='noGetReward' :src="noGetReward"  v-show="showNoReward">
+              <!--<img  class='noGetReward' :src="noGetReward"  v-show="showNoReward">-->
+              <img  class='noGetReward' :src="noGetReward" v-show="false">
               <div class="resultHotel" v-if="rewardResultHotel.length>0">
                 <img class="rewardResutTitle" :src="hotelTitle" >
                 <div class="hotelCardwrap"   v-for="(item, index) in rewardResultHotel" :item="item" :key="index">
-                  <img class="hotelCard" :src="hotelcard">
+                  <img class="hotelCard" :src="item.hotelcard">
                   <div class="changeInfo">
                     <div class="code">兑奖码：{{ item.code}}</div>
-                    <!--<div class="valueDate">有效期：{{item.valueDate}}</div>-->
+                    <!--<div class="valueDate">有效期：2019.10.20</div>-->
                   </div>
                 </div>
                 <div class="hotelText">中奖者请凭兑奖码在有效期前，提前三天致电023-63718080/13101342268预约兑换奖品，过期视为自动放弃奖品。</div>
@@ -64,13 +65,17 @@
                 </div>
                 <div class="crashText">请注意查看服务通知消息并领取红包。</div>
               </div>
-              <div class="resultPlace" v-if="rewardResultInterst.length>0">
+              <!--<div class="resultPlace"  v-if="rewardResultInterst.length>0">-->
+                <div class="resultPlace" >
                 <img class="rewardResutTitle" :src="interestTitle" >
-                <div class="interestCardwrap"   v-for="(item, index) in rewardResultInterst" :item="item" :key="index">
+                <div class="interestCardwrap"  >
+                  <!--<img  class="placecard" :src="item.placecard" >-->
+                  <!--v-for="(item, index) in rewardResultInterst" :item="item" :key="index"-->
                   <img  class="placecard" :src="placecard" >
                   <div class="changeInfo">
-                    <div class="code">兑奖码：{{ item.code}}</div>
-                    <!--<div class="valueDate">有效期：{{item.valueDate}}</div>-->
+                    <!--<div class="code">兑奖码：{{ item.code}}</div>-->
+                    <div class="code">兑奖码：12345678</div>
+                    <!--<div class="valueDate">2019.10.20</div>-->
                   </div>
                 </div>
                 <div class="interestText">中奖者请凭兑奖码在有效期前，提前三天致电023-63718080/13101342268预约兑换奖品，过期视为自动放弃奖品。</div>
@@ -102,7 +107,7 @@
   import hotelTitle from '../assets/images/hotelTitle.png'
   import interestTitle from '../assets/images/interestTitle.png'
   import crashTitle from '../assets/images/crashTitle.png'
-  import hotelcard from '../assets/images/hotelcard.png'
+  // import hotelcard from '../assets/images/hotelcard.png'
   import placecard from '../assets/images/placeCard.png'
   import crashcard from '../assets/images/crashCard.png'
 
@@ -137,8 +142,8 @@
             hotelTitle:hotelTitle,
             crashTitle:crashTitle,
             interestTitle:interestTitle,
-            hotelcard:hotelcard,
-            placecard:placecard,
+            // hotelcard:hotelcard,
+             placecard:placecard,
             crashcard:crashcard,
             backLetter:backLetter,
             btnckLetter:btnckLetter,
@@ -244,13 +249,13 @@
                         break
                       case 2:
                         temp.code=item.orderId
-                        temp.url=me.$imgbaseUrl+item.url
+                        temp.placecard=me.$imgbaseUrl+item.url
                         temp.name=item.name
                         me.rewardResultInterst.push(temp)
                         break
                       case 3:
                         temp.code=item.orderId
-                        temp.url=me.$imgbaseUrl+item.url
+                        temp.hotelcard=me.$imgbaseUrl+item.url
                         temp.name=item.name
                         me.rewardResultHotel.push(temp)
                         break
@@ -309,6 +314,7 @@
         },
         postCardOut:function(pid,url){
           let me=this
+          localStorage.setItem('prizeResult','')
           me.$axios.post('/api/sendCard',{pid:pid,token:sessionStorage.getItem('userId')})
             .then((res)=>{
              //console.log('寄出明信片'+JSON.stringify(res))
@@ -319,11 +325,13 @@
                  audio.src=me.postOutSuccess
                 audio.setAttribute('type','audio/mpeg')
                 document.body.appendChild(audio)
-                //let audio=document.getElementById('btnMusic3')
+                audio.load()
                 audio.play()
-
+                document.addEventListener("weixinJSBridgeReady",function(){
+                  audio.load()
+                  audio.play()
+                })
                 //寄出动画效果
-               // setTimeout(function(){
                   document.getElementById('bigImgBox').style.display='none'
                   let letter=document.createElement('img')
                   let div=document.getElementById('showBigImgBox')
@@ -345,7 +353,6 @@
                     div.removeChild(letter)
                     document.getElementById('bigImgBox').style.display='bolock'
                   },1000)
-              //  },2000)
                 let rewardInfo={}
                 rewardInfo.type=res.data.data.type
                 rewardInfo.url=res.data.data.url
@@ -355,6 +362,7 @@
                 if(res.data.data.type===1){
                   rewardInfo.money=res.data.data.money
                   rewardInfo.moneyUrl=res.data.data.openUrl
+                 // me.$isCrashOpened=false
                   localStorage.setItem('isCrashOpened',false)
                 }
                //console.log('存：'+JSON.stringify(rewardInfo))
@@ -599,7 +607,7 @@
                   height: 32px;
                   width: 108px;
                   right: 0;
-                  bottom: 5px;
+                  bottom: 35px;
                 }
               }
               .hotelText {

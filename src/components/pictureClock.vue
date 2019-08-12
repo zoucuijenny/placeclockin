@@ -218,6 +218,9 @@
               //console.log('获取打卡情况：'+JSON.stringify(res))
               if(res.data.status===0){
                 me.cardCount=res.data.data.cardNum
+                if( me.cardCount>10||me.cardCount===10){
+                  me.$toast('今日你已累计获得10张明信片，每日最多累计获得10张')
+                }
               }else{
                 me.$toast.fail(res.data.msg)
               }

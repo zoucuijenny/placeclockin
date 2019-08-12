@@ -95,15 +95,15 @@ export default {
           })
       }
     }
-     // 测试登录
-     //  sessionStorage.setItem('userId','12345678')
-     //  this.$axios.get('/api/test/login',{})
-     //   .then((res)=>{
-     //     if(res.data.status!==0){
-     //       me.$toast(res.data.msg)
-     //     }
-     //   })
-     //  .catch((err)=>{console.log(err)})
+    // 测试登录
+    //   sessionStorage.setItem('userId','12345678')
+    //   this.$axios.get('/api/test/login',{})
+    //    .then((res)=>{
+    //      if(res.data.status!==0){
+    //        me.$toast(res.data.msg)
+    //      }
+    //    })
+    //   .catch((err)=>{console.log(err)})
     console.log('session=='+sessionStorage.getItem('userId'))
     wxshare.wxshare(this.$address,sessionStorage.getItem('userId'))
   }

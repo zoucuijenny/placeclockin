@@ -7,6 +7,7 @@ import Vue from 'vue'
 const appId = 'wx2b0cfb496537a3dc'//后台提供
 const address='http://www.zss001.cn/'
 const imgbaseUrl=address.substring(0,address.length-1)
+const isCrashOpened=false
 const prefix = process.env.NODB_BNV === 'development'
   ? address
   : address
@@ -50,6 +51,7 @@ let fetch=function(){
   Vue.prototype.$axios=request
   Vue.prototype.$address=address
   Vue.prototype.$imgbaseUrl=imgbaseUrl
+  Vue.prototype.$isCrashOpened=isCrashOpened
 }
 
 

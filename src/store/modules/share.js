@@ -1,11 +1,11 @@
 import axios from 'axios'
 import wx from 'weixin-js-sdk';
-var host = 'http://www.zss001.cn'
+let  host = 'http://www.zss001.cn'
 //不能加/
-import { parse } from 'query-string';
 
-var shareUrlDomain = 'http://qn.baltictravellerservice.com'
-var shareUrl =host+ '?beforUserId='
+
+let  shareUrlDomain = 'http://qn.baltictravellerservice.com'
+let  shareUrl =host+ '?beforUserId='
 
 let isIPhone = () => {
   const uag = window.navigator.userAgent;
