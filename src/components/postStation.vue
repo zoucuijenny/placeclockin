@@ -9,7 +9,6 @@
       </div>
       <div class="textMailboxWrap">
         <div class="text">您可寄出的明信片 <span class="blueNumber">{{cardCount}}</span> 张，选择一张点击查看并寄出吧！</div>
-        <!--<img  class="storage" :src="storage" >-->
         <div class="storage" :style="storageStyle">
           <div class="cards" >
             <div class="cardiv" v-for="(item,index) in cards"  :item="item" :key="index">
@@ -44,15 +43,13 @@
           <img  class="resultTitle" :src="resultTitle" alt="">
           <div class="resultBox">
             <div  class="rewardContainer">
-              <!--<img  class='noGetReward' :src="noGetReward"  v-show="showNoReward">-->
-              <img  class='noGetReward' :src="noGetReward" v-show="false">
+              <img  class='noGetReward' :src="noGetReward"  v-show="showNoReward">
               <div class="resultHotel" v-if="rewardResultHotel.length>0">
                 <img class="rewardResutTitle" :src="hotelTitle" >
                 <div class="hotelCardwrap"   v-for="(item, index) in rewardResultHotel" :item="item" :key="index">
                   <img class="hotelCard" :src="item.hotelcard">
                   <div class="changeInfo">
                     <div class="code">兑奖码：{{ item.code}}</div>
-                    <!--<div class="valueDate">有效期：2019.10.20</div>-->
                   </div>
                 </div>
                 <div class="hotelText">中奖者请凭兑奖码在有效期前，提前三天致电023-63718080/13101342268预约兑换奖品，过期视为自动放弃奖品。</div>
@@ -65,17 +62,12 @@
                 </div>
                 <div class="crashText">请注意查看服务通知消息并领取红包。</div>
               </div>
-              <!--<div class="resultPlace"  v-if="rewardResultInterst.length>0">-->
-                <div class="resultPlace" >
+              <div class="resultPlace"  v-if="rewardResultInterst.length>0">
                 <img class="rewardResutTitle" :src="interestTitle" >
-                <div class="interestCardwrap"  >
-                  <!--<img  class="placecard" :src="item.placecard" >-->
-                  <!--v-for="(item, index) in rewardResultInterst" :item="item" :key="index"-->
-                  <img  class="placecard" :src="placecard" >
+                <div class="interestCardwrap"  v-for="(item, index) in rewardResultInterst" :item="item" :key="index" >
+                  <img  class="placecard" :src="item.placecard" >
                   <div class="changeInfo">
-                    <!--<div class="code">兑奖码：{{ item.code}}</div>-->
-                    <div class="code">兑奖码：12345678</div>
-                    <!--<div class="valueDate">2019.10.20</div>-->
+                    <div class="code">兑奖码：{{ item.code}}</div>
                   </div>
                 </div>
                 <div class="interestText">中奖者请凭兑奖码在有效期前，提前三天致电023-63718080/13101342268预约兑换奖品，过期视为自动放弃奖品。</div>
@@ -667,7 +659,7 @@
                   height: 32px;
                   width: 108px;
                   right: 0;
-                  bottom: 5px;
+                  bottom:30px;
                 }
               }
               .interestText {
