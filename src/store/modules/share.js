@@ -1,6 +1,7 @@
 import axios from 'axios'
 import wx from 'weixin-js-sdk';
 let  host = 'http://www.zss001.cn'
+//let  host = 'http://qn.baltictravellerservice.com'
 //不能加/
 
 

@@ -9,10 +9,10 @@
           <img  class="startbgTop" :src="startbgTop" >
         </div>
         <div class="startContentWrap" :style="startContentWrapStyle">
-          <van-swipe  style="width:362px; height:560px;"  @change="onChange" :autoplay="3000">
+          <div class="phoneBgdiv" :style="phoneBgdivStyle"></div>
+          <van-swipe  style="width:375px; height:560px;"  @change="onChange" :autoplay="3000">
             <van-swipe-item  v-for="(item,index) in startContent" :item="item" :key="index">
               <div class="placeItem">
-                <div class="phoneBgdiv" :style="phoneBgdivStyle"></div>
                <img class="phonePhoto" :src="item.url" @click="toNext(item.place)">
               <img :src="item.text" class="startContent">
               <img :src="detailButton" class="detailOnTap" @click="toNext(item.place)">
@@ -30,7 +30,7 @@
 <script>
   import { Swipe, SwipeItem } from 'vant';
   import indicator from '../assets/images/indicator.png'
-  import activeIndicator from '../assets/images/activeIndicator.jpg'
+  import activeIndicator from '../assets/images/activeIndicator.png'
   import noStartbg from '../assets/images/bgOnwayNostart.jpg'
   import startbgTop from '../assets/images/startbgTop.png'
   import btnBack from '../assets/images/btnback.png'
@@ -79,6 +79,7 @@
            phonePhoto:phonePhoto,
            wrapStyle:{
              width:this.clientWidth+'px',
+             overflow:'hidden'
            },
            startContentWrapStyle:{
              width:this.clientWidth+'px',
@@ -88,6 +89,7 @@
              backgroundPosition:'0,0'
            },
            phoneBgdivStyle:{
+             width:this.clientWidth+'px',
              backgroundImage:'url('+phoneBg+')',
              backgroundRepeat:'no-repeat',
              backgroundSize:'100% 100%',
@@ -183,7 +185,7 @@
   .onthewayWrap{
     background: #c7eefd;
     .backBtn{
-      z-index:2;
+      z-index:3;
       width: 35px;
       height: 43.5px;
       position:fixed;
@@ -218,12 +220,11 @@
           justify-content: center;
           .phoneBgdiv{
             position: absolute;
-            width: 365px;
+            width: 100%;
             height: 193.5px;
             top:0;
-            left:50%;
-            margin-left:-182px;
-            z-index:9;
+            left:0;
+            z-index:2;
           }
           .placeItem{
             width: 100%;
@@ -232,19 +233,20 @@
             justify-content: center;
             align-items: center;
             .phonePhoto{
-              width:314.5px;
-              height: 173px;
-              margin-top:11px;
+              width:324px;
+              height: 178px;
+              margin-top:13px;
+              margin-left: 5px;
             }
             .startContent{
               width: 300px;
               height: 183px;
-              margin-top: 80px;
+              margin-top: 70px;
             }
             .detailOnTap{
               width: 100px;
               height: 27.5px;
-              margin-top: 50px;
+              margin-top: 30px;
             }
             /*.van-swipe__indicators{*/
               /*bottom: 340px;*/
