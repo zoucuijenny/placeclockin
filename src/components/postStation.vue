@@ -9,7 +9,6 @@
       </div>
       <div class="textMailboxWrap">
         <div class="text">您可寄出的明信片 <span class="blueNumber">{{cardCount}}</span> 张，选择一张点击查看并寄出吧！</div>
-        <!--<img  class="storage" :src="storage" >-->
         <div class="storage" :style="storageStyle">
           <div class="cards" >
             <div class="cardiv" v-for="(item,index) in cards"  :item="item" :key="index">
@@ -51,7 +50,6 @@
                   <img class="hotelCard" :src="item.hotelcard">
                   <div class="changeInfo">
                     <div class="code">兑奖码：{{ item.code}}</div>
-                    <!--<div class="valueDate">有效期：2019.10.20</div>-->
                   </div>
                 </div>
                 <div class="hotelText">中奖者请凭兑奖码在有效期前，提前三天致电023&minus;63718080/13101342268预约兑换奖品，过期视为自动放弃奖品。</div>
@@ -67,10 +65,9 @@
               <div class="resultPlace"  v-if="rewardResultInterst.length>0">
                 <img class="rewardResutTitle" :src="interestTitle" >
                 <div class="interestCardwrap"  v-for="(item, index) in rewardResultInterst" :item="item" :key="index" >
-                  <img  class="placecard" :src="item.placecard">
+                  <img  class="placecard" :src="item.placecard" >
                   <div class="changeInfo">
                     <div class="code">兑奖码：{{ item.code}}</div>
-                    <!--<div class="valueDate">2019.10.20</div>-->
                   </div>
                 </div>
                 <div class="interestText">中奖者请凭兑奖码在有效期前，提前三天致电023&minus;63718080/13101342268预约兑换奖品，过期视为自动放弃奖品。</div>

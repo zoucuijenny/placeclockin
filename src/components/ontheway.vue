@@ -1,5 +1,5 @@
 <template>
-    <div class="onthewayWrap">
+    <div class="onthewayWrap" :style="wrapStyle">
       <img class="backBtn" :src="btnBack" @click="back()">
       <div class="nostartWrap" v-show="!isStart">
         <img class="noStartbg" :src="noStartbg" >
@@ -9,20 +9,28 @@
           <img  class="startbgTop" :src="startbgTop" >
         </div>
         <div class="startContentWrap" :style="startContentWrapStyle">
-          <div class="placeItem" v-for="(item,index) in startContent" :item="item" :index="index">
-            <div class="phoneBgdiv" :style="phoneBgdivStyle">
-              <img class="phonePhoto" :src="item.url" >
+          <van-swipe  style="width:362px; height:560px;"  @change="onChange" :autoplay="3000">
+            <van-swipe-item  v-for="(item,index) in startContent" :item="item" :key="index">
+              <div class="placeItem">
+                <div class="phoneBgdiv" :style="phoneBgdivStyle"></div>
+               <img class="phonePhoto" :src="item.url" @click="toNext(item.place)">
+              <img :src="item.text" class="startContent">
+              <img :src="detailButton" class="detailOnTap" @click="toNext(item.place)">
+              </div>
+            </van-swipe-item>
+            <div class="custom-indicator" slot="indicator" >
+              <img :src='currentIndicator === index ? aIndicator:indicator' alt=""   class="indicatorImg"  v-for="(item,index) in startContent" :item="item" :key="index">
             </div>
-            <img :src="statusFlag" class="statusFlag">
-            <img :src="item.text" class="startContent">
-            <img :src="detailButton" class="detailOnTap" @click="toNext(item.place)">
-          </div>
+          </van-swipe>
         </div>
       </div>
     </div>
 </template>
 
 <script>
+  import { Swipe, SwipeItem } from 'vant';
+  import indicator from '../assets/images/indicator.png'
+  import activeIndicator from '../assets/images/activeIndicator.jpg'
   import noStartbg from '../assets/images/bgOnwayNostart.jpg'
   import startbgTop from '../assets/images/startbgTop.png'
   import btnBack from '../assets/images/btnback.png'
@@ -43,10 +51,15 @@
   const { mapState } = createNamespacedHelpers('data/')
 
   import wxshare from '../store/modules/share.js'
+
     export default {
        data(){
          return {
            moudleNameSpace:'data/',
+           aIndicator:activeIndicator,
+           indicator:indicator,
+           clientWidth:0,
+           currentIndicator: 0,
            isStart:true,
            noStartbg:noStartbg,
            startbgTop:startbgTop,
@@ -64,7 +77,11 @@
            startContent:[],
            detailButton:detailButton,
            phonePhoto:phonePhoto,
+           wrapStyle:{
+             width:this.clientWidth+'px',
+           },
            startContentWrapStyle:{
+             width:this.clientWidth+'px',
              backgroundImage:'url('+contentBg+')',
              backgroundRepeat:'no-repeat',
              backgroundSize:'100% 100%',
@@ -78,12 +95,20 @@
            }
          }
        },
+      components:{
+          [Swipe.name]:Swipe,
+          [SwipeItem.name]:SwipeItem
+      },
       computed: {
         ...mapState({
           imgBaseUrl: state => state.imgBaseUrl
         })
       },
       methods:{
+        onChange(index) {
+          let me=this
+          me.currentIndicator = index
+        },
         back:function(){
            this.$router.push({name:'index'})
         },
@@ -145,7 +170,11 @@
       created:function () {
         this.getBanners()
         wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
-
+      },
+      mounted(){
+        window.onresize = () => {
+          this.clientWidth = document.body.clientWidth
+        }
       }
     }
 </script>
@@ -176,7 +205,7 @@
           margin-bottom: 0;
           padding-bottom: 0;
           .startbgTop{
-            width: 375px;
+            width:100%;
             height: auto;
             margin-bottom: 0;
           }
@@ -184,46 +213,55 @@
         .startContentWrap{
           width: 100%;
           height: 100%;
+          position:relative;
+          display: flex;
+          justify-content: center;
+          .phoneBgdiv{
+            position: absolute;
+            width: 365px;
+            height: 193.5px;
+            top:0;
+            left:50%;
+            margin-left:-182px;
+            z-index:9;
+          }
           .placeItem{
             width: 100%;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
-            margin-bottom: 80px;
+            .phonePhoto{
+              width:314.5px;
+              height: 173px;
+              margin-top:11px;
+            }
+            .startContent{
+              width: 300px;
+              height: 183px;
+              margin-top: 80px;
+            }
+            .detailOnTap{
+              width: 100px;
+              height: 27.5px;
+              margin-top: 50px;
+            }
+            /*.van-swipe__indicators{*/
+              /*bottom: 340px;*/
+            /*}*/
           }
         }
-      .phoneBgdiv{
-        width: 365px;
-        height: 193.5px;
-        margin-top:-5px;
-        position: relative;
-        .phonePhoto{
-          position: absolute;
-          width:314.5px;
-          height: 173px;
-          top:50%;
-          left:50%;
-          margin-left:-157px;
-          margin-top:-84px
-
-        }
-      }
-      .statusFlag{
-        width: 85px;
-        height: 16.5px;
-        margin-top: 20px;
-      }
-      .startContent{
-        width: 300px;
-        height: 183px;
-        margin-top: 20px;
-      }
-      .detailOnTap{
-        width: 100px;
-        height: 27.5px;
-        margin-top: 30px;
-      }
     }
-
+  }
+  .custom-indicator{
+    width: 100%;
+    height: 20px;
+    top:213px ;
+    position: absolute;
+    text-align: center;
+    .indicatorImg{
+      width: 14.5px;
+      height: 16.5px;
+    }
   }
 </style>
