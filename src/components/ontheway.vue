@@ -5,7 +5,6 @@
         <img class="noStartbg" :src="noStartbg" >
       </div>
       <div class="startWrap" v-show="isStart">
-        <!--<img class="startbg" :src="startbg" >-->
         <div class="startbgTopWrap">
           <img  class="startbgTop" :src="startbgTop" >
         </div>
