@@ -9,7 +9,7 @@
           <img  class="startbgTop" :src="startbgTop" >
         </div>
         <div class="startContentWrap" :style="startContentWrapStyle">
-          <div class="phoneBgdiv" :style="phoneBgdivStyle"></div>
+          <div class="phoneBgdiv" :style="phoneBgdivStyle" @click="toDetail()"></div>
           <van-swipe  style="width:375px; height:560px;"  @change="onChange" :autoplay="3000">
             <van-swipe-item  v-for="(item,index) in startContent" :item="item" :key="index">
               <div class="placeItem">
@@ -60,6 +60,7 @@
            indicator:indicator,
            clientWidth:0,
            currentIndicator: 0,
+           currentPlaceIndex:'f',
            isStart:true,
            noStartbg:noStartbg,
            startbgTop:startbgTop,
@@ -110,13 +111,17 @@
         onChange(index) {
           let me=this
           me.currentIndicator = index
+          me.currentPlaceIndex=me.startContent[index].place
         },
         back:function(){
            this.$router.push({name:'index'})
         },
         toNext:function (index) {
-         // window.location.href=`/album?place=${index}`
           this.$router.push({name: 'album',params:{place:index}})
+        },
+        toDetail:function(){
+          let me=this
+          this.$router.push({name: 'album',params:{place:me.currentPlaceIndex}})
         },
         getBanners:function () {
           let me=this
