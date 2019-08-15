@@ -36,8 +36,7 @@
       },
       created: function () {
         wxshare.wxshare(this.$route.fullPath, sessionStorage.getItem('userId'))
-        let me = this
-        let myMp4 = document.getElementById("mp444");
+        let me = this        let myMp4 = document.getElementById("mp444");
         myMp4.play()
       //  兼容微信(微信可以自动播放)
         document.addEventListener("WeixinJSBridgeReady", function () {
