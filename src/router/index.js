@@ -5,7 +5,7 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('data/')
 import  parse  from 'query-string';
 import axios from "axios/index";
-let prex='http://www.zss001.cn/' //*一定不要/
+let prex='http://qn.baltictravellerservice.com/'
 
 Vue.use(Router)
 
