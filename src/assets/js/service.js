@@ -5,7 +5,7 @@ import Vue from 'vue'
  import promise from 'promise'
 
 const appId = 'wx2b0cfb496537a3dc'//后台提供
-const address='http://qn.baltictravellerservice.com/'
+const address='http://www.baltictravellerservice.com/'
 const imgbaseUrl=address.substring(0,address.length-1)
 const isCrashOpened=false
 const prefix = process.env.NODB_BNV === 'development'

@@ -52,7 +52,7 @@
                     <div class="code">兑奖码：{{ item.code}}</div>
                   </div>
                 </div>
-                <div class="hotelText">中奖者请凭兑奖码在有效期前，提前三天致电023&minus;63718080/13101342268预约兑换奖品，过期视为自动放弃奖品。</div>
+                <div class="hotelText">中奖者请凭兑奖码在有效期前，提前三天致电023&minus;63718080/13101342268预约兑换奖品，过期视为自动放弃奖品</div>
               </div>
               <div class="resultCrash" v-if="rewardResultCrash.length>0">
                 <img class="rewardResutTitle" :src="crashTitle" >
@@ -60,7 +60,7 @@
                   <img class="crashCard" :src="crashcard">
                   <div class="textInfo">{{rewardResultCrash[0].count }}</div>
                 </div>
-                <div class="crashText">请注意查看服务通知消息并领取红包。</div>
+                <div class="crashText">请注意查看服务通知消息并领取红包</div>
               </div>
               <div class="resultPlace"  v-if="rewardResultInterst.length>0">
                 <img class="rewardResutTitle" :src="interestTitle" >
@@ -70,7 +70,7 @@
                     <div class="code">兑奖码：{{ item.code}}</div>
                   </div>
                 </div>
-                <div class="interestText">中奖者请凭兑奖码在有效期前，提前三天致电023&minus;63718080/13101342268预约兑换奖品，过期视为自动放弃奖品。</div>
+                <div class="interestText">中奖者请凭兑奖码在有效期前，提前三天致电023&minus;63718080/13101342268预约兑换奖品，过期视为自动放弃奖品</div>
               </div>
             </div>
           </div>
@@ -583,12 +583,12 @@
               align-items: center;
               .hotelCardwrap {
                 width: 210.5px;
-                height: 89.5px;
+                height: 97px;
                 position: relative;
                 margin-bottom: 11.5px;
                 .hotelCard {
-                  width: 210.5px;
-                  height: 89.5px;
+                  width: 212px;
+                  height: 97px;
                 }
                 .changeInfo {
                   position:absolute;
@@ -596,14 +596,14 @@
                   font-weight: bold;
                   color: #1c8ebf;
                   text-align: center;
-                  height: 32px;
+                //  height: 32px;
                   width: 108px;
                   right: 0;
-                  bottom: 35px;
+                  bottom: 33px;
                 }
               }
               .hotelText {
-                width: 210.5px;
+                width: 212px;
                 padding-bottom: 13px;
                 text-align: left;
               }
@@ -632,7 +632,7 @@
                 }
               }
               .crashText {
-                width: 210.5px;
+                width: 212px;
                 padding-bottom: 13px;
               }
             }
@@ -642,13 +642,13 @@
               flex-direction: column;
               align-items: center;
               .interestCardwrap {
-                width: 210.5px;
-                height: 89.5px;
+                width: 212px;
+                height: 96px;
                 margin-bottom: 11.5px;
                 position: relative;
                 .placecard {
-                  width: 210.5px;
-                  height: 89.5px;
+                  width: 211px;
+                  height: 96px;
                 }
                 .changeInfo {
                   position:absolute;
@@ -656,14 +656,14 @@
                   font-weight: bold;
                   color: #1c8ebf;
                   text-align: center;
-                  height: 32px;
+                 // height: 32px;
                   width: 108px;
                   right: 0;
-                  bottom:30px;
+                  bottom:33px;
                 }
               }
               .interestText {
-                width: 210.5px;
+                width: 212px;
                 padding-bottom: 13px;
                 text-align: left;
               }

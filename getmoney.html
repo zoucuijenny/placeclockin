@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1,viewport-fit=cover,user-scalable=no">
+  <title>领取红包</title>
+</head>
+<body>
+<div class="getMOney" id="getMOney">
+  <div class="moneyNumber">
+    <span id="moneyNumber" ></span>元
+  </div>
+</div>
+<script>
+   let monyNumber=GetQueryString("retmoney")
+     monyNumber=parseFloat(monyNumber)
+     monyNumber=Math.floor(monyNumber*100)/100
+    document.getElementById('moneyNumber').innerHTML=monyNumber
+
+
+    function GetQueryString(name)
+    {
+      let reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+      let r = window.location.search.substr(1).match(reg);
+      if(r!=null)return  unescape(r[2]); return null;
+    }
+</script>
+</body>
+<style lang="scss">
+  body{
+    width: 100%;
+    height: 100%;
+    padding:0;
+    margin:0;
+    background: url(./img/7ba735a224d6b8776d80b09356b821f.jpg) no-repeat 0 0;
+    /*background: url(http://qn.baltictravellerservice.com/hongbao.jpg) no-repeat 0 0;*/
+    background-size: cover;
+  }
+  .getMOney{
+   width: 100%;
+    height: 100%;
+
+  }
+  .moneyNumber{
+    position: fixed;
+    z-index:1;
+    width: 100%;
+    bottom:44%;
+    left:0;
+    font-size: 18px;
+   /*font-weight: bold;*/
+    text-align: center;
+    color:#fff
+  }
+  #moneyNumber{
+    font-size: 26px;
+  }
+</style>
+</html>

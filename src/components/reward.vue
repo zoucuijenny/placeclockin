@@ -79,12 +79,16 @@
         },
         openMoneyUrl:function(url){
         let me=this
+          console.log('外即将打开红包'+localStorage.getItem('isCrashOpened'))
+          console.log('local'+typeof(localStorage.getItem('isCrashOpened')))
           //若红包未打开过，则自动打开
-          if(!localStorage.getItem('isCrashOpened')){
-            setTimeout(function () {
+          let local=localStorage.getItem('isCrashOpened')
+          if(local==='false'){
+          //  setTimeout(function () {
               localStorage.setItem('isCrashOpened',true)
+            console.log('即将打开红包'+url)
               window.location.href=url
-            },1000)
+          //  },2000)
           }
         },
         btnShared:function() {

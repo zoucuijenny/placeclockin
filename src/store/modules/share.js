@@ -1,7 +1,7 @@
 import axios from 'axios'
 import wx from 'weixin-js-sdk';
 //let  host = 'http://www.zss001.cn'
-let  host = 'http://qn.baltictravellerservice.com'
+let  host = 'http://www.baltictravellerservice.com'
 //不能加/
 
 
@@ -60,7 +60,7 @@ export default {
         let me = this
         wx.updateAppMessageShareData({
           title: '美丽重庆打卡季，偶遇惊喜好礼', // 分享标题
-          desc: '打卡不一样的美丽重庆，偶遇景区门票、品质住宿、现金红包惊喜好礼！', // 分享描述
+          desc: '打卡不一样的美丽重庆，偶遇景区门票、品质住宿等惊喜好礼！', // 分享描述
           link: shareUrl + userId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
           imgUrl: shareUrlDomain + '/sharePic.jpg', // 分享图标
           success: function () {
@@ -69,7 +69,7 @@ export default {
         }),
           wx.updateTimelineShareData({
             title: '美丽重庆打卡季，偶遇惊喜好礼', // 分享标题
-            desc: '打卡不一样的美丽重庆，偶遇景区门票、品质住宿、现金红包惊喜好礼！', // 分享描述
+            desc: '打卡不一样的美丽重庆，偶遇景区门票、品质住宿等惊喜好礼！', // 分享描述
             link: shareUrl + userId,  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: shareUrlDomain + '/sharePic.jpg', // 分享图标
             success: function () {
