@@ -48,7 +48,7 @@ export default {
     bgAudio.load()
     bgAudio.play()
     document.addEventListener("WeixinJSBridgeReady", function () {
-      bgAudio.load()
+       bgAudio.load()
       bgAudio.play()
     },false);
   }

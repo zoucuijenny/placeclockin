@@ -70,9 +70,6 @@ if(environment){
     localStorage.setItem('beforeUrl',beforeUrl)  //值为/
      console.log('第一次进入项目wlf='+window.location.href)
       let params=window.location.search
-      // let arr = params.split('\&')
-      // let idIndex = arr[0].indexOf("\=");
-     // arr[0].substring(idIndex + 1, arr[0].length);
       let beforUserId = parse.parse(params).beforUserId
       if(params){
         if(beforUserId){
@@ -82,19 +79,48 @@ if(environment){
               .then(function (data){
                 if (data.status === 0) {
                   console.log("加次数成功")
+                  //未授权的用户进入授权页面
+                  if(!sessionStorage.getItem('userId') && to.path !=='/author'){
+                    next('/author')
+                    return false
+                  }
+                  next()
                 } else {
                   console.log(data.msg)
+                  //未授权的用户进入授权页面
+                  if(!sessionStorage.getItem('userId') && to.path !=='/author'){
+                    next('/author')
+                    return false
+                  }
+                  next()
                 }
               })
+              .catch(function(error){
+                console.log(error)
+                //未授权的用户进入授权页面
+                if(!sessionStorage.getItem('userId') && to.path !=='/author'){
+                  next('/author')
+                  return false
+                }
+                next()
+              })
+          }else{
+          //未授权的用户进入授权页面
+          if(!sessionStorage.getItem('userId') && to.path !=='/author'){
+            next('/author')
+            return false
           }
-
+          next()
+        }
+      }else{
+        //未授权的用户进入授权页面
+        if(!sessionStorage.getItem('userId') && to.path !=='/author'){
+          next('/author')
+          return false
+        }
+        next()
       }
 //《分享被点击后加明信片数量结束》
-    if(!sessionStorage.getItem('userId') && to.path !=='/author'){
-      next('/author')
-      return false
-    }
-    next()
   })
 }
 
